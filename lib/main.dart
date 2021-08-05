@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Clever Git',
       theme: ThemeData.dark(),
-      home: HomeScreen(title: 'Clever Git'),
+      home: const HomeScreen(title: 'Clever Git'),
     );
   }
 }
