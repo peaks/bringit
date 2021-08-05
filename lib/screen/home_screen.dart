@@ -19,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-              child: Column(children: [
-            const Text(
+              child: Column(children: const <Widget>[
+            Text(
               'It\'s Git Time!',
               style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
             ),
