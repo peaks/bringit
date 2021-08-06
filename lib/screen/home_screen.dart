@@ -40,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
         TextPosition(offset: _cmdController.text.length));
   }
 
-  final TextStyle _commandStyle = const TextStyle(fontSize: 32);
+  final TextStyle _commandStyle =
+      const TextStyle(fontSize: 32, fontFamily: 'FantasqueSansMono');
+
+  final TextStyle _consoleStyle =
+      const TextStyle(fontSize: 24, fontFamily: 'FantasqueSansMono');
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           textAlign: TextAlign.left,
                           decoration: InputDecoration(
                             prefixIcon: Text(
-                              'git ',
+                              ' git ',
                               style: _commandStyle,
                             ),
                             prefixIconConstraints:
@@ -108,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: TextField(
                       controller: _stdoutController,
                       enabled: false,
-                      style: const TextStyle(fontSize: 24),
+                      style: _consoleStyle,
                       textAlign: TextAlign.left,
                       minLines: 20,
                       maxLines: 20,
@@ -125,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: TextField(
                   controller: _stderrController,
                   enabled: false,
-                  style: const TextStyle(fontSize: 24, color: Colors.redAccent),
+                  style: _consoleStyle
+                      .merge(const TextStyle(color: Colors.redAccent)),
                   textAlign: TextAlign.left,
                   minLines: 2,
                   maxLines: 2,
