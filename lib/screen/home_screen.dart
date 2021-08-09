@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:git_ihm/utils/command_level_enum.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
 import 'package:git_ihm/widgets/button/icon_button.dart';
 
@@ -17,19 +18,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cmdController = TextEditingController();
   final FocusNode _cmdFocus = FocusNode();
-  final TextEditingController _stdoutController = TextEditingController();
-  final TextEditingController _stderrController = TextEditingController();
+  final TextEditingController _resultController = TextEditingController();
   bool _lastCommandSuccedeed = true;
 
   void _runCommand(String command) {
+    _setCurrentCommand(command);
     final ProcessResult result =
         Process.runSync('git', command.split(' '), workingDirectory: './');
-    _stdoutController.text = result.stdout.toString();
-    _stderrController.text = result.stderr.toString();
+    _resultController.text =
+        result.stderr.toString() + result.stdout.toString();
+    result.stderr.toString();
     setState(() {
       _lastCommandSuccedeed = result.exitCode == 0;
     });
-    _cmdController.clear();
     _cmdFocus.requestFocus();
   }
 
@@ -46,6 +47,41 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextStyle _consoleStyle =
       const TextStyle(fontSize: 24, fontFamily: 'FantasqueSansMono');
 
+  final List<String> infoCommands = <String>[
+    'status',
+    'branch',
+    'log',
+    'remote',
+    'diff',
+    // 'config',
+    'show',
+  ];
+
+  final List<String> remoteCommands = <String>[
+    'push',
+    // 'clone',
+    'fetch',
+    'pull',
+  ];
+
+  final List<String> safeCommands = <String>[
+    'commit',
+    // 'add',
+    // 'checkout',
+    'rebase',
+    'stash',
+    // 'restore',
+    'config',
+    'init',
+    // 'mv',
+  ];
+
+  final List<String> dangerousCommands = <String>[
+    // 'reset',
+    // 'rm',
+    'clean',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,20 +95,39 @@ class _HomeScreenState extends State<HomeScreen> {
               'It\'s Git Time!',
               style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
             ),
-            Row(children: <Widget>[
-              CommandButton(
-                title: 'STATUS',
-                onPressed: () => _setCurrentCommand('status'),
-              ),
-              CommandButton(
-                title: 'LOG',
-                onPressed: () => _setCurrentCommand('log'),
-              ),
-              CommandButton(
-                title: 'DIFF',
-                onPressed: () => _setCurrentCommand('diff'),
-              ),
-            ]),
+            Wrap(
+                alignment: WrapAlignment.center,
+                children: infoCommands
+                    .map((String command) => CommandButton(
+                          title: command,
+                          onPressed: () => _runCommand(command),
+                          level: CommandLevel.info,
+                        ))
+                    .toList()),
+            Wrap(
+                alignment: WrapAlignment.center,
+                children: remoteCommands
+                    .map((String command) => CommandButton(
+                        title: command,
+                        onPressed: () => _runCommand(command),
+                        level: CommandLevel.remote))
+                    .toList()),
+            Wrap(
+                alignment: WrapAlignment.center,
+                children: safeCommands
+                    .map((String command) => CommandButton(
+                        title: command,
+                        onPressed: () => _runCommand(command),
+                        level: CommandLevel.safe))
+                    .toList()),
+            Wrap(
+                alignment: WrapAlignment.center,
+                children: dangerousCommands
+                    .map((String command) => CommandButton(
+                        title: command,
+                        onPressed: () => _runCommand(command),
+                        level: CommandLevel.dangerous))
+                    .toList()),
             Row(
               children: <Widget>[
                 Expanded(
@@ -90,6 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             prefixIconConstraints:
                                 const BoxConstraints(minWidth: 0, minHeight: 0),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(),
+                            ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: _lastCommandSuccedeed
@@ -106,42 +164,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Expanded(
-                flex: 3,
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: TextField(
-                      controller: _stdoutController,
-                      enabled: false,
-                      style: _consoleStyle,
-                      textAlign: TextAlign.left,
-                      minLines: 20,
-                      maxLines: 20,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: _lastCommandSuccedeed
-                                    ? Colors.greenAccent
-                                    : Colors.redAccent)),
-                      ),
-                    ))),
-            Expanded(
-                flex: 1,
-                child: TextField(
-                  controller: _stderrController,
-                  enabled: false,
-                  style: _consoleStyle
-                      .merge(const TextStyle(color: Colors.redAccent)),
-                  textAlign: TextAlign.left,
-                  minLines: 2,
-                  maxLines: 2,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: _lastCommandSuccedeed
-                                ? Colors.greenAccent
-                                : Colors.redAccent)),
-                  ),
-                ))
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: TextField(
+                          controller: _resultController,
+                          enabled: false,
+                          style: _consoleStyle.merge(TextStyle(
+                              color: _lastCommandSuccedeed
+                                  ? Colors.white
+                                  : Colors.redAccent)),
+                          textAlign: TextAlign.left,
+                          maxLines: null,
+                        )))),
           ])),
     );
   }

@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:git_ihm/utils/command_level_enum.dart';
 
 class CommandButton extends StatelessWidget {
-  const CommandButton({required this.title, required this.onPressed});
+  CommandButton(
+      {required this.title,
+      required this.onPressed,
+      this.level = CommandLevel.unknown});
   final String title;
   final GestureTapCallback onPressed;
+  final CommandLevel level;
+
+  final Map<CommandLevel, Color> colorByLevel = <CommandLevel, Color>{
+    CommandLevel.unknown: Colors.grey,
+    CommandLevel.info: Colors.blue,
+    CommandLevel.remote: Colors.orange,
+    CommandLevel.safe: Colors.green,
+    CommandLevel.dangerous: Colors.red,
+  };
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(16.0),
         child: RawMaterialButton(
-          fillColor: Colors.green,
-          splashColor: Colors.greenAccent,
+          fillColor: colorByLevel[level],
+          splashColor: colorByLevel[level],
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
