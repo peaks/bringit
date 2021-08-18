@@ -84,100 +84,116 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<CommandButton> commands = <CommandButton>[];
+    commands.addAll(infoCommands.map((String command) => CommandButton(
+          title: command,
+          onPressed: () => _runCommand(command),
+          level: CommandLevel.info,
+        )));
+    commands.addAll(remoteCommands.map((String command) => CommandButton(
+        title: command,
+        onPressed: () => _runCommand(command),
+        level: CommandLevel.remote)));
+    commands.addAll(safeCommands.map((String command) => CommandButton(
+        title: command,
+        onPressed: () => _runCommand(command),
+        level: CommandLevel.safe)));
+    commands.addAll(dangerousCommands.map((String command) => CommandButton(
+        title: command,
+        onPressed: () => _runCommand(command),
+        level: CommandLevel.dangerous)));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(children: <Widget>[
+          child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
             const Text(
               'It\'s Git Time!',
               style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
             ),
-            Wrap(
-                alignment: WrapAlignment.center,
-                children: infoCommands
-                    .map((String command) => CommandButton(
-                          title: command,
-                          onPressed: () => _runCommand(command),
-                          level: CommandLevel.info,
-                        ))
-                    .toList()),
-            Wrap(
-                alignment: WrapAlignment.center,
-                children: remoteCommands
-                    .map((String command) => CommandButton(
-                        title: command,
-                        onPressed: () => _runCommand(command),
-                        level: CommandLevel.remote))
-                    .toList()),
-            Wrap(
-                alignment: WrapAlignment.center,
-                children: safeCommands
-                    .map((String command) => CommandButton(
-                        title: command,
-                        onPressed: () => _runCommand(command),
-                        level: CommandLevel.safe))
-                    .toList()),
-            Wrap(
-                alignment: WrapAlignment.center,
-                children: dangerousCommands
-                    .map((String command) => CommandButton(
-                        title: command,
-                        onPressed: () => _runCommand(command),
-                        level: CommandLevel.dangerous))
-                    .toList()),
+            Wrap(alignment: WrapAlignment.center, children: commands),
             Row(
-              children: <Widget>[
+              children: [
                 Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: TextField(
-                          controller: _cmdController,
-                          focusNode: _cmdFocus,
-                          style: _commandStyle,
-                          textAlign: TextAlign.left,
-                          decoration: InputDecoration(
-                            prefixIcon: Text(
-                              ' git ',
-                              style: _commandStyle,
-                            ),
-                            prefixIconConstraints:
-                                const BoxConstraints(minWidth: 0, minHeight: 0),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: _lastCommandSuccedeed
-                                      ? Colors.greenAccent
-                                      : Colors.redAccent,
-                                  width: 0.0),
-                            ),
-                          ),
-                          onSubmitted: (String command) => _runCommand(command),
-                        ))),
-                GIconButton(
-                    onPressed: () => _runCommand(_cmdController.text),
-                    icon: Icons.keyboard_return)
+                    flex: 1,
+                    child: Center(
+                        child: Text(
+                      'Files',
+                      style: TextStyle(fontSize: 32),
+                    ))),
+                Expanded(
+                    flex: 1,
+                    child: Center(
+                        child: Text(
+                      'Graph',
+                      style: TextStyle(fontSize: 32),
+                    ))),
+                Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            Flexible(
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: TextField(
+                                      controller: _cmdController,
+                                      focusNode: _cmdFocus,
+                                      style: _commandStyle,
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                        prefixIcon: Text(
+                                          ' git ',
+                                          style: _commandStyle,
+                                        ),
+                                        prefixIconConstraints:
+                                            const BoxConstraints(
+                                                minWidth: 0, minHeight: 0),
+                                        border: const OutlineInputBorder(
+                                          borderSide: BorderSide(),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: _lastCommandSuccedeed
+                                                  ? Colors.greenAccent
+                                                  : Colors.redAccent,
+                                              width: 0.0),
+                                        ),
+                                      ),
+                                      onSubmitted: (String command) =>
+                                          _runCommand(command),
+                                    ))),
+                            GIconButton(
+                                onPressed: () =>
+                                    _runCommand(_cmdController.text),
+                                icon: Icons.keyboard_return),
+                          ],
+                        ),
+                        Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                primary: true,
+                                child: TextField(
+                                  controller: _resultController,
+                                  enabled: false,
+                                  style: _consoleStyle.merge(TextStyle(
+                                      color: _lastCommandSuccedeed
+                                          ? Colors.white
+                                          : Colors.redAccent)),
+                                  textAlign: TextAlign.left,
+                                  maxLines: null,
+                                ))),
+                      ],
+                    ))
               ],
-            ),
-            Expanded(
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: TextField(
-                          controller: _resultController,
-                          enabled: false,
-                          style: _consoleStyle.merge(TextStyle(
-                              color: _lastCommandSuccedeed
-                                  ? Colors.white
-                                  : Colors.redAccent)),
-                          textAlign: TextAlign.left,
-                          maxLines: null,
-                        )))),
+            )
           ])),
     );
   }

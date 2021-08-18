@@ -13,7 +13,7 @@ class GIconButton extends StatelessWidget {
           fillColor: Colors.lightBlue,
           splashColor: Colors.lightBlueAccent,
           child: Padding(
-              padding: const EdgeInsets.all(10.0), child: Icon(icon, size: 32)),
+              padding: const EdgeInsets.all(4.0), child: Icon(icon, size: 26)),
           onPressed: onPressed,
           shape: const StadiumBorder(),
         ));
