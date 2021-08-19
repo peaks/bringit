@@ -6,7 +6,7 @@ before_script:
 stages:
   - analyze-and-test
 
-analyze:
+lint:
   stage: analyze-and-test
   script:
     - flutter analyze

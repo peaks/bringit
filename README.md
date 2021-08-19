@@ -3,27 +3,16 @@
 
 [![build status](https://project.peaks.fr/peaks-ri/git-ihm/badges/master/pipeline.svg)]() [![code coverage](https://img.shields.io/gitlab/coverage/internal/mdc/master)]()
 [![licence](https://img.shields.io/badge/licence-Copyright%20%C2%A9%20Peaks%202021-blue)]() [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
-<!--
-[![node](https://img.shields.io/badge/node-v14.17.0-blue)](https://nodejs.org/dist/v14.17.0/node-v14.17.0-x64.msi) [![Nuxt](https://img.shields.io/badge/nuxt-v2.15.3-blue)](https://nuxtjs.org/) [![Express](https://img.shields.io/badge/express-v2.15.5-blue)](https://expressjs.com/)  [![SQL Server](https://img.shields.io/badge/SQL%20Server-v15.0.2080-blue)](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
--->
+
+## Ambition
+
+The main goal of this project is to provide a full featured Git graphical interface that always let the user know what is really hapenning.
+
+To achieve this, the interface shall mix both the simplicity provided by Git GUIs and the control ensured by the command line.
 
 
-<!--
-<p align="center" title="Project Initiator"><img src="./assets/images/main.gif" alt="Project Initiator"/></p>
--->
 
-<!--
-<h2 align="center">🌐 Links 🌐</h2>
-<p align="center">
-    <a href="https://youtu.be/ud4P45zhCk0" title="Project Initiator using Python">🖥️ Video</a>
-    ·
-    <a href="https://github.com/king-technologies/Project-Initiator" title="Project Initiator">📂 Repo</a>
-    ·
-    <a href="https://github.com/king-technologies/Project-Initiator/issues/new/choose" title="🐛Report Bug/🎊Request Feature">🚀 Got Issue</a>
-</p>
--->
-
-## 🚀 Features
+## Features
 
 > :construction: This project is under construction, those feature are planned as a MVP version
 
@@ -39,49 +28,75 @@ Use Git easily and graphically without loosing the core of its complexity.
 
 ## Prerequisite
 
-- Coming soon...
+- [Flutter (>=2.2)](https://flutter.dev/docs/get-started/install) installed
+- [Flutter Desktop](https://flutter.dev/desktop) enabled
+
+```bash
+flutter config --enable-windows-desktop
+flutter config --enable-macos-desktop
+flutter config --enable-linux-desktop
+```
+
+> Additional steps for Windows
+> ```bash
+> flutter channel dev
+> flutter upgrade
+> flutter config --enable-windows-uwp-desktop
+> ```
 
 ## Installation
 
-1. Coming soon...
+### Build from sources
+
+1. `git clone git@git.peaks.fr:peaks-ri/git-ihm.git` *clone the project*
+2. `flutter pub get` *download dependencies*
+3. `flutter devices` *list devices, ensure your OS is available*
+4. `flutter run -d <device>` *run the project on \<device>, linux, windows or macos*
 
 **:thumbsup: You are Ready to Go!**
 
 ## Quick startup
 
-```
-Coming soon...
-```
+> Coming soon...
 
 ## Documentation
 
-Full documentation is available [here](https://project.peaks.fr/peaks-ri/git-ihm/-/wikis/home)
+Full documentation will be available [here](https://project.peaks.fr/peaks-ri/git-ihm/-/wikis/home)
 
-## 🎊 Future Updates
+## Future Updates
 
-- [ ] Coming soon...
+- [ ] Display current state of the repository
+- [ ] Display the project folders/files hierarchy and their state through Git
+- [ ] Add options to Git commands with GUI only
+- [ ] Multi-repository
+- [ ] Commits graph
 
 ## For developers
 
 ### Directory Structure
 
-> Coming soon...
-
-### Setup dev environment
-
-`Coming soon...`
+- `lib/`
+  - `screen/` contains all *screens*, *i.e.* all widgets that are displayed on their own on the screen (not included in another widget)
+  - `widget/` contains all project custom widgets
+    - `button/`
+  - `utils/` miscellaneous classes for utility methods
+  - `git/` lib to access the git layer
+- `assets/`
+  - `fonts/`
+- `test/`
+  - `test_repository` empty folder, can be used as repository folder for tests
 
 ### Run tests
 
-`Coming soon...`
+`flutter test`
 
-### 💪 How to contribute
+### How to contribute 💪
 
 1. Clone the project
 `git clone git@git.peaks.fr:peaks-ri/git-ihm.git`
-2. Choose an issue from the [project's board](https://project.peaks.fr/peaks-ri/git-ihm/-/boards)
+2. Choose your issue from the [project's board](https://project.peaks.fr/peaks-ri/git-ihm/-/boards)
 3. Create a Merge Request from the issue (and get the branch name)
-3. Resolve the issue following the [Developer's guide](https://project.peaks.fr/peaks-ri/charte-projets-ri)
+4. Resolve the issue following the [Developer's guide](https://project.peaks.fr/peaks-ri/charte-projets-ri)
 5. Push your code on the corresponding branch
 ```
 git checkout -b <issue-number>-<issue-name>
@@ -93,4 +108,3 @@ git push
 ## 🧑🏻 Contributors
 
 - Jules Chevalier ([@jchevalier](https://project.peaks.fr/jchevalier))
-
