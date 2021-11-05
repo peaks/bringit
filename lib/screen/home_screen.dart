@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<CommandButton> commands = <CommandButton>[];
+    final List<CommandButton> commands = <CommandButton>[];
     commands.addAll(infoCommands.map((String command) => CommandButton(
           title: command,
           onPressed: () => _runCommand(command),
@@ -116,15 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Wrap(alignment: WrapAlignment.center, children: commands),
             Row(
-              children: [
-                Expanded(
+              children: <Widget>[
+                const Expanded(
                     flex: 1,
                     child: Center(
                         child: Text(
                       'Files',
                       style: TextStyle(fontSize: 32),
                     ))),
-                Expanded(
+                const Expanded(
                     flex: 1,
                     child: Center(
                         child: Text(
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 1,
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         Row(
                           children: <Widget>[
                             Flexible(
