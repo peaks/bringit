@@ -21,19 +21,16 @@ class CommandButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: RawMaterialButton(
           fillColor: colorByLevel[level],
           splashColor: colorByLevel[level],
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               title,
               maxLines: 1,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
           onPressed: onPressed,

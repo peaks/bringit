@@ -42,10 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final TextStyle _commandStyle =
-      const TextStyle(fontSize: 32, fontFamily: 'FantasqueSansMono');
+      const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono');
 
   final TextStyle _consoleStyle =
-      const TextStyle(fontSize: 24, fontFamily: 'FantasqueSansMono');
+      const TextStyle(fontSize: 12, fontFamily: 'FantasqueSansMono');
 
   final List<String> infoCommands = <String>[
     'status',
@@ -108,11 +108,11 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(widget.title),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
             const Text(
               'It\'s Git Time!',
-              style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Wrap(alignment: WrapAlignment.center, children: commands),
             Row(
@@ -122,14 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                         child: Text(
                       'Files',
-                      style: TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 16),
                     ))),
                 const Expanded(
                     flex: 1,
                     child: Center(
                         child: Text(
                       'Graph',
-                      style: TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 16),
                     ))),
                 Expanded(
                     flex: 1,
@@ -140,16 +140,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             Flexible(
                                 child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
+                                        horizontal: 4.0),
                                     child: TextField(
                                       controller: _cmdController,
                                       focusNode: _cmdFocus,
-                                      style: _commandStyle,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'FantasqueSansMono'),
                                       textAlign: TextAlign.left,
                                       decoration: InputDecoration(
-                                        prefixIcon: Text(
+                                        prefixIcon: const Text(
                                           ' git ',
-                                          style: _commandStyle,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'FantasqueSansMono'),
                                         ),
                                         prefixIconConstraints:
                                             const BoxConstraints(
@@ -176,20 +180,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                primary: true,
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Expanded(
                                 child: TextField(
-                                  controller: _resultController,
-                                  enabled: false,
-                                  style: _consoleStyle.merge(TextStyle(
-                                      color: _lastCommandSuccedeed
-                                          ? Colors.white
-                                          : Colors.redAccent)),
-                                  textAlign: TextAlign.left,
-                                  maxLines: null,
-                                ))),
+                              controller: _resultController,
+                              enabled: false,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'FantasqueSansMono',
+                                  color: _lastCommandSuccedeed
+                                      ? Colors.white
+                                      : Colors.redAccent),
+                              textAlign: TextAlign.left,
+                              maxLines: null,
+                            ))),
                       ],
                     ))
               ],
