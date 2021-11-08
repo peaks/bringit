@@ -105,6 +105,18 @@ git push
 ```
 6. Submit your Merge Request !
 
+## Troubleshooting
+
+### CMake error on flutter run:
+
+If you encounter a C++ compiler error when running `flutter -d linux` command, try to update your C++  
+related packages, then clear the build and .dart_tool directories:
+```bash
+sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev  
+flutter clean
+```
+
 ## 🧑🏻 Contributors
 
 - Jules Chevalier ([@jchevalier](https://project.peaks.fr/jchevalier))
+- Ludovic Réus ([@lreus](https://project.peaks.fr/lreus))
