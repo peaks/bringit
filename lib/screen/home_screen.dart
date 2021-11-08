@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
+import 'package:git_ihm/widgets/CommitGraph.dart';
+import 'package:git_ihm/widgets/FileTree.dart';
+import 'package:git_ihm/widgets/GitConsole.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
-import 'package:git_ihm/widgets/button/icon_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);
@@ -40,12 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _cmdController.selection = TextSelection.fromPosition(
         TextPosition(offset: _cmdController.text.length));
   }
-
-  final TextStyle _commandStyle =
-      const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono');
-
-  final TextStyle _consoleStyle =
-      const TextStyle(fontSize: 12, fontFamily: 'FantasqueSansMono');
 
   final List<String> infoCommands = <String>[
     'status',
@@ -118,83 +114,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: <Widget>[
                 const Expanded(
-                    flex: 1,
-                    child: Center(
-                        child: Text(
-                      'Files',
-                      style: TextStyle(fontSize: 16),
-                    ))),
-                const Expanded(
-                    flex: 1,
-                    child: Center(
-                        child: Text(
-                      'Graph',
-                      style: TextStyle(fontSize: 16),
-                    ))),
+                    flex: 1, child: Center(child: FileTree(path: './'))),
+                const Expanded(flex: 1, child: Center(child: CommitTree())),
                 Expanded(
                     flex: 1,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Flexible(
-                                child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0),
-                                    child: TextField(
-                                      controller: _cmdController,
-                                      focusNode: _cmdFocus,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'FantasqueSansMono'),
-                                      textAlign: TextAlign.left,
-                                      decoration: InputDecoration(
-                                        prefixIcon: const Text(
-                                          ' git ',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: 'FantasqueSansMono'),
-                                        ),
-                                        prefixIconConstraints:
-                                            const BoxConstraints(
-                                                minWidth: 0, minHeight: 0),
-                                        border: const OutlineInputBorder(
-                                          borderSide: BorderSide(),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: _lastCommandSuccedeed
-                                                  ? Colors.greenAccent
-                                                  : Colors.redAccent,
-                                              width: 0.0),
-                                        ),
-                                      ),
-                                      onSubmitted: (String command) =>
-                                          _runCommand(command),
-                                    ))),
-                            GIconButton(
-                                onPressed: () =>
-                                    _runCommand(_cmdController.text),
-                                icon: Icons.keyboard_return),
-                          ],
-                        ),
-                        Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Expanded(
-                                child: TextField(
-                              controller: _resultController,
-                              enabled: false,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'FantasqueSansMono',
-                                  color: _lastCommandSuccedeed
-                                      ? Colors.white
-                                      : Colors.redAccent),
-                              textAlign: TextAlign.left,
-                              maxLines: null,
-                            ))),
-                      ],
+                    child: GitConsole(
+                      cmdController: _cmdController,
+                      cmdFocus: _cmdFocus,
+                      lastCommandSuccedeed: _lastCommandSuccedeed,
+                      resultController: _resultController,
+                      runCommand: _runCommand,
                     ))
               ],
             )
