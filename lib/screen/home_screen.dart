@@ -111,12 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Wrap(alignment: WrapAlignment.center, children: commands),
-            Row(
+            Expanded(
+                child: Row(
               children: <Widget>[
-                const Expanded(
+                const Flexible(
                     flex: 1, child: Center(child: FileTree(path: './'))),
-                const Expanded(flex: 1, child: Center(child: CommitTree())),
-                Expanded(
+                const Flexible(flex: 1, child: Center(child: CommitTree())),
+                Flexible(
                     flex: 1,
                     child: GitConsole(
                       cmdController: _cmdController,
@@ -126,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       runCommand: _runCommand,
                     ))
               ],
-            )
+            ))
           ])),
     );
   }
