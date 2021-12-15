@@ -1,34 +1,7 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:flutter/cupertino.dart';
-/*class FileTree extends StatefulWidget {
-  const FileTree({Key? key, required this.path}) : super(key: key);
-  final String path;
-
-  @override
-  _FileTreeState createState() => _FileTreeState();
-}
-
-class _FileTreeState extends State<FileTree> {
-  Future<List<FileSystemEntity>> dirContents(String path) async {
-    final Directory myDir = Directory(path);
-
-    print(myDir.listSync(recursive: true));
-
-    return myDir.listSync(recursive: true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    dirContents(widget.path);
-    return Text(
-      'Files in ${widget.path}',
-      style: const TextStyle(fontSize: 16),
-    );
-  }
-}*/
+import 'dart:developer';
 
 class FileTree extends StatefulWidget {
   const FileTree({Key? key, required this.path}) : super(key: key);
@@ -39,8 +12,8 @@ class FileTree extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<FileTree> {
-  late String _selectedNode = 'd3';
-
+  late String _selectedNode = 'd3'; // TODO init
+  List<Node<dynamic>> _nodes = []; // TODO set state with value
   late TreeViewController _treeViewController;
   bool docsOpen = true;
   bool deepExpanded = true;
@@ -74,8 +47,46 @@ class _MyHomePageState extends State<FileTree> {
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
 
+  List<Node<dynamic>> dirContents(String path) {
+    List<Node<dynamic>> nodes = [];
+    // Create Dir object from existing path
+    final Directory myDir = Directory(path);
+    // List all file from dir
+    final List<FileSystemEntity> allContent = myDir.listSync(recursive: true);
+    // loop items in path
+    for (final FileSystemEntity file in allContent) {
+      // init Node
+      final Node<dynamic> n = Node<dynamic>(
+        key: file.path.toString(),
+        label: file.path.toString(),
+        icon: file.runtimeType.toString() == '_Directory'
+            ? (docsOpen ? Icons.folder_open : Icons.folder)
+            : (Icons.insert_drive_file), // TODO icon setter
+        iconColor: Colors.blue,
+      );
+      nodes.add(n);
+      /*log(file.absolute.runtimeType.toString()); // _Directory / _File
+      log(file.path.toString());
+      log(file.parent.path.toString());
+      log(file.uri.toString());
+      log('---------------------');*/
+
+      //nodes.add(Node(key: file.path, label: ))
+      //label: 'personal',
+      //key: 'd3',
+      //icon: Icons.input,
+      //iconColor: Colors.red,
+      //children: <Node<dynamic>>[
+    }
+
+    return nodes;
+  }
+
   @override
   void initState() {
+    // get files from path
+    final List<Node<dynamic>> _nodes = dirContents(widget.path);
+    /*
     final List<Node<dynamic>> _nodes = <Node<dynamic>>[
       Node<dynamic>(
         label: 'documents',
@@ -139,11 +150,13 @@ class _MyHomePageState extends State<FileTree> {
         parent: true,
       ),
     ];
+*/
+    // controller
     _treeViewController = TreeViewController(
       children: _nodes,
       selectedKey: _selectedNode,
     );
-
+    // call parent init state
     super.initState();
   }
 
