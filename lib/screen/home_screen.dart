@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _runCommand(String command) {
     _setCurrentCommand(command);
-    final ProcessResult result =
-        Process.runSync('git', command.split(' '), workingDirectory: './');
+    final ProcessResult result = Process.runSync('git', command.split(' '),
+        includeParentEnvironment: false, workingDirectory: './');
     _resultController.text =
         result.stderr.toString() + result.stdout.toString();
     result.stderr.toString();
