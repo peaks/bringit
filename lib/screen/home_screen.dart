@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
-import 'package:git_ihm/widgets/CommitGraph.dart';
-import 'package:git_ihm/widgets/FileTree.dart';
-import 'package:git_ihm/widgets/GitConsole.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
+import 'package:git_ihm/widgets/commit_graph.dart';
+import 'package:git_ihm/widgets/file_tree.dart';
+import 'package:git_ihm/widgets/git_console.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);
