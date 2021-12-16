@@ -56,15 +56,21 @@ class _MyHomePageState extends State<FileTree> {
     // loop items in path
     for (final FileSystemEntity file in allContent) {
       // init Node
-      final Node<dynamic> n = Node<dynamic>(
+      Node<dynamic> n = Node<dynamic>(
         key: file.path.toString(),
-        label: file.path.toString(),
+        label: file.uri.toString(),
         icon: file.runtimeType.toString() == '_Directory'
             ? (docsOpen ? Icons.folder_open : Icons.folder)
             : (Icons.insert_drive_file), // TODO icon setter
         iconColor: Colors.blue,
       );
-      nodes.add(n);
+
+      if (file.parent.path == '.') {
+        nodes.add(n);
+      } else {
+        // TODO
+      }
+
       /*log(file.absolute.runtimeType.toString()); // _Directory / _File
       log(file.path.toString());
       log(file.parent.path.toString());
@@ -86,71 +92,7 @@ class _MyHomePageState extends State<FileTree> {
   void initState() {
     // get files from path
     final List<Node<dynamic>> _nodes = dirContents(widget.path);
-    /*
-    final List<Node<dynamic>> _nodes = <Node<dynamic>>[
-      Node<dynamic>(
-        label: 'documents',
-        key: 'docs',
-        expanded: docsOpen,
-        icon: docsOpen ? Icons.folder_open : Icons.folder,
-        children: <Node<dynamic>>[
-          const Node<dynamic>(
-            label: 'personal',
-            key: 'd3',
-            icon: Icons.input,
-            iconColor: Colors.red,
-            children: <Node<dynamic>>[
-              Node<dynamic>(
-                label: 'Poems.docx',
-                key: 'pd1',
-                icon: Icons.insert_drive_file,
-              ),
-              Node<dynamic>(
-                label: 'Job Hunt',
-                key: 'jh1',
-                icon: Icons.input,
-                children: <Node<dynamic>>[
-                  Node<dynamic>(
-                    label: 'Resume.docx',
-                    key: 'jh1a',
-                    icon: Icons.insert_drive_file,
-                  ),
-                  Node<dynamic>(
-                    label: 'Cover Letter.docx',
-                    key: 'jh1b',
-                    icon: Icons.insert_drive_file,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Node<dynamic>(
-            label: 'Inspection.docx',
-            key: 'd1',
-//          icon: Icons.insert_drive_file),
-          ),
-          const Node<dynamic>(
-              label: 'Invoice.docx', key: 'd2', icon: Icons.insert_drive_file),
-        ],
-      ),
-      const Node<dynamic>(
-          label: 'MeetingReport.xls',
-          key: 'mrxls',
-          icon: Icons.insert_drive_file),
-      Node<dynamic>(
-          label: 'MeetingReport.pdf',
-          key: 'mrpdf',
-          iconColor: Colors.green.shade300,
-          selectedIconColor: Colors.white,
-          icon: Icons.insert_drive_file),
-      const Node<dynamic>(label: 'Demo.zip', key: 'demo', icon: Icons.archive),
-      const Node<dynamic>(
-        label: 'empty folder',
-        key: 'empty',
-        parent: true,
-      ),
-    ];
-*/
+
     // controller
     _treeViewController = TreeViewController(
       children: _nodes,
