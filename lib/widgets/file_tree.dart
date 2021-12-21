@@ -1,9 +1,7 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter_treeview/flutter_treeview.dart';
-import 'dart:developer';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:git_ihm/utils/file/tree/load_file_tree_data.dart';
 
 /// package : flutter_treeview_example
@@ -17,8 +15,7 @@ class FileTree extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<FileTree> {
-  late String _selectedNode = 'd3'; // TODO init
-  List<Node<dynamic>> _nodes = [];
+  late String _selectedNode = '';
   late TreeViewController _treeViewController;
   bool docsOpen = true;
   bool deepExpanded = true;
@@ -54,14 +51,13 @@ class _MyHomePageState extends State<FileTree> {
 
   @override
   void initState() {
-    // get files from path
-    final List<Node<dynamic>> _nodes = getDirFiles(widget.path, docsOpen);
-
     // controller
     _treeViewController = TreeViewController(
-      children: _nodes,
+      children: <Node<dynamic>>[],
       selectedKey: _selectedNode,
     );
+    _treeViewController = _treeViewController.loadJSON<dynamic>(
+        json: jsonEncode(getDirFiles(widget.path, docsOpen)));
     // call parent init state
     super.initState();
   }
@@ -116,8 +112,11 @@ class _MyHomePageState extends State<FileTree> {
                       controller: _treeViewController,
                       allowParentSelect: _allowParentSelect,
                       supportParentDoubleTap: _supportParentDoubleTap,
-                      onExpansionChanged: (String key, bool expanded) =>
-                          _expandNode(key, expanded),
+                      onExpansionChanged: (String key, bool expanded) {
+                        setState(() {
+                          docsOpen = expanded;
+                        });
+                      },
                       onNodeTap: (String key) {
                         debugPrint('Selected: $key');
                         setState(() {
@@ -136,40 +135,14 @@ class _MyHomePageState extends State<FileTree> {
       ),
     );
   }
-
-  void _expandNode(String key, bool expanded) {
-    final String msg = '${expanded ? "Expanded" : "Collapsed"}: $key';
-    debugPrint(msg);
-    final Node<dynamic>? node = _treeViewController.getNode<dynamic>(key);
-    if (node != null) {
-      List<Node<dynamic>> updated;
-      if (key == 'docs') {
-        updated = _treeViewController.updateNode<dynamic>(
-            key,
-            node.copyWith(
-              expanded: expanded,
-              icon: expanded ? Icons.folder_open : Icons.folder,
-            ));
-      } else {
-        updated = _treeViewController.updateNode<dynamic>(
-            key, node.copyWith(expanded: expanded));
-      }
-      setState(() {
-        // ignore: always_put_control_body_on_new_line
-        if (key == 'docs') docsOpen = expanded;
-        _treeViewController =
-            _treeViewController.loadJSON<dynamic>(json: jsonEncode(_nodes));
-      });
-    }
-  }
 }
 
 class ModContainer extends StatelessWidget {
-  final ExpanderModifier modifier;
-
-  // ignore: sort_constructors_first
+  /// constructor
   const ModContainer({Key? key, required this.modifier}) : super(key: key);
 
+  /// modifier
+  final ExpanderModifier modifier;
   @override
   Widget build(BuildContext context) {
     double _borderWidth = 0;
