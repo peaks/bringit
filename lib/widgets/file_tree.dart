@@ -2,7 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'dart:developer';
+import 'dart:convert';
 
+import 'package:git_ihm/utils/file/tree/load_file_tree_data.dart';
+
+/// package : flutter_treeview_example
+/// doc-url : https://bitbucket.org/kevinandre/flutter_treeview_example/src/master/
 class FileTree extends StatefulWidget {
   const FileTree({Key? key, required this.path}) : super(key: key);
   final String path;
@@ -13,7 +18,7 @@ class FileTree extends StatefulWidget {
 
 class _MyHomePageState extends State<FileTree> {
   late String _selectedNode = 'd3'; // TODO init
-  List<Node<dynamic>> _nodes = []; // TODO set state with value
+  List<Node<dynamic>> _nodes = [];
   late TreeViewController _treeViewController;
   bool docsOpen = true;
   bool deepExpanded = true;
@@ -47,51 +52,10 @@ class _MyHomePageState extends State<FileTree> {
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
 
-  List<Node<dynamic>> dirContents(String path) {
-    List<Node<dynamic>> nodes = [];
-    // Create Dir object from existing path
-    final Directory myDir = Directory(path);
-    // List all file from dir
-    final List<FileSystemEntity> allContent = myDir.listSync(recursive: true);
-    // loop items in path
-    for (final FileSystemEntity file in allContent) {
-      // init Node
-      Node<dynamic> n = Node<dynamic>(
-        key: file.path.toString(),
-        label: file.uri.toString(),
-        icon: file.runtimeType.toString() == '_Directory'
-            ? (docsOpen ? Icons.folder_open : Icons.folder)
-            : (Icons.insert_drive_file), // TODO icon setter
-        iconColor: Colors.blue,
-      );
-
-      if (file.parent.path == '.') {
-        nodes.add(n);
-      } else {
-        // TODO
-      }
-
-      /*log(file.absolute.runtimeType.toString()); // _Directory / _File
-      log(file.path.toString());
-      log(file.parent.path.toString());
-      log(file.uri.toString());
-      log('---------------------');*/
-
-      //nodes.add(Node(key: file.path, label: ))
-      //label: 'personal',
-      //key: 'd3',
-      //icon: Icons.input,
-      //iconColor: Colors.red,
-      //children: <Node<dynamic>>[
-    }
-
-    return nodes;
-  }
-
   @override
   void initState() {
     // get files from path
-    final List<Node<dynamic>> _nodes = dirContents(widget.path);
+    final List<Node<dynamic>> _nodes = getDirFiles(widget.path, docsOpen);
 
     // controller
     _treeViewController = TreeViewController(
@@ -149,21 +113,21 @@ class _MyHomePageState extends State<FileTree> {
                   ),
                   padding: const EdgeInsets.all(10),
                   child: TreeView(
-                    controller: _treeViewController,
-                    allowParentSelect: _allowParentSelect,
-                    supportParentDoubleTap: _supportParentDoubleTap,
-                    onExpansionChanged: (String key, bool expanded) =>
-                        _expandNode(key, expanded),
-                    onNodeTap: (String key) {
-                      debugPrint('Selected: $key');
-                      setState(() {
-                        _selectedNode = key;
-                        _treeViewController = _treeViewController
-                            .copyWith<dynamic>(selectedKey: key);
-                      });
-                    },
-                    theme: _treeViewTheme,
-                  ),
+                      controller: _treeViewController,
+                      allowParentSelect: _allowParentSelect,
+                      supportParentDoubleTap: _supportParentDoubleTap,
+                      onExpansionChanged: (String key, bool expanded) =>
+                          _expandNode(key, expanded),
+                      onNodeTap: (String key) {
+                        debugPrint('Selected: $key');
+                        setState(() {
+                          _selectedNode = key;
+                          _treeViewController = _treeViewController
+                              .copyWith<dynamic>(selectedKey: key);
+                        });
+                      },
+                      theme: _treeViewTheme,
+                      shrinkWrap: true),
                 ),
               ),
             ],
@@ -194,7 +158,7 @@ class _MyHomePageState extends State<FileTree> {
         // ignore: always_put_control_body_on_new_line
         if (key == 'docs') docsOpen = expanded;
         _treeViewController =
-            _treeViewController.copyWith<dynamic>(children: updated);
+            _treeViewController.loadJSON<dynamic>(json: jsonEncode(_nodes));
       });
     }
   }
