@@ -15,7 +15,8 @@ List<Map<String, dynamic>> addToParentNode(List<Map<String, dynamic>> nodes,
   } else {
     nodes.add(n);
   }
-  // sort nodes before render
+
+  /// sort nodes before render
   nodes.sort((Map<String, dynamic> a, Map<String, dynamic> b) =>
       (a['key'] as String).compareTo(b['key'] as String));
   return nodes;
@@ -36,20 +37,24 @@ String getFileNameByUri(FileSystemEntity file) {
 }
 
 List<Map<String, dynamic>> getDirFiles(String path, bool docsOpen) {
-  // Create Dir object from existing path
+  /// Create Dir object from existing path
   final Directory myDir = Directory(path);
-  // List all file from dir
+
+  /// List all file from dir
   final List<FileSystemEntity> allContent = myDir.listSync(recursive: true);
-  // result
+
+  /// result
   List<Map<String, dynamic>> nodes = <Map<String, dynamic>>[];
-  // loop items in path
+
+  /// loop items in path
   for (final FileSystemEntity file in allContent) {
     final Map<String, dynamic> n = <String, dynamic>{
       'label': getFileNameByUri(file),
       'key': file.uri.toString(),
       'children': <Map<String, dynamic>>[]
     };
-    // file is located on root of tree
+
+    /// file is located on root of tree
     if (file.parent.path == '.' || file.parent.path == './') {
       nodes.add(n);
     } else {

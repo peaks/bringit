@@ -19,8 +19,8 @@ class _MyHomePageState extends State<FileTree> {
   late TreeViewController _treeViewController;
   bool docsOpen = true;
   bool deepExpanded = true;
-  // ignore: always_specify_types
-  final Map<ExpanderPosition, Widget> expansionPositionOptions = const {
+  final Map<ExpanderPosition, Widget> expansionPositionOptions =
+      const <ExpanderPosition, Text>{
     ExpanderPosition.start: Text('Start'),
     ExpanderPosition.end: Text('End'),
   };
@@ -51,14 +51,15 @@ class _MyHomePageState extends State<FileTree> {
 
   @override
   void initState() {
-    // controller
+    /// controller
     _treeViewController = TreeViewController(
       children: <Node<dynamic>>[],
       selectedKey: _selectedNode,
     );
     _treeViewController = _treeViewController.loadJSON<dynamic>(
         json: jsonEncode(getDirFiles(widget.path, docsOpen)));
-    // call parent init state
+
+    /// call parent init state
     super.initState();
   }
 
