@@ -48,7 +48,7 @@ class _MyHomePageState extends State<FileTree> {
   };
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
-
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     /// controller
@@ -104,30 +104,42 @@ class _MyHomePageState extends State<FileTree> {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                child: Scrollbar(
+                  controller: _scrollController, // <---- Here, the controller
+                  isAlwaysShown: true, // <---- Required
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SingleChildScrollView(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: TreeView(
+                              controller: _treeViewController,
+                              allowParentSelect: _allowParentSelect,
+                              supportParentDoubleTap: _supportParentDoubleTap,
+                              onExpansionChanged: (String key, bool expanded) {
+                                setState(() {
+                                  docsOpen = expanded;
+                                });
+                              },
+                              onNodeTap: (String key) {
+                                debugPrint('Selected: $key');
+                                setState(() {
+                                  _selectedNode = key;
+                                  _treeViewController = _treeViewController
+                                      .copyWith<dynamic>(selectedKey: key);
+                                });
+                              },
+                              theme: _treeViewTheme,
+                              shrinkWrap: true),
+                        ),
+                      ),
+                    ),
                   ),
-                  padding: const EdgeInsets.all(10),
-                  child: TreeView(
-                      controller: _treeViewController,
-                      allowParentSelect: _allowParentSelect,
-                      supportParentDoubleTap: _supportParentDoubleTap,
-                      onExpansionChanged: (String key, bool expanded) {
-                        setState(() {
-                          docsOpen = expanded;
-                        });
-                      },
-                      onNodeTap: (String key) {
-                        debugPrint('Selected: $key');
-                        setState(() {
-                          _selectedNode = key;
-                          _treeViewController = _treeViewController
-                              .copyWith<dynamic>(selectedKey: key);
-                        });
-                      },
-                      theme: _treeViewTheme,
-                      shrinkWrap: true),
                 ),
               ),
             ],
