@@ -6,6 +6,7 @@ import 'package:git_ihm/widgets/button/command_button.dart';
 import 'package:git_ihm/widgets/commit_graph.dart';
 import 'package:git_ihm/widgets/file_tree.dart';
 import 'package:git_ihm/widgets/git_console.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);
@@ -40,6 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
     _cmdFocus.requestFocus();
     _cmdController.selection = TextSelection.fromPosition(
         TextPosition(offset: _cmdController.text.length));
+  }
+
+  String _getGitVersion() {
+    // TODO(all): get version from the git lib once selected
+    return Process.runSync('git', <String>['--version'],
+            includeParentEnvironment: false, workingDirectory: './')
+        .stdout
+        .toString()
+        .split(' ')
+        .last;
   }
 
   final List<String> infoCommands = <String>[
@@ -101,6 +112,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Chip(
+          avatar: const Icon(MdiIcons.git, size: 20),
+          label: Text(
+            _getGitVersion(),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
