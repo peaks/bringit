@@ -24,14 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cmdController = TextEditingController();
   final FocusNode _cmdFocus = FocusNode();
   final TextEditingController _resultController = TextEditingController();
-  bool _lastCommandSuccedeed = true;
+  bool _lastCommandSucceeded = true;
 
   CommandResult _runCommand(String command) {
     _setCurrentCommand(command);
     final ProcessResult result = Process.runSync('git', command.split(' '),
         includeParentEnvironment: false, workingDirectory: './');
     setState(() {
-      _lastCommandSuccedeed = result.exitCode == 0;
+      _lastCommandSucceeded = result.exitCode == 0;
     });
     _cmdFocus.requestFocus();
     return CommandResult(
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: GitConsole(
                           cmdController: _cmdController,
                           cmdFocus: _cmdFocus,
-                          lastCommandSuccedeed: _lastCommandSuccedeed,
+                          lastCommandSucceeded: _lastCommandSucceeded,
                           resultController: _resultController,
                           runCommand: _runCommand,
                         )),

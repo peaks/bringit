@@ -8,14 +8,14 @@ class GitConsole extends StatefulWidget {
     required this.cmdController,
     required this.cmdFocus,
     required this.resultController,
-    required this.lastCommandSuccedeed,
+    required this.lastCommandSucceeded,
     required this.runCommand,
   });
 
   final TextEditingController cmdController;
   final FocusNode cmdFocus;
   final TextEditingController resultController;
-  final bool lastCommandSuccedeed;
+  final bool lastCommandSucceeded;
   final CommandResult Function(String) runCommand;
 
   @override
@@ -60,7 +60,7 @@ class _GitConsoleState extends State<GitConsole> {
         GitConsoleInput(
             cmdController: widget.cmdController,
             cmdFocus: widget.cmdFocus,
-            lastCommandSuccedeed: widget.lastCommandSuccedeed,
+            lastCommandSucceeded: widget.lastCommandSucceeded,
             runCommand: runCommand),
         Expanded(
             child: Scrollbar(

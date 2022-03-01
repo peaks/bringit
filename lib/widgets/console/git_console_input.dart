@@ -5,13 +5,13 @@ class GitConsoleInput extends StatelessWidget {
     Key? key,
     required this.cmdController,
     required this.cmdFocus,
-    required this.lastCommandSuccedeed,
+    required this.lastCommandSucceeded,
     required this.runCommand,
   }) : super(key: key);
 
   final TextEditingController cmdController;
   final FocusNode cmdFocus;
-  final bool lastCommandSuccedeed;
+  final bool lastCommandSucceeded;
   final Function(String p1) runCommand;
 
   @override
