@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
+import 'package:git_ihm/widgets/clever_infos.dart';
 import 'package:git_ihm/widgets/commit_graph.dart';
+import 'package:git_ihm/widgets/console/command_result.dart';
+import 'package:git_ihm/widgets/console/git_console.dart';
 import 'package:git_ihm/widgets/file_tree.dart';
-import 'package:git_ihm/widgets/git_console.dart';
+import 'package:git_ihm/widgets/repository_status.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,19 +24,20 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cmdController = TextEditingController();
   final FocusNode _cmdFocus = FocusNode();
   final TextEditingController _resultController = TextEditingController();
-  bool _lastCommandSuccedeed = true;
+  bool _lastCommandSucceeded = true;
 
-  void _runCommand(String command) {
+  CommandResult _runCommand(String command) {
     _setCurrentCommand(command);
     final ProcessResult result = Process.runSync('git', command.split(' '),
         includeParentEnvironment: false, workingDirectory: './');
-    _resultController.text =
-        result.stderr.toString() + result.stdout.toString();
-    result.stderr.toString();
     setState(() {
-      _lastCommandSuccedeed = result.exitCode == 0;
+      _lastCommandSucceeded = result.exitCode == 0;
     });
     _cmdFocus.requestFocus();
+    return CommandResult(
+        stdout: result.stdout.toString(),
+        stderr: result.stderr.toString(),
+        success: result.exitCode == 0);
   }
 
   void _setCurrentCommand(String command) {
@@ -129,28 +133,44 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-            const Text(
-              'It\'s Git Time!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
             Wrap(alignment: WrapAlignment.center, children: commands),
-            Expanded(
+            Flexible(
+                flex: 1,
                 child: Row(
-              children: <Widget>[
-                const Flexible(
-                    flex: 1, child: Center(child: FileTree(path: './'))),
-                const Flexible(flex: 1, child: Center(child: CommitTree())),
-                Flexible(
-                    flex: 1,
-                    child: GitConsole(
-                      cmdController: _cmdController,
-                      cmdFocus: _cmdFocus,
-                      lastCommandSuccedeed: _lastCommandSuccedeed,
-                      resultController: _resultController,
-                      runCommand: _runCommand,
-                    ))
-              ],
-            ))
+                  children: <Widget>[
+                    Expanded(
+                        flex: 2,
+                        child: GitConsole(
+                          cmdController: _cmdController,
+                          cmdFocus: _cmdFocus,
+                          lastCommandSucceeded: _lastCommandSucceeded,
+                          resultController: _resultController,
+                          runCommand: _runCommand,
+                        )),
+                    const Expanded(
+                      flex: 1,
+                      child: CleverInfos(),
+                    ),
+                  ],
+                )),
+            Flexible(
+                flex: 3,
+                child: Row(
+                  children: const <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Center(child: CommitTree()),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RepositoryStatus(),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Center(child: FileTree(path: './')),
+                    ),
+                  ],
+                ))
           ])),
     );
   }
