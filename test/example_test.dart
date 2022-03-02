@@ -6,6 +6,6 @@ void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
 
-    expect(1, 1);
+    expect(5, 5);
   });
 }
