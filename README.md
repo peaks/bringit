@@ -93,11 +93,18 @@ Full documentation will be available [here](https://project.peaks.fr/peaks-ri/gi
 ### How to contribute 💪
 
 1. Clone the project
-`git clone git@git.peaks.fr:peaks-ri/git-ihm.git`
-2. Choose your issue from the [project's board](https://project.peaks.fr/peaks-ri/git-ihm/-/boards)
-3. Create a Merge Request from the issue (and get the branch name)
-4. Resolve the issue following the [Developer's guide](https://project.peaks.fr/peaks-ri/charte-projets-ri)
-5. Push your code on the corresponding branch
+```
+git clone git@git.peaks.fr:peaks-ri/git-ihm.git
+```
+2. Configure git locally to use our custom hooks
+```
+cd git-ihm/
+git config core.hooksPath .githooks
+```
+3. Choose your issue from the [project's board](https://project.peaks.fr/peaks-ri/git-ihm/-/boards)
+4. Create a Merge Request from the issue (and get the branch name)
+5. Resolve the issue following the [Developer's guide](https://project.peaks.fr/peaks-ri/charte-projets-ri)
+6. Push your code on the corresponding branch
 ```
 git checkout -b <issue-number>-<issue-name>
 git commit
