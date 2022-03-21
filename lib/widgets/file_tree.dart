@@ -13,7 +13,6 @@ class FileTree extends StatefulWidget {
 class _MyHomePageState extends State<FileTree> {
   late String _selectedNode = '';
   late TreeViewController _treeViewController;
-  bool docsOpen = true;
   bool deepExpanded = true;
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
@@ -21,11 +20,23 @@ class _MyHomePageState extends State<FileTree> {
   @override
   void initState() {
     _treeViewController = TreeViewController(
-      children: getNodesFromPath(widget.path, docsOpen),
+      children: getNodesFromPath(widget.path),
       selectedKey: _selectedNode,
     );
 
     super.initState();
+  }
+
+  void _expandNode(String key, bool expanded) {
+    final Node<void>? node = _treeViewController.getNode(key);
+    if (node != null) {
+      List<Node<void>> updated;
+      updated = _treeViewController.updateNode(
+          key, node.copyWith(expanded: expanded));
+      setState(() {
+        _treeViewController = _treeViewController.copyWith(children: updated);
+      });
+    }
   }
 
   @override
@@ -64,9 +75,7 @@ class _MyHomePageState extends State<FileTree> {
               allowParentSelect: _allowParentSelect,
               supportParentDoubleTap: _supportParentDoubleTap,
               onExpansionChanged: (String key, bool expanded) {
-                setState(() {
-                  docsOpen = expanded;
-                });
+                _expandNode(key, expanded);
               },
               onNodeTap: (String key) {
                 setState(() {
