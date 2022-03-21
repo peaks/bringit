@@ -30,8 +30,8 @@ dependencies:
   material_design_icons_flutter: ^5.0.6595
   expandable: ^5.0.1
   path_provider: ^2.0.8
-  flutter_treeview: ^1.0.6+1
   path: ^1.8.0
+  flutter_treeview: ^1.0.7+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
