@@ -3,19 +3,6 @@ import 'dart:io';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:path/path.dart';
 
-String getFileNameByUri(FileSystemEntity file) {
-  if (file.absolute.path.toString().contains('/')) {
-    final List<String> temp = file.uri.toString().split('/');
-    if (temp.isNotEmpty && temp.last != '') {
-      return temp.last;
-    } else {
-      return temp.first;
-    }
-  } else {
-    return file.uri.toString();
-  }
-}
-
 List<Node<void>> getNodesFromPath(String path) {
   final Directory directory = Directory(path);
   final List<FileSystemEntity> allContent =
