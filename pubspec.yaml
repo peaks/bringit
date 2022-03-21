@@ -73,4 +73,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/FantasqueSansMono-Italic.ttf
           style: italic
+    - family: Seti
+      fonts:
+        - asset: assets/fonts/seti.ttf
 
