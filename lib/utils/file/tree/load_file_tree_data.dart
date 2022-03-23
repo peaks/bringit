@@ -5,6 +5,8 @@ import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:git_ihm/utils/file/icons/file_icondata.dart';
 import 'package:path/path.dart';
 
+const Node<void> EMPTY_NODE = Node<void>(key: 'EMPTY_NODE', label: '');
+
 List<Node<void>> getNodesFromPath(String path) {
   final Directory directory = Directory(path);
   final List<FileSystemEntity> allContent =
@@ -18,9 +20,7 @@ List<Node<void>> getNodesFromPath(String path) {
       icon: file is Directory ? Icons.folder : getIconDataForFile(file.path),
       iconColor: Colors.white,
       label: basename(file.path),
-      children: file is Directory
-          ? getNodesFromPath(file.absolute.path)
-          : <Node<void>>[],
+      children: file is Directory ? <Node<void>>[EMPTY_NODE] : <Node<void>>[],
     );
 
     nodes.add(node);

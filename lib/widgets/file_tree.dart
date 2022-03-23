@@ -35,8 +35,11 @@ class _MyHomePageState extends State<FileTree> {
   }
 
   void _expandNode(String key, bool expanded) {
-    final Node<void>? node = _treeViewController.getNode(key);
+    Node<void>? node = _treeViewController.getNode(key);
     if (node != null) {
+      if (node.children.contains(EMPTY_NODE)) {
+        node = node.copyWith(children: getNodesFromPath(key));
+      }
       List<Node<void>> updated;
       updated = _treeViewController.updateNode(
           key, node.copyWith(expanded: expanded));
