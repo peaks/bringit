@@ -7,6 +7,17 @@ import 'package:path/path.dart';
 
 const Node<void> EMPTY_NODE = Node<void>(key: 'EMPTY_NODE', label: '');
 
+Node<void> getNodeFromPath(String path) {
+  final Directory directory = Directory(path);
+  final String absolutePath = directory.absolute.path;
+  return Node<void>(
+    key: absolutePath,
+    expanded: true,
+    label: basename(absolutePath),
+    children: getNodesFromPath(absolutePath),
+  );
+}
+
 List<Node<void>> getNodesFromPath(String path) {
   final Directory directory = Directory(path);
   final List<FileSystemEntity> allContent =
