@@ -21,12 +21,7 @@ class _MyHomePageState extends State<FileTree> {
   void initState() {
     _treeViewController = TreeViewController(
       children: <Node<void>>[
-        Node<void>(
-          key: 'root',
-          expanded: true,
-          label: widget.path,
-          children: getNodesFromPath(widget.path),
-        ),
+        getNodeFromPath(''),
       ],
       selectedKey: _selectedNode,
     );
