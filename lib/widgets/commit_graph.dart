@@ -4,9 +4,12 @@ class CommitTree extends StatelessWidget {
   const CommitTree();
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Commit Graph',
-      style: TextStyle(fontSize: 16),
-    );
+    return Container(
+        child: Center(
+            child: Image.asset(
+      'assets/git.png',
+      fit: BoxFit.fitWidth,
+      width: MediaQuery.of(context).size.width,
+    )));
   }
 }

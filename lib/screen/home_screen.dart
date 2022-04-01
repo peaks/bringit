@@ -8,6 +8,7 @@ import 'package:git_ihm/widgets/commit_graph.dart';
 import 'package:git_ihm/widgets/console/command_result.dart';
 import 'package:git_ihm/widgets/console/git_console.dart';
 import 'package:git_ihm/widgets/file_tree.dart';
+import 'package:git_ihm/widgets/panel_container.dart';
 import 'package:git_ihm/widgets/repository_status.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -133,23 +134,27 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-            Wrap(alignment: WrapAlignment.center, children: commands),
+            //Wrap(alignment: WrapAlignment.center, children: commands),
             Flexible(
                 flex: 1,
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                        flex: 2,
-                        child: GitConsole(
-                          cmdController: _cmdController,
-                          cmdFocus: _cmdFocus,
-                          lastCommandSucceeded: _lastCommandSucceeded,
-                          resultController: _resultController,
-                          runCommand: _runCommand,
-                        )),
+                      flex: 1,
+                      child: GitConsole(
+                        cmdController: _cmdController,
+                        cmdFocus: _cmdFocus,
+                        lastCommandSucceeded: _lastCommandSucceeded,
+                        resultController: _resultController,
+                        runCommand: _runCommand,
+                      ),
+                    ),
                     const Expanded(
                       flex: 1,
-                      child: CleverInfos(),
+                      child: PanelContainer(
+                        title: 'Smart',
+                        child: Expanded(child: CleverInfos()),
+                      ),
                     ),
                   ],
                 )),
@@ -159,15 +164,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: const <Widget>[
                     Expanded(
                       flex: 1,
-                      child: Center(child: CommitTree()),
+                      child: PanelContainer(
+                        title: 'Files',
+                        child: FileTree(path: './'),
+                      ),
                     ),
                     Expanded(
                       flex: 1,
-                      child: RepositoryStatus(),
+                      child: PanelContainer(
+                        title: 'Commits',
+                        child: CommitTree(),
+                      ),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Center(child: FileTree(path: './')),
+                      child: PanelContainer(
+                        title: 'Status',
+                        child: Expanded(child: RepositoryStatus()),
+                      ),
                     ),
                   ],
                 ))

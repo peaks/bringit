@@ -57,11 +57,15 @@ class GitConsoleHistoryState extends State<GitConsoleHistory> {
           Text(
             widget.stderr,
             style: const TextStyle(
-                color: Colors.redAccent, fontFamily: 'FantasqueSansMono'),
+              color: Colors.redAccent,
+              fontFamily: 'FantasqueSansMono',
+            ),
           ),
           Text(
             widget.stdout,
-            style: const TextStyle(fontFamily: 'FantasqueSansMono'),
+            style: const TextStyle(
+              fontFamily: 'FantasqueSansMono',
+            ),
           )
         ],
       ),

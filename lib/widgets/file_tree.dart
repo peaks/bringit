@@ -48,6 +48,7 @@ class _MyHomePageState extends State<FileTree> {
   Widget build(BuildContext context) {
     final TreeViewTheme _treeViewTheme = TreeViewTheme(
       expanderTheme: const ExpanderThemeData(
+        animated: false,
         type: ExpanderType.chevron,
         position: ExpanderPosition.start,
         size: 20,
@@ -66,35 +67,38 @@ class _MyHomePageState extends State<FileTree> {
         color: Colors.grey.shade800,
       ),
       colorScheme: Theme.of(context).colorScheme,
+      expandSpeed: const Duration(seconds: 0),
     );
-    return Container(
-      height: double.infinity,
-      child: Scrollbar(
-        controller: _scrollController,
-        isAlwaysShown: true,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+    return Expanded(
+      child: Container(
+        height: double.infinity,
+        child: Scrollbar(
           controller: _scrollController,
-          child: TreeView(
-              controller: _treeViewController,
-              allowParentSelect: _allowParentSelect,
-              supportParentDoubleTap: _supportParentDoubleTap,
-              onExpansionChanged: (String key, bool expanded) {
-                _expandNode(key, expanded);
-              },
-              onNodeTap: (String key) {
-                setState(() {
-                  if (_selectedNode == key) {
-                    _selectedNode = '';
-                  } else {
-                    _selectedNode = key;
-                  }
-                  _treeViewController = _treeViewController.copyWith<dynamic>(
-                      selectedKey: _selectedNode);
-                });
-              },
-              theme: _treeViewTheme,
-              shrinkWrap: true),
+          isAlwaysShown: true,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            controller: _scrollController,
+            child: TreeView(
+                controller: _treeViewController,
+                allowParentSelect: _allowParentSelect,
+                supportParentDoubleTap: _supportParentDoubleTap,
+                onExpansionChanged: (String key, bool expanded) {
+                  _expandNode(key, expanded);
+                },
+                onNodeTap: (String key) {
+                  setState(() {
+                    if (_selectedNode == key) {
+                      _selectedNode = '';
+                    } else {
+                      _selectedNode = key;
+                    }
+                    _treeViewController = _treeViewController.copyWith<dynamic>(
+                        selectedKey: _selectedNode);
+                  });
+                },
+                theme: _treeViewTheme,
+                shrinkWrap: true),
+          ),
         ),
       ),
     );
