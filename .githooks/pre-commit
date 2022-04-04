@@ -13,8 +13,19 @@ pop_stash_files () {
 # Stash unstaged files
 hasChanges=$(git diff)
 if [ -n "$hasChanges" ]; then
-    printf "\e[33;1m%s\e[0m\n" 'Stashing unstaged changes'
+    printf "\e[33;1m%s\e[0m\n" '=== Stashing unstaged changes ==='
     git stash push --keep-index
+fi
+printf '%s\n' "${avar}"
+
+# Validating author email
+authorinfo=$(git var GIT_AUTHOR_IDENT)
+name=$(printf '%s\n\n' "${authorinfo}" | sed -n 's/^\(.*\) <.*$/\1/p')
+email=$(printf '%s\n\n' "${authorinfo}" | sed -n 's/^.* <\(.*\)> .*$/\1/p')
+if ! [[ "$email" =~ .peaks.fr ]]; then
+    printf "\e[31;1m%s\e[0m\n" '=== Invalid Email Detected ==='
+    printf "\e[31;1m%s\e[0m\n" "Invalid email <$email>, please use your Peaks email address to push commits."
+    printf '%s\n' "${avar}"
 fi
 
 # Flutter formatter
