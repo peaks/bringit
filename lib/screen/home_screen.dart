@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/data/git_proxy.dart';
+import 'package:git_ihm/data/path_manager.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
 import 'package:git_ihm/widgets/clever_infos.dart';
@@ -11,11 +13,16 @@ import 'package:git_ihm/widgets/file_tree.dart';
 import 'package:git_ihm/widgets/panel_container.dart';
 import 'package:git_ihm/widgets/repository_status.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'shared/path_selector.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  const HomeScreen(
+      {Key? key, required this.title, required this.sharedPreferences})
+      : super(key: key);
 
   final String title;
+  final SharedPreferences sharedPreferences;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -117,6 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          PathSelector(SpPathManager(widget.sharedPreferences),
+              GitProxyImplementation()),
+        ],
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8),
