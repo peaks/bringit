@@ -34,7 +34,6 @@ void main() {
     expect(result.contains(const UntrackedPath(filePath)), isTrue);
   });
 
-
   test('returns modified file in results', () async {
     const String filePath = 'my/modified/file/path';
     mockedCommand.pushModifiedResult(filePath);
@@ -56,4 +55,3 @@ void main() {
     expect(result.contains(const AddedFile(filePath2)), isTrue);
   });
 }
-

@@ -4,7 +4,6 @@ import 'package:args/args.dart';
 import 'package:git/git.dart';
 
 class StatusFetcher {
-  
   Future<List<String>> fetch(String path) async {
     final GitDir git = await GitDir.fromExisting(path);
     final String results = await _callGitStatus(git);
@@ -16,8 +15,8 @@ class StatusFetcher {
 
   Future<String> _callGitStatus(GitDir git) async {
     final ProcessResult result =
-      await git.runCommand(<String>['status', '--porcelain', '-z']);
-    
+        await git.runCommand(<String>['status', '--porcelain', '-z']);
+
     return _extractStringStdOutOrEmpty(result);
   }
 

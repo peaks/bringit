@@ -3,7 +3,7 @@ import 'package:git_ihm/git/parsers/status_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final StatusParser interpreter= StatusParser();
+  final StatusParser interpreter = StatusParser();
   const String filePath = '/foo/bar';
 
   StatusFile doParseTest(String statusLine) => interpreter.parse(statusLine);

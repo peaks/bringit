@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 import 'package:git_ihm/data/path_manager.dart';
-import 'package:git_ihm/git/base_command/status_fetcher.dart';
 import 'package:git_ihm/git/git_registry.dart';
-import 'package:git_ihm/git/git_status_implementation.dart';
-import 'package:git_ihm/git/parsers/status_parser.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
 import 'package:git_ihm/widgets/clever_infos.dart';
@@ -18,6 +15,7 @@ import 'package:git_ihm/widgets/panel_container.dart';
 import 'package:git_ihm/widgets/repository_status.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'shared/path_selector.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -131,10 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
-          PathSelector(
-            SpPathManager(widget.sharedPreferences),
-            GitProxyImplementation(registry.gitStatusCommand)
-          )
+          PathSelector(SpPathManager(widget.sharedPreferences),
+              GitProxyImplementation(registry.gitStatusCommand))
         ],
       ),
       bottomSheet: Padding(

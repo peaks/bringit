@@ -4,7 +4,6 @@ import 'package:git_ihm/git/git_status_implementation.dart';
 import 'package:git_ihm/git/parsers/status_parser.dart';
 
 class GitRegistry {
-  GitStatusCommand get gitStatusCommand => GitStatusImplementation(
-      StatusParser(), StatusFetcher()
-  );
+  GitStatusCommand get gitStatusCommand =>
+      GitStatusImplementation(StatusParser(), StatusFetcher());
 }

@@ -29,7 +29,8 @@ class GitProxyImplementation implements GitProxy {
 
 Future<void> main(List<String> arguments) async {
   final GitRegistry registry = GitRegistry();
-  final GitProxyImplementation git = GitProxyImplementation(registry.gitStatusCommand);
+  final GitProxyImplementation git =
+      GitProxyImplementation(registry.gitStatusCommand);
   final String path = getPathFromArguments(arguments);
   final bool gitDir = await git.isGitDir(path);
 

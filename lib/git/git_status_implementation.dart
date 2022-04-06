@@ -15,8 +15,7 @@ class GitStatusImplementation extends GitStatusCommand {
     return _map(await _baseCommand.fetch(path));
   }
 
-  List<StatusFile> _map(List<String> gitStatus)
-  {
+  List<StatusFile> _map(List<String> gitStatus) {
     final List<StatusFile> results = <StatusFile>[];
 
     for (final String element in gitStatus) {

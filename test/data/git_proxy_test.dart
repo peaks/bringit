@@ -7,9 +7,9 @@ import 'package:test/test.dart';
 void main() {
   test('it delegates gitStatus to GitStatusCommand', () async {
     final GitRegistryMock mockedRegistry = GitRegistryMock();
-    final GitStatusCommandMock gitStatusCommandMock = mockedRegistry.gitStatusCommand;
+    final GitStatusCommandMock gitStatusCommandMock =
+        mockedRegistry.gitStatusCommand;
     final GitProxy testSubject = GitProxyImplementation(gitStatusCommandMock);
-
 
     const String gitPath = '/foo/bar';
     const List<StatusFile> commandResult = <StatusFile>[
@@ -22,15 +22,15 @@ void main() {
   });
 }
 
-class GitStatusCommandMock extends GitStatusCommand
-{
+class GitStatusCommandMock extends GitStatusCommand {
   List<StatusFile> mockedResult = <StatusFile>[];
   String expectedParameter = '';
 
   @override
   Future<List<StatusFile>> run(String path) async {
     if (path != expectedParameter) {
-      throw Exception('Failed asserting method "run" parameter: expecting "$expectedParameter", actual: "$path"');
+      throw Exception(
+          'Failed asserting method "run" parameter: expecting "$expectedParameter", actual: "$path"');
     }
     return mockedResult;
   }

@@ -10,7 +10,8 @@ class StatusFetcherMock extends StatusFetcher {
       throw Exception('expectedPath for mocked method run is not initialized');
     }
     if (expectedPath != path) {
-      throw Exception('Failed to assert method "run" parameter, expected: "$expectedPath", actual: "$path"');
+      throw Exception(
+          'Failed to assert method "run" parameter, expected: "$expectedPath", actual: "$path"');
     }
     return runResult;
   }
