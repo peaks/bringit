@@ -4,15 +4,15 @@ import 'package:git_ihm/git/git_status_implementation.dart';
 import 'package:git_ihm/git/parsers/status_parser.dart';
 import 'package:test/test.dart';
 
-import '../mock/status_command_mock.dart';
+import '../mock/status_fetcher_mock.dart';
 
 void main() {
   late GitStatusImplementation command;
-  late StatusCommandMock mockedCommand;
+  late StatusFetcherMock mockedCommand;
   const String testPath = '/any/path';
 
   setUp(() {
-    mockedCommand = StatusCommandMock();
+    mockedCommand = StatusFetcherMock();
     mockedCommand.willRunFor(testPath);
     command = GitStatusImplementation(StatusParser(), mockedCommand);
   });

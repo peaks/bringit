@@ -3,9 +3,9 @@ import 'package:args/args.dart';
 
 import 'package:git/git.dart';
 
-class StatusCommand {
+class StatusFetcher {
   
-  Future<List<String>> run(String path) async {
+  Future<List<String>> fetch(String path) async {
     final GitDir git = await GitDir.fromExisting(path);
     final String results = await _callGitStatus(git);
 
@@ -29,9 +29,9 @@ class StatusCommand {
 }
 
 Future<void> main(List<String> arguments) async {
-  final StatusCommand command = StatusCommand();
+  final StatusFetcher command = StatusFetcher();
   final String path = getPathFromArguments(arguments);
-  final List<String> gitFiles = await command.run(path);
+  final List<String> gitFiles = await command.fetch(path);
 
   gitFiles.forEach(print);
 }

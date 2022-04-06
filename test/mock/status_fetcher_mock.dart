@@ -1,11 +1,11 @@
-import 'package:git_ihm/git/base_command/status_command.dart';
+import 'package:git_ihm/git/base_command/status_fetcher.dart';
 
-class StatusCommandMock extends StatusCommand {
+class StatusFetcherMock extends StatusFetcher {
   List<String> runResult = <String>[];
   String expectedPath = '';
 
   @override
-  Future<List<String>> run(String path) async {
+  Future<List<String>> fetch(String path) async {
     if (expectedPath.isEmpty) {
       throw Exception('expectedPath for mocked method run is not initialized');
     }
