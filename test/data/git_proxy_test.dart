@@ -1,16 +1,18 @@
 import 'package:git_ihm/data/git/git_status_command.dart';
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/data/git_proxy.dart';
-import 'package:git_ihm/git/git_registry.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('it delegates gitStatus to GitStatusCommand', () async {
-    final GitRegistryMock mockedRegistry = GitRegistryMock();
-    final GitStatusCommandMock gitStatusCommandMock =
-        mockedRegistry.gitStatusCommand;
-    final GitProxy testSubject = GitProxyImplementation(gitStatusCommandMock);
+  late GitStatusCommandMock gitStatusCommandMock;
+  late GitProxy testSubject;
 
+  setUp(() {
+    gitStatusCommandMock = GitStatusCommandMock();
+    testSubject = GitProxyImplementation(gitStatusCommandMock);
+  });
+
+  test('it delegates gitStatus to GitStatusCommand', () async {
     const String gitPath = '/foo/bar';
     const List<StatusFile> commandResult = <StatusFile>[
       UntrackedPath('any/path')
@@ -20,6 +22,13 @@ void main() {
 
     expect(await testSubject.gitStatus(gitPath), same(commandResult));
   });
+
+  test('git directories are detected', () async {
+    const String goodPath = '/tmp/git-ihm/gitProject';
+    const String badPath = '/tmp/git-ihm/nonGitProject';
+    expect(await testSubject.isGitDir(goodPath), true);
+    expect(await testSubject.isGitDir(badPath), false);
+  }, tags: <String>['git-interpreter']);
 }
 
 class GitStatusCommandMock extends GitStatusCommand {
@@ -44,11 +53,4 @@ class GitStatusCommandMock extends GitStatusCommand {
 
     return this;
   }
-}
-
-class GitRegistryMock extends GitRegistry {
-  final GitStatusCommandMock _gitStatusMock = GitStatusCommandMock();
-
-  @override
-  GitStatusCommandMock get gitStatusCommand => _gitStatusMock;
 }

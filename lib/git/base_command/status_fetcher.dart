@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:args/args.dart';
 
 import 'package:git/git.dart';
 
@@ -25,21 +24,4 @@ class StatusFetcher {
 
     return (standardOutput is String) ? standardOutput : '';
   }
-}
-
-Future<void> main(List<String> arguments) async {
-  final StatusFetcher command = StatusFetcher();
-  final String path = getPathFromArguments(arguments);
-  final List<String> gitFiles = await command.fetch(path);
-
-  gitFiles.forEach(print);
-}
-
-String getPathFromArguments(List<String> arguments) {
-  final ArgParser parser = ArgParser();
-  parser.addOption('path');
-  final ArgResults results = parser.parse(arguments);
-  final dynamic path = results['path'] ?? './';
-
-  return path as String;
 }
