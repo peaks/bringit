@@ -1,0 +1,3 @@
+tags:
+  git-interpreter:
+    test_on: "!windows"
