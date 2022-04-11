@@ -14,4 +14,4 @@ lint:
 test:
   stage: analyze-and-test
   script:
-    - flutter test
+    - make test
