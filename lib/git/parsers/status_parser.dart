@@ -14,6 +14,8 @@ class StatusParser {
         return AddedFile(extractSimplePath(fileStatus));
       case 'R ':
         return RenamedFile(_extractNewPathFromStatusRenamed(fileStatus));
+      case '!!':
+        return IgnoredFile(extractSimplePath(fileStatus));
       default:
         throw Exception('Unexpected prefix "$prefixStatus"');
     }

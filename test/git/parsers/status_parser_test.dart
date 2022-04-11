@@ -39,4 +39,8 @@ void main() {
 
     expectWillMatch('R  $oldPath -> $newPath', GitFileState.renamed, newPath);
   });
+
+  test('prefix !! returns an ignored file', () {
+    expectWillMatch('!! $filePath', GitFileState.ignored, filePath);
+  });
 }

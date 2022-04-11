@@ -54,4 +54,13 @@ void main() {
     expect(result.contains(const AddedFile(filePath1)), isTrue);
     expect(result.contains(const AddedFile(filePath2)), isTrue);
   });
+
+  test('returns ignored file in results', () async {
+    const String filePath = 'my/modified/file/path';
+    mockedCommand.pushIgnoredResult(filePath);
+
+    final List<StatusFile> result = await command.run(testPath);
+
+    expect(result.contains(const IgnoredFile(filePath)), isTrue);
+  });
 }
