@@ -1,7 +1,7 @@
 // ignore_for_file: hash_and_equals
 import 'package:flutter/cupertino.dart';
 
-enum GitFileState { untracked, modified, added, renamed }
+enum GitFileState { untracked, modified, added, renamed, ignored }
 
 @immutable
 abstract class StatusFile {
@@ -67,5 +67,17 @@ class RenamedFile extends StatusFile {
   @override
   bool operator ==(Object other) {
     return other is RenamedFile && super == other;
+  }
+}
+
+class IgnoredFile extends StatusFile {
+  const IgnoredFile(String newPath) : super(newPath);
+
+  @override
+  GitFileState get state => GitFileState.ignored;
+
+  @override
+  bool operator ==(Object other) {
+    return other is IgnoredFile && super == other;
   }
 }

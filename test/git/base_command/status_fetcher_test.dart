@@ -28,6 +28,20 @@ void main() {
     expect(result.contains('?? $untrackedFile'), equals(true));
   });
 
+  Future<void> createIgnoredFile(String fileName) async {
+    await createEmptyFile(fileName);
+    await File('$path/.gitignore').writeAsString(fileName);
+    createdFiles.add('$path/.gitignore');
+  }
+
+  test('show ignored files', () async {
+    const String ignoredFile = 'ignored.txt';
+    await createIgnoredFile(ignoredFile);
+
+    final List<String> result = await fetcher.fetch(path);
+    expect(result.contains('!! $ignoredFile'), equals(true));
+  });
+
   tearDown(() {
     for (final String path in createdFiles) {
       final File createdFile = File(path);

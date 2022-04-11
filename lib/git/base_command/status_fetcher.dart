@@ -14,7 +14,8 @@ class StatusFetcher {
 
   Future<String> _callGitStatus(GitDir git) async {
     final ProcessResult result =
-        await git.runCommand(<String>['status', '--porcelain=v1']);
+        await git.runCommand(
+            <String>['status', '--porcelain=v1', '--ignored=matching']);
 
     return _extractStringStdOutOrEmpty(result);
   }

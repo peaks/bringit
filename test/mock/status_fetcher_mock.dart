@@ -35,4 +35,8 @@ class StatusFetcherMock extends StatusFetcher {
   void willRunFor(String gitDirectory) {
     expectedPath = gitDirectory;
   }
+
+  void pushIgnoredResult(String filePath) {
+    runResult.add('!! $filePath');
+  }
 }
