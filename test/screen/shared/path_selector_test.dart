@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:git_ihm/data/git_proxy.dart';
 import 'package:git_ihm/data/path_manager.dart';
 import 'package:git_ihm/screen/shared/path_selector.dart';
 
+import '../../mock/git_proxy_mock.dart';
+
 late MockedPathManager _pathManager;
-late MockedGitProxy _gitProxy;
+late GitProxyMock _gitProxy;
 
 void main() {
   setUp(() {
     _pathManager = MockedPathManager('');
-    _gitProxy = MockedGitProxy();
+    _gitProxy = GitProxyMock();
   });
 
   testWidgets('PathSelector contains an IconButton',
@@ -166,13 +167,4 @@ class MockedPathManager implements PathManager {
 
   @override
   set path(String path) => _currentPath = path;
-}
-
-class MockedGitProxy implements GitProxy {
-  bool willFindGitDir = true;
-
-  @override
-  Future<bool> isGitDir(String path) async {
-    return willFindGitDir;
-  }
 }
