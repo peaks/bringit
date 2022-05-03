@@ -1,16 +1,14 @@
 import 'dart:io';
 
-class VersionFetcher {
+import 'base_command.dart';
+
+class VersionFetcher extends BaseCommand {
   Future<String> fetch() async {
     final ProcessResult result =
         await Process.run('git', <String>['--version']);
-    return getStdoutOrEmptyStringOnFailure(result);
-  }
 
-  String getStdoutOrEmptyStringOnFailure(ProcessResult result) {
-    final dynamic stdout = result.stdout;
-    if (stdout is String && result.exitCode == 0) {
-      return stdout.trim();
+    if (commandIsSuccessful(result)) {
+      return (result.stdout as String).trim();
     }
     return '';
   }
