@@ -13,4 +13,9 @@ class GitProxyMock implements GitProxy {
   Future<List<StatusFile>> gitStatus(String path) async {
     return <StatusFile>[];
   }
+
+  @override
+  Future<String> gitVersion() {
+    throw UnimplementedError();
+  }
 }

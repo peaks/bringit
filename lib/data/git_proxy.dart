@@ -1,17 +1,20 @@
 import 'package:git/git.dart';
-import 'package:git_ihm/data/git/git_status_command.dart';
 import 'package:git_ihm/data/git/status_file.dart';
+
+import '../git/git_registry.dart';
 
 abstract class GitProxy {
   Future<bool> isGitDir(String path);
 
   Future<List<StatusFile>> gitStatus(String path);
+
+  Future<String> gitVersion();
 }
 
 class GitProxyImplementation implements GitProxy {
-  GitProxyImplementation(this.statusCommand);
+  GitProxyImplementation(this.registry);
 
-  final GitStatusCommand statusCommand;
+  final GitRegistry registry;
 
   @override
   Future<bool> isGitDir(String path) async {
@@ -20,6 +23,11 @@ class GitProxyImplementation implements GitProxy {
 
   @override
   Future<List<StatusFile>> gitStatus(String path) async {
-    return statusCommand.run(path);
+    return registry.statusCommand.run(path);
+  }
+
+  @override
+  Future<String> gitVersion() async {
+    return registry.versionCommand.run();
   }
 }

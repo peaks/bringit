@@ -1,15 +1,23 @@
-import 'package:git_ihm/data/git/git_status_command.dart';
+
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 import 'package:test/test.dart';
 
+import '../mock/git_registry_mock.dart';
+
 void main() {
-  late GitStatusCommandMock gitStatusCommandMock;
+  late GitRegistryMock registry;
   late GitProxy testSubject;
 
   setUp(() {
-    gitStatusCommandMock = GitStatusCommandMock();
-    testSubject = GitProxyImplementation(gitStatusCommandMock);
+    registry = GitRegistryMock();
+    testSubject = GitProxyImplementation(registry);
+  });
+
+  test('it delegates git --version to GitVersionCommand', () async {
+    const String mockedGitVersion = '1.0';
+    registry.versionCommandMock.willReturn(mockedGitVersion);
+    expect(await testSubject.gitVersion(), same(mockedGitVersion));
   });
 
   test('it delegates gitStatus to GitStatusCommand', () async {
@@ -18,7 +26,7 @@ void main() {
       UntrackedPath('any/path')
     ];
 
-    gitStatusCommandMock.withParameter(gitPath).willReturn(commandResult);
+    registry.statusCommandMock.withParameter(gitPath).willReturn(commandResult);
 
     expect(await testSubject.gitStatus(gitPath), same(commandResult));
   });
@@ -29,28 +37,4 @@ void main() {
     expect(await testSubject.isGitDir(goodPath), true);
     expect(await testSubject.isGitDir(badPath), false);
   }, tags: <String>['git-interpreter']);
-}
-
-class GitStatusCommandMock extends GitStatusCommand {
-  List<StatusFile> mockedResult = <StatusFile>[];
-  String expectedParameter = '';
-
-  @override
-  Future<List<StatusFile>> run(String path) async {
-    if (path != expectedParameter) {
-      throw Exception(
-          'Failed asserting method "run" parameter: expecting "$expectedParameter", actual: "$path"');
-    }
-    return mockedResult;
-  }
-
-  void willReturn(List<StatusFile> list) {
-    mockedResult = list;
-  }
-
-  GitStatusCommandMock withParameter(String gitPath) {
-    expectedParameter = gitPath;
-
-    return this;
-  }
 }

@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(widget.title),
         actions: <Widget>[
           PathSelector(SpPathManager(widget.sharedPreferences),
-              GitProxyImplementation(registry.gitStatusCommand))
+              GitProxyImplementation(registry))
         ],
       ),
       bottomSheet: Padding(
