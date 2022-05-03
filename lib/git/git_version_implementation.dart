@@ -9,8 +9,8 @@ class GitVersionImplementation extends GitVersionCommand {
 
   @override
   Future<String> run() async {
-    final RegExpMatch? versionMatch = _versionRegex.firstMatch(
-        await fetcher.fetch());
+    final RegExpMatch? versionMatch =
+        _versionRegex.firstMatch(await fetcher.fetch());
 
     return versionMatch == null ? '' : versionMatch.group(0)!;
   }

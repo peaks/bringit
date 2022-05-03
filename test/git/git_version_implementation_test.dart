@@ -4,13 +4,14 @@ import 'package:test/test.dart';
 
 void main() {
   test('it returns an empty string if mock fetch is empty', () async {
-    final VersionFetcherMock mock = VersionFetcherMock();   
+    final VersionFetcherMock mock = VersionFetcherMock();
     final GitVersionImplementation command = GitVersionImplementation(mock);
     mock.willReturn('');
     expect(await command.run(), equals(''));
   });
 
-  test('it returns an empty string if no version number can be found', () async {
+  test('it returns an empty string if no version number can be found',
+      () async {
     final VersionFetcherMock mock = VersionFetcherMock();
     final GitVersionImplementation command = GitVersionImplementation(mock);
     mock.willReturn('not a git directory');
@@ -27,7 +28,7 @@ void main() {
 
 class VersionFetcherMock extends VersionFetcher {
   String _expectedResult = '';
-  
+
   void willReturn(String s) {
     _expectedResult = s;
   }

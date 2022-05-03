@@ -1,14 +1,11 @@
-import 'dart:io';
-
 import 'package:git_ihm/git/base_command/version_fetcher.dart';
 import 'package:test/test.dart';
 
-final RegExp gitVersionRegex = RegExp(r'^git version [1-9](\.[0-9]{0,2}){0,2}$');
+final RegExp gitVersionRegex =
+    RegExp(r'^git version [1-9](\.[0-9]{0,2}){0,2}$');
 
 void expectIsAGitVersionMessage(String testedMessage) {
-  expect(
-      gitVersionRegex.hasMatch(testedMessage),
-      equals(true),
+  expect(gitVersionRegex.hasMatch(testedMessage), equals(true),
       reason: '"$testedMessage" did not match "git version X.XX.XX" message');
 }
 
@@ -33,4 +30,3 @@ void main() {
     expectIsAGitVersionMessage(stdout);
   });
 }
-

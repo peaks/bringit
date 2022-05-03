@@ -1,4 +1,3 @@
-
 import 'package:git_ihm/data/git/git_status_command.dart';
 import 'package:git_ihm/data/git/git_version_command.dart';
 import 'package:git_ihm/git/git_registry.dart';
@@ -21,6 +20,3 @@ class GitRegistryMock extends GitRegistry {
   @override
   GitVersionCommand get versionCommand => versionCommandMock;
 }
-
-
-

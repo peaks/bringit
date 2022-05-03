@@ -2,8 +2,8 @@ import 'dart:io';
 
 class VersionFetcher {
   Future<String> fetch() async {
-    final ProcessResult result = await Process.run('git',
-        <String>['--version']);
+    final ProcessResult result =
+        await Process.run('git', <String>['--version']);
     return getStdoutOrEmptyStringOnFailure(result);
   }
 

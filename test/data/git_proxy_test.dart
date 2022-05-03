@@ -1,4 +1,3 @@
-
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 import 'package:test/test.dart';
