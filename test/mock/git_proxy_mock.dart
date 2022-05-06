@@ -1,7 +1,7 @@
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 
-class GitProxyMock implements GitProxy {
+class GitProxyMock extends GitProxy {
   bool willFindGitDir = true;
   @override
   String path = '/original/path';

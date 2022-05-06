@@ -5,7 +5,7 @@ import '../git/git_registry.dart';
 import 'git/status_file.dart';
 import 'git_proxy.dart';
 
-class GitProxyImplementation implements GitProxy {
+class GitProxyImplementation extends GitProxy {
   GitProxyImplementation(this._registry, this._pathManager);
 
   final GitRegistry _registry;

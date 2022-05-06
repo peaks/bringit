@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:git_ihm/data/git/status_file.dart';
 
-abstract class GitProxy {
+abstract class GitProxy extends ChangeNotifier {
   Future<bool> isGitDir(String path);
 
   Future<List<StatusFile>> gitStatus(String path);
