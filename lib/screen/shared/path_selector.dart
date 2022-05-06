@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:git_ihm/data/git_proxy.dart';
-import 'package:git_ihm/data/path_manager.dart';
 
 class PathSelector extends StatefulWidget {
-  const PathSelector(this.manager, this.git, {Key? key}) : super(key: key);
+  const PathSelector(this.git, {Key? key}) : super(key: key);
 
-  final PathManager manager;
   final GitProxy git;
 
   @override
@@ -30,7 +28,7 @@ class _PathSelectorState extends State<PathSelector> {
   }
 
   Future<AlertDialog?> showSelectionModal(BuildContext context) async {
-    pathController.text = widget.manager.path;
+    pathController.text = widget.git.path;
 
     return showDialog<AlertDialog>(
         context: context,
@@ -54,7 +52,7 @@ class _PathSelectorState extends State<PathSelector> {
                       final bool isGitDir =
                           await widget.git.isGitDir(pathController.text);
                       if (isGitDir) {
-                        widget.manager.path = pathController.text;
+                        widget.git.path = pathController.text;
                         Navigator.pop(context);
                       } else {
                         pathFieldError = 'not a git directory';

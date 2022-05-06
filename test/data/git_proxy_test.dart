@@ -3,14 +3,17 @@ import 'package:git_ihm/data/git_proxy.dart';
 import 'package:test/test.dart';
 
 import '../mock/git_registry_mock.dart';
+import '../mock/path_manager_mock.dart';
 
 void main() {
   late GitRegistryMock registry;
+  late PathManagerMock pathManager;
   late GitProxy testSubject;
 
   setUp(() {
     registry = GitRegistryMock();
-    testSubject = GitProxyImplementation(registry);
+    pathManager = PathManagerMock('');
+    testSubject = GitProxyImplementation(registry, pathManager);
   });
 
   test('it delegates git --version to GitVersionCommand', () async {
@@ -28,6 +31,16 @@ void main() {
     registry.statusCommandMock.withParameter(gitPath).willReturn(commandResult);
 
     expect(await testSubject.gitStatus(gitPath), same(commandResult));
+  });
+
+  test('it fetches path from pathManager', () {
+    expect(testSubject.path, same(pathManager.path));
+  });
+
+  test('it updates path in pathManager', () {
+    const String newPath = '/new/path';
+    testSubject.path = newPath;
+    expect(pathManager.path, equals(newPath));
   });
 
   test('git directories are detected', () async {

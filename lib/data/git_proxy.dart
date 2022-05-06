@@ -1,5 +1,6 @@
 import 'package:git/git.dart';
 import 'package:git_ihm/data/git/status_file.dart';
+import 'package:git_ihm/data/path_manager.dart';
 
 import '../git/git_registry.dart';
 
@@ -9,12 +10,17 @@ abstract class GitProxy {
   Future<List<StatusFile>> gitStatus(String path);
 
   Future<String> gitVersion();
+
+  String get path;
+
+  set path(String newPath);
 }
 
 class GitProxyImplementation implements GitProxy {
-  GitProxyImplementation(this.registry);
+  GitProxyImplementation(this._registry, this._pathManager);
 
-  final GitRegistry registry;
+  final GitRegistry _registry;
+  final PathManager _pathManager;
 
   @override
   Future<bool> isGitDir(String path) async {
@@ -23,11 +29,17 @@ class GitProxyImplementation implements GitProxy {
 
   @override
   Future<List<StatusFile>> gitStatus(String path) async {
-    return registry.statusCommand.run(path);
+    return _registry.statusCommand.run(path);
   }
 
   @override
   Future<String> gitVersion() async {
-    return registry.versionCommand.run();
+    return _registry.versionCommand.run();
   }
+
+  @override
+  String get path => _pathManager.path;
+
+  @override
+  set path(String newPath) => _pathManager.path = newPath;
 }

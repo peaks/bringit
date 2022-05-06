@@ -3,6 +3,8 @@ import 'package:git_ihm/data/git_proxy.dart';
 
 class GitProxyMock implements GitProxy {
   bool willFindGitDir = true;
+  @override
+  String path = '/original/path';
 
   @override
   Future<bool> isGitDir(String path) async {

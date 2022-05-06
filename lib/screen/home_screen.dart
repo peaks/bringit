@@ -124,14 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
         level: CommandLevel.dangerous)));
 
     // TODO(lreus): fix GitProxy injection either with inherited widget or factory.
-    final GitRegistry registry = GitRegistry();
+    final GitProxy git = GitProxyImplementation(
+        GitRegistry(), SpPathManager(widget.sharedPreferences));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[
-          PathSelector(SpPathManager(widget.sharedPreferences),
-              GitProxyImplementation(registry))
-        ],
+        actions: <Widget>[PathSelector(git)],
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8),

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:git_ihm/data/path_manager.dart';
 import 'package:git_ihm/screen/shared/path_selector.dart';
 
 import '../../mock/git_proxy_mock.dart';
 
-late MockedPathManager _pathManager;
 late GitProxyMock _gitProxy;
 
 void main() {
   setUp(() {
-    _pathManager = MockedPathManager('');
     _gitProxy = GitProxyMock();
   });
 
@@ -35,7 +32,7 @@ void main() {
 
   testWidgets('shows a modal when tapped', (WidgetTester tester) async {
     const String originalPath = '/foo/bar';
-    _pathManager.path = originalPath;
+    _gitProxy.path = originalPath;
     await buildSelectorAndTap(tester);
 
     expect(findAlertModal(), findsOneWidget,
@@ -54,7 +51,7 @@ void main() {
 
   testWidgets('Cancel does not update path', (WidgetTester tester) async {
     const String originalPath = '/foo/bar';
-    _pathManager.path = originalPath;
+    _gitProxy.path = originalPath;
     await buildSelectorAndTap(tester);
     await tester.enterText(findModalTextField(), 'anyValue');
     await tapButton(tester, 'Cancel');
@@ -65,11 +62,11 @@ void main() {
 
   testWidgets('Validating modal update stored path',
       (WidgetTester tester) async {
-    _pathManager.path = 'any/path';
+    _gitProxy.path = 'any/path';
     const String newPath = '/foo/bar';
     await savePathInModal(tester, newPath);
 
-    expect(_pathManager.path, equals(newPath));
+    expect(_gitProxy.path, equals(newPath));
     expect(findAlertModal(), findsNothing);
   });
 
@@ -92,7 +89,7 @@ Future<void> savePathInModal(WidgetTester tester, String newPath) async {
 Future<void> buildPathSelector(WidgetTester tester,
     [String currentPath = '']) async {
   await tester.pumpWidget(createWidgetForTesting(
-    PathSelector(_pathManager, _gitProxy),
+    PathSelector(_gitProxy),
   ));
 }
 
@@ -155,16 +152,4 @@ String? getTextFieldValue() {
       findModalTextField().evaluate().single.widget as TextField;
 
   return field.controller?.text;
-}
-
-class MockedPathManager implements PathManager {
-  MockedPathManager(this._currentPath);
-
-  String _currentPath = '';
-
-  @override
-  String get path => _currentPath;
-
-  @override
-  set path(String path) => _currentPath = path;
 }
