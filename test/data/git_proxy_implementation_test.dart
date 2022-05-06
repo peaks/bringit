@@ -1,5 +1,6 @@
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/data/git_proxy.dart';
+import 'package:git_ihm/data/git_proxy_implementation.dart';
 import 'package:test/test.dart';
 
 import '../mock/git_registry_mock.dart';

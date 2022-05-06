@@ -16,6 +16,7 @@ import 'package:git_ihm/widgets/repository_status.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/git_proxy_implementation.dart';
 import 'shared/path_selector.dart';
 
 class HomeScreen extends StatefulWidget {
