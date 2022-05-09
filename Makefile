@@ -1,5 +1,10 @@
-.PHONY: test fixtures
+.PHONY: test fixtures clean
 .SILENT:
+
+clean:
+	flutter analyze
+	printf "=> Formatting...\n"
+	flutter format .
 
 test: test-with-git
 	printf "=> Finishing tests\n"
