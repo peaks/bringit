@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/screen/shared/project_path.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
 import 'package:git_ihm/widgets/clever_infos.dart';
@@ -189,6 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ))
           ])),
+      bottomNavigationBar: const BottomAppBar(
+        child: ProjectPath(),
+      ),
     );
   }
 }

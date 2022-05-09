@@ -30,5 +30,8 @@ class GitProxyImplementation extends GitProxy {
   String get path => _pathManager.path;
 
   @override
-  set path(String newPath) => _pathManager.path = newPath;
+  set path(String newPath) {
+    _pathManager.path = newPath;
+    notifyListeners();
+  }
 }
