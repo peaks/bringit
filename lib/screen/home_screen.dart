@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/screen/shared/git_chip.dart';
 import 'package:git_ihm/screen/shared/project_path.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
 import 'package:git_ihm/widgets/button/command_button.dart';
@@ -11,7 +12,6 @@ import 'package:git_ihm/widgets/console/git_console.dart';
 import 'package:git_ihm/widgets/file_tree.dart';
 import 'package:git_ihm/widgets/panel_container.dart';
 import 'package:git_ihm/widgets/repository_status.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'shared/path_selector.dart';
 
@@ -49,16 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _cmdFocus.requestFocus();
     _cmdController.selection = TextSelection.fromPosition(
         TextPosition(offset: _cmdController.text.length));
-  }
-
-  String _getGitVersion() {
-    // TODO(all): get version from the git lib once selected
-    return Process.runSync('git', <String>['--version'],
-            includeParentEnvironment: false, workingDirectory: './')
-        .stdout
-        .toString()
-        .split(' ')
-        .last;
   }
 
   final List<String> infoCommands = <String>[
@@ -122,19 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(widget.title),
         actions: const <Widget>[PathSelector()],
       ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Chip(
-          avatar: const Icon(MdiIcons.git, size: 20),
-          label: Text(
-            _getGitVersion(),
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
@@ -190,8 +167,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ))
           ])),
-      bottomNavigationBar: const BottomAppBar(
-        child: ProjectPath(),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          children: const <Widget>[GitChip(), ProjectPath()],
+        ),
       ),
     );
   }

@@ -16,8 +16,8 @@ class GitProxyMock extends GitProxy {
   }
 
   @override
-  Future<String> gitVersion() {
-    throw UnimplementedError();
+  Future<String> gitVersion() async {
+    return '1.25.2';
   }
 
   @override
