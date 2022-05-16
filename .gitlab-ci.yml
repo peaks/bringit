@@ -1,4 +1,4 @@
-image: cirrusci/flutter:stable
+image: cirrusci/flutter:2.10.5
 
 before_script:
   - flutter pub get
