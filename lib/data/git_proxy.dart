@@ -1,25 +1,14 @@
-import 'package:git/git.dart';
-import 'package:git_ihm/data/git/git_status_command.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:git_ihm/data/git/status_file.dart';
 
-abstract class GitProxy {
+abstract class GitProxy extends ChangeNotifier {
   Future<bool> isGitDir(String path);
 
   Future<List<StatusFile>> gitStatus(String path);
-}
 
-class GitProxyImplementation implements GitProxy {
-  GitProxyImplementation(this.statusCommand);
+  Future<String> gitVersion();
 
-  final GitStatusCommand statusCommand;
+  String get path;
 
-  @override
-  Future<bool> isGitDir(String path) async {
-    return await GitDir.isGitDir(path);
-  }
-
-  @override
-  Future<List<StatusFile>> gitStatus(String path) async {
-    return statusCommand.run(path);
-  }
+  set path(String newPath);
 }

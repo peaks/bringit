@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:git_ihm/data/path_manager.dart';
+import 'package:git_ihm/data/git_proxy.dart';
 import 'package:git_ihm/screen/shared/path_selector.dart';
 
+import '../../git_dependent_loader.dart';
 import '../../mock/git_proxy_mock.dart';
 
-late MockedPathManager _pathManager;
 late GitProxyMock _gitProxy;
 
 void main() {
   setUp(() {
-    _pathManager = MockedPathManager('');
     _gitProxy = GitProxyMock();
   });
 
@@ -34,15 +33,13 @@ void main() {
   });
 
   testWidgets('shows a modal when tapped', (WidgetTester tester) async {
-    const String originalPath = '/foo/bar';
-    _pathManager.path = originalPath;
     await buildSelectorAndTap(tester);
 
     expect(findAlertModal(), findsOneWidget,
         reason: 'Modal with title not found');
     expect(findModalTextField(), findsOneWidget,
         reason: 'No text field in modal');
-    expect(getTextFieldValue(), equals(originalPath));
+    expect(getTextFieldValue(), equals(_gitProxy.path));
   });
 
   testWidgets('Cancel removes modal', (WidgetTester tester) async {
@@ -53,8 +50,7 @@ void main() {
   });
 
   testWidgets('Cancel does not update path', (WidgetTester tester) async {
-    const String originalPath = '/foo/bar';
-    _pathManager.path = originalPath;
+    final String originalPath = _gitProxy.path;
     await buildSelectorAndTap(tester);
     await tester.enterText(findModalTextField(), 'anyValue');
     await tapButton(tester, 'Cancel');
@@ -65,12 +61,11 @@ void main() {
 
   testWidgets('Validating modal update stored path',
       (WidgetTester tester) async {
-    _pathManager.path = 'any/path';
     const String newPath = '/foo/bar';
     await savePathInModal(tester, newPath);
+    await tapFolderIcon(tester);
 
-    expect(_pathManager.path, equals(newPath));
-    expect(findAlertModal(), findsNothing);
+    expect(getTextFieldValue(), equals(newPath));
   });
 
   testWidgets('Display non git directory error', (WidgetTester tester) async {
@@ -89,19 +84,13 @@ Future<void> savePathInModal(WidgetTester tester, String newPath) async {
   await tapButton(tester, 'Save');
 }
 
-Future<void> buildPathSelector(WidgetTester tester,
-    [String currentPath = '']) async {
-  await tester.pumpWidget(createWidgetForTesting(
-    PathSelector(_pathManager, _gitProxy),
-  ));
+Future<void> buildPathSelector(WidgetTester tester) async {
+  await tester.pumpWidget(createWidgetForTesting(_gitProxy));
 }
 
-Widget createWidgetForTesting(Widget child) {
-  return MaterialApp(
-    home: Material(
-      child: child,
-    ),
-  );
+Widget createWidgetForTesting(GitProxy gitProxy) {
+  final GitDependentLoader loader = GitDependentLoader();
+  return loader.loadAppWithWidget(const PathSelector(), gitProxy);
 }
 
 Finder getIconButtonWithinApp() {
@@ -155,16 +144,4 @@ String? getTextFieldValue() {
       findModalTextField().evaluate().single.widget as TextField;
 
   return field.controller?.text;
-}
-
-class MockedPathManager implements PathManager {
-  MockedPathManager(this._currentPath);
-
-  String _currentPath = '';
-
-  @override
-  String get path => _currentPath;
-
-  @override
-  set path(String path) => _currentPath = path;
 }

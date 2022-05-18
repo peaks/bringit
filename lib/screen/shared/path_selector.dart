@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:git_ihm/data/git_proxy.dart';
-import 'package:git_ihm/data/path_manager.dart';
+import 'package:provider/provider.dart';
 
 class PathSelector extends StatefulWidget {
-  const PathSelector(this.manager, this.git, {Key? key}) : super(key: key);
-
-  final PathManager manager;
-  final GitProxy git;
+  const PathSelector({Key? key}) : super(key: key);
 
   @override
   _PathSelectorState createState() => _PathSelectorState();
@@ -18,19 +15,21 @@ class _PathSelectorState extends State<PathSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          showSelectionModal(context);
-        },
-        icon: const Icon(Icons.folder));
+    return Consumer<GitProxy>(
+        builder: (BuildContext context, GitProxy notifier, _) => IconButton(
+            onPressed: () {
+              showSelectionModal(context, notifier);
+            },
+            icon: const Icon(Icons.folder)));
   }
 
   InputDecoration buildDecoration(String? error) {
     return InputDecoration(hintText: 'path directory', errorText: error);
   }
 
-  Future<AlertDialog?> showSelectionModal(BuildContext context) async {
-    pathController.text = widget.manager.path;
+  Future<AlertDialog?> showSelectionModal(
+      BuildContext context, GitProxy git) async {
+    pathController.text = git.path;
 
     return showDialog<AlertDialog>(
         context: context,
@@ -52,9 +51,9 @@ class _PathSelectorState extends State<PathSelector> {
                 TextButton(
                     onPressed: () async {
                       final bool isGitDir =
-                          await widget.git.isGitDir(pathController.text);
+                          await git.isGitDir(pathController.text);
                       if (isGitDir) {
-                        widget.manager.path = pathController.text;
+                        git.path = pathController.text;
                         Navigator.pop(context);
                       } else {
                         pathFieldError = 'not a git directory';

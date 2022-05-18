@@ -85,17 +85,67 @@ Full documentation will be available [here](https://project.peaks.fr/peaks-ri/gi
   - `fonts/`
 - `test/`
   - `test_repository` empty folder, can be used as repository folder for tests
+  
+### Application Structure
+In order to keep the application code maintainable we decided to separate the code dedicated to print
+the User Interface (Widgets) from the code interacting with the Git application. This allows us to 
+separate the code as if we were having a Front-End manipulating a library. It does even more by making 
+our "library" available from any Widget context.
 
-### Run tests
+This was achieved with the InheritedWidget technology made easier with the package [Provider](https://pub.dev/packages/provider). 
+The GitProxy abstract class defines a facade injected in the Flutter framework thanks to the 
+ChangeNotifierProvider Widget. Every widget is now able to interact with GitProxy thanks to Consumer
+and Provider widgets. See [the official Flutter state management documentation](https://docs.flutter.dev/development/data-and-backend/state-mgmt/simple)
+to learn more about these Widgets.
 
-`make test`
+### Project commands
 
-## test based on git command results
+- `make test` will run all unit and component tests located in /test directory
+- `make clean` will analyze and format your code to keep it to the upper standards
+
+## Tests based on git command results
 As the project need to execute commands with Git and adapt their results it is 
 essential to be able to test project elements fulfilling this purpose.
 Test tagged with `git-interpreter` are expected to run on an isolated environment 
-of the file system created by the script [git_interpreter_fixtures.sh](./test/scripts/git_interpreter_fixtures.sh)
+of the file system created by the script [git_interpreter_fixtures.sh](test/scripts/git_interpreter_fixtures.sh)
 located in `/tmp` directory on linux and macOS systems.
+
+## Testing Consumer and Provider widgets
+Class [GitDependentLoader](test/git_dependent_loader.dart) provides a simple way to load any widget
+in a test application: It will provide in its context an instance of GitProxy as a ChangeNotifier. 
+You just need to instantiate the tested widget and pass it to GitDependentLoader.
+```dart
+// import flutter_test and git_dependent_loader.
+
+testWidgets('my git dependent test', (WidgetTester tester) async {
+  final GitDependentLoader loader = GitDependentLoader();
+  final Widget app = loader.loadAppWithWidget(const MyTestedWidget());
+```
+
+If no GitProxy is provided, loader will provide a new instance of [GitProxyMock](test/mock/git_proxy_mock.dart)
+but you may also pass a reference to your own GitProxy to manipulate it in your test.
+```dart
+  final GitProxy git = GitProxyMock();
+  final Widget app = loader.loadAppWithWidget(const MyTestedWidget(), git);
+
+```
+
+You will then be able to "pump" application and test your widget's behavior.
+
+```dart
+  await tester.pumpWidget(app);
+
+  // Do your tests
+  // expect(..., ...);
+});
+```
+
+## Integration tests
+Directory integration_test contains tests that are not triggered with th command `make test`for 
+performance purpose. See [flutter integration test documentation](https://docs.flutter.dev/cookbook/testing/integration/introduction)
+to learn more on them. They can be launched with the command: 
+`flutter test integration_test/[your-integration-test].dart`
+
 
 ### How to contribute 💪
 

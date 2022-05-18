@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/screen/home_screen.dart';
 import 'package:git_ihm/screen/shared/path_selector.dart';
 
-import '../mock/shared_preferences.dart';
+import '../git_dependent_loader.dart';
 
 void main() {
   testWidgets('contains AppBar with title', (WidgetTester tester) async {
@@ -22,8 +22,8 @@ void main() {
 }
 
 Future<void> buildHomeScreen(WidgetTester tester, [String title = '']) async {
-  await tester.pumpWidget(createWidgetForTesting(
-      HomeScreen(title: title, sharedPreferences: MockedSharedPreferences())));
+  final GitDependentLoader loader = GitDependentLoader();
+  await tester.pumpWidget(loader.loadAppWithWidget(HomeScreen(title: title)));
 }
 
 Widget createWidgetForTesting(Widget child) {
