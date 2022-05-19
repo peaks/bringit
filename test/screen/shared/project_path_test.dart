@@ -9,7 +9,7 @@ void main() {
     final GitProxyMock pathManager =
         await getPathManagerFromApplication(tester);
 
-    expect(find.text('project: ${pathManager.path}'), findsOneWidget);
+    expect(find.text(pathManager.path), findsOneWidget);
   });
 
   testWidgets('it updates path when notified', (WidgetTester tester) async {
@@ -18,7 +18,7 @@ void main() {
     pathManager.path = '/new/path';
     await tester.pumpAndSettle();
 
-    expect(find.text('project: ${pathManager.path}'), findsOneWidget);
+    expect(find.text(pathManager.path), findsOneWidget);
   });
 }
 
