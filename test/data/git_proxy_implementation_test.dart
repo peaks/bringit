@@ -49,5 +49,5 @@ void main() {
     const String badPath = '/tmp/git-ihm/nonGitProject';
     expect(await testSubject.isGitDir(goodPath), true);
     expect(await testSubject.isGitDir(badPath), false);
-  }, tags: <String>['git-interpreter']);
+  }, tags: <String>['file-system-dependent']);
 }

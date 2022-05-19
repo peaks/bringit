@@ -7,16 +7,17 @@ class FileTree extends StatefulWidget {
   final String path;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _FileTreeState createState() => _FileTreeState();
 }
 
-class _MyHomePageState extends State<FileTree> {
+class _FileTreeState extends State<FileTree> {
   late String _selectedNode = '';
   late TreeViewController _treeViewController;
   bool deepExpanded = true;
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
   final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     _treeViewController = TreeViewController(
@@ -29,24 +30,15 @@ class _MyHomePageState extends State<FileTree> {
     super.initState();
   }
 
-  void _expandNode(String key, bool expanded) {
-    Node<void>? node = _treeViewController.getNode(key);
-    if (node != null) {
-      if (node.children.contains(EMPTY_NODE)) {
-        node = node.copyWith(children: getNodesFromPath(key));
-      }
-      List<Node<void>> updated;
-      updated = _treeViewController.updateNode(
-          key, node.copyWith(expanded: expanded));
-      setState(() {
-        _treeViewController = _treeViewController.copyWith(children: updated);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final TreeViewTheme _treeViewTheme = TreeViewTheme(
+    final TreeViewTheme theme = _buildTreeViewTheme(context);
+    final TreeView treeView = _buildTreeView(theme);
+    return _buildTreeContainer(treeView);
+  }
+
+  TreeViewTheme _buildTreeViewTheme(BuildContext context) {
+    return TreeViewTheme(
       expanderTheme: const ExpanderThemeData(
         animated: false,
         type: ExpanderType.chevron,
@@ -69,6 +61,47 @@ class _MyHomePageState extends State<FileTree> {
       colorScheme: Theme.of(context).colorScheme,
       expandSpeed: const Duration(seconds: 0),
     );
+  }
+
+  TreeView _buildTreeView(TreeViewTheme theme) {
+    return TreeView(
+        controller: _treeViewController,
+        allowParentSelect: _allowParentSelect,
+        supportParentDoubleTap: _supportParentDoubleTap,
+        onExpansionChanged: (String key, bool expanded) {
+          _expandNode(key, expanded);
+        },
+        onNodeTap: (String key) {
+          setState(() {
+            if (_selectedNode == key) {
+              _selectedNode = '';
+            } else {
+              _selectedNode = key;
+            }
+            _treeViewController = _treeViewController.copyWith<dynamic>(
+                selectedKey: _selectedNode);
+          });
+        },
+        theme: theme,
+        shrinkWrap: true);
+  }
+
+  void _expandNode(String key, bool expanded) {
+    Node<void>? node = _treeViewController.getNode(key);
+    if (node != null) {
+      if (node.children.contains(EMPTY_NODE)) {
+        node = node.copyWith(children: getNodesFromPath(key));
+      }
+      List<Node<void>> updated;
+      updated = _treeViewController.updateNode(
+          key, node.copyWith(expanded: expanded));
+      setState(() {
+        _treeViewController = _treeViewController.copyWith(children: updated);
+      });
+    }
+  }
+
+  Expanded _buildTreeContainer(TreeView treeView) {
     return Expanded(
       child: Container(
         height: double.infinity,
@@ -78,26 +111,7 @@ class _MyHomePageState extends State<FileTree> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             controller: _scrollController,
-            child: TreeView(
-                controller: _treeViewController,
-                allowParentSelect: _allowParentSelect,
-                supportParentDoubleTap: _supportParentDoubleTap,
-                onExpansionChanged: (String key, bool expanded) {
-                  _expandNode(key, expanded);
-                },
-                onNodeTap: (String key) {
-                  setState(() {
-                    if (_selectedNode == key) {
-                      _selectedNode = '';
-                    } else {
-                      _selectedNode = key;
-                    }
-                    _treeViewController = _treeViewController.copyWith<dynamic>(
-                        selectedKey: _selectedNode);
-                  });
-                },
-                theme: _treeViewTheme,
-                shrinkWrap: true),
+            child: treeView,
           ),
         ),
       ),

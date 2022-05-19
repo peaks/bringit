@@ -36,7 +36,17 @@ List<Node<void>> getNodesFromPath(String path) {
 
     nodes.add(node);
   }
-  nodes.sort((Node<void> a, Node<void> b) => (a.key).compareTo(b.key));
+  nodes.sort((Node<void> a, Node<void> b) {
+    if (a.isParent && !b.isParent) {
+      return -1;
+    }
+
+    if (!a.isParent && b.isParent) {
+      return 1;
+    }
+
+    return a.label.compareTo(b.label);
+  });
 
   return nodes;
 }

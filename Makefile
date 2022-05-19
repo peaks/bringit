@@ -6,14 +6,14 @@ clean:
 	printf "=> Formatting...\n"
 	flutter format .
 
-test: test-with-git
+test: test-with-filesystem
 	printf "=> Finishing tests\n"
-	flutter test -x git-interpreter
+	flutter test -x file-system-dependent
 
-test-with-git: fixtures
+test-with-filesystem: fixtures
 	printf "=> Running tests depending on git commands\n"
-	flutter test -t git-interpreter
+	flutter test -t file-system-dependent
 
 fixtures:
 	printf "=> Preparing fixture files\n"
-	./test/scripts/git_interpreter_fixtures.sh
+	./test/scripts/filesystem_fixtures.sh

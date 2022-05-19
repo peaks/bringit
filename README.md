@@ -106,7 +106,7 @@ to learn more about these Widgets.
 ## Tests based on git command results
 As the project need to execute commands with Git and adapt their results it is 
 essential to be able to test project elements fulfilling this purpose.
-Test tagged with `git-interpreter` are expected to run on an isolated environment 
+Test tagged with `file-system-dependent` are expected to run on an isolated environment 
 of the file system created by the script [git_interpreter_fixtures.sh](test/scripts/git_interpreter_fixtures.sh)
 located in `/tmp` directory on linux and macOS systems.
 
