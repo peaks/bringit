@@ -65,7 +65,7 @@ class _GitConsoleState extends State<GitConsole> {
         Expanded(
             child: Scrollbar(
                 controller: _scrollController,
-                isAlwaysShown: true,
+                thumbVisibility: true,
                 child: SingleChildScrollView(
                     controller: _scrollController,
                     child: Padding(
