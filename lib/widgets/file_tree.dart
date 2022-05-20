@@ -107,7 +107,7 @@ class _FileTreeState extends State<FileTree> {
         height: double.infinity,
         child: Scrollbar(
           controller: _scrollController,
-          isAlwaysShown: true,
+          thumbVisibility: true,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             controller: _scrollController,
