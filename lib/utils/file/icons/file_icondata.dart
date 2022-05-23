@@ -28,3 +28,9 @@ IconData getIconDataForFile(String fileName) {
     fontFamily: 'Seti',
   );
 }
+
+class IconFetcher {
+  IconData getIcon(String fileName) {
+    return getIconDataForFile(fileName);
+  }
+}
