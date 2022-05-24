@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_ihm/screen/home_screen.dart';
+import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
 
 import 'data/git/git_factory.dart';
@@ -9,9 +10,11 @@ Future<void> main() async {
   final GitFactory f = GitFactory();
   final GitProxy git = await f.getGit();
 
-  final ChangeNotifierProvider<GitProxy> myApp =
-      ChangeNotifierProvider<GitProxy>(
-    create: (BuildContext context) => git,
+  final MultiProvider myApp = MultiProvider(
+    providers: <InheritedProvider<dynamic>>[
+      ChangeNotifierProvider<GitProxy>(create: (BuildContext context) => git),
+      Provider<UtilsFactory>(create: (_) => UtilsFactory())
+    ],
     child: const MyApp(),
   );
 

@@ -1,33 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:git_ihm/utils/file/tree/load_file_tree_data.dart';
+import 'package:git_ihm/utils/file/tree/tree_data_file_loader.dart';
+import 'package:git_ihm/utils/utils_factory.dart';
+import 'package:provider/provider.dart';
+
+import '../data/git_proxy.dart';
 
 class FileTree extends StatefulWidget {
-  const FileTree({Key? key, required this.path}) : super(key: key);
-  final String path;
+  const FileTree({Key? key}) : super(key: key);
 
   @override
   _FileTreeState createState() => _FileTreeState();
 }
 
 class _FileTreeState extends State<FileTree> {
+  late GitProxy git;
+  late TreeDataFileLoader fileLoader;
+
   late String _selectedNode = '';
   late TreeViewController _treeViewController;
-  bool deepExpanded = true;
+
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
+  bool deepExpanded = true;
+
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    _treeViewController = TreeViewController(
-      children: <Node<void>>[
-        getNodeFromPath(''),
-      ],
-      selectedKey: _selectedNode,
-    );
+    final UtilsFactory factory =
+        Provider.of<UtilsFactory>(context, listen: false);
+    fileLoader = factory.treeDataFileLoader;
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    git = Provider.of<GitProxy>(context, listen: true);
+    _initTreeViewController(git.path);
+
+    super.didChangeDependencies();
+  }
+
+  void _initTreeViewController(String projectPath) {
+    _treeViewController = TreeViewController(
+      children: <Node<void>>[fileLoader.getNode(projectPath)],
+      selectedKey: _selectedNode,
+    );
   }
 
   @override
@@ -68,16 +88,11 @@ class _FileTreeState extends State<FileTree> {
         controller: _treeViewController,
         allowParentSelect: _allowParentSelect,
         supportParentDoubleTap: _supportParentDoubleTap,
-        onExpansionChanged: (String key, bool expanded) {
-          _expandNode(key, expanded);
-        },
+        onExpansionChanged: (String key, bool isExpanded) =>
+            _toggleNodeState(key, isExpanded),
         onNodeTap: (String key) {
           setState(() {
-            if (_selectedNode == key) {
-              _selectedNode = '';
-            } else {
-              _selectedNode = key;
-            }
+            _selectedNode = (_selectedNode == key) ? '' : key;
             _treeViewController = _treeViewController.copyWith<dynamic>(
                 selectedKey: _selectedNode);
           });
@@ -86,19 +101,24 @@ class _FileTreeState extends State<FileTree> {
         shrinkWrap: true);
   }
 
-  void _expandNode(String key, bool expanded) {
-    Node<void>? node = _treeViewController.getNode(key);
-    if (node != null) {
-      if (node.children.contains(EMPTY_NODE)) {
-        node = node.copyWith(children: getNodesFromPath(key));
-      }
-      List<Node<void>> updated;
-      updated = _treeViewController.updateNode(
-          key, node.copyWith(expanded: expanded));
-      setState(() {
-        _treeViewController = _treeViewController.copyWith(children: updated);
-      });
+  void _toggleNodeState(String key, bool expandedState) {
+    final Node<void>? node = _treeViewController.getNode(key);
+    if (node == null) {
+      return;
     }
+
+    List<Node<void>>? nodeChildren;
+    if (node.children.first.key == 'EMPTY_NODE') {
+      nodeChildren = fileLoader.getNodes(node.key);
+    }
+
+    final List<Node<void>> updatedNode = _treeViewController.updateNode(
+        node.key,
+        node.copyWith(children: nodeChildren, expanded: expandedState));
+
+    setState(() {
+      _treeViewController = _treeViewController.copyWith(children: updatedNode);
+    });
   }
 
   Expanded _buildTreeContainer(TreeView treeView) {
