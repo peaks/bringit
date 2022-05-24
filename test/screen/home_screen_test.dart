@@ -1,3 +1,5 @@
+@Tags(<String>['file-system-dependent'])
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/screen/home_screen.dart';
@@ -7,13 +9,7 @@ import 'package:git_ihm/screen/shared/path_selector.dart';
 import '../git_dependent_loader.dart';
 import '../mock/git_proxy_mock.dart';
 
-late GitProxyMock _gitProxy;
-
 void main() {
-  setUp(() {
-    _gitProxy = GitProxyMock();
-  });
-
   testWidgets('contains AppBar with title', (WidgetTester tester) async {
     const String expectedTitle = 'any title';
     await buildHomeScreen(tester, expectedTitle);
@@ -36,9 +32,13 @@ void main() {
 }
 
 Future<void> buildHomeScreen(WidgetTester tester, [String title = '']) async {
+  final GitProxyMock gitProxy = GitProxyMock();
+  gitProxy.path = '/tmp/git-ihm/nonGitProject';
+
   final GitDependentLoader loader = GitDependentLoader();
-  await tester.pumpWidget(
-      loader.loadAppWithWidget(HomeScreen(title: title), _gitProxy));
+  loader.gitProxy = gitProxy;
+
+  await tester.pumpWidget(loader.loadAppWithWidget(HomeScreen(title: title)));
 }
 
 Widget createWidgetForTesting(Widget child) {

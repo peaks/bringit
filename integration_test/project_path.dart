@@ -38,7 +38,8 @@ GitProxyImplementation buildGitProxyWithMocks() {
 Future<void> loadApplication(WidgetTester tester, GitProxy git) async {
   const HomeScreen homeScreen = HomeScreen(title: 'any title');
   final GitDependentLoader loader = GitDependentLoader();
-  await tester.pumpWidget(loader.loadAppWithWidget(homeScreen, git));
+  loader.gitProxy = git;
+  await tester.pumpWidget(loader.loadAppWithWidget(homeScreen));
 }
 
 Future<void> updateProjectPath(WidgetTester tester, String newPath) async {

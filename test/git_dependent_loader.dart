@@ -5,23 +5,20 @@ import 'package:provider/provider.dart';
 import 'mock/git_proxy_mock.dart';
 
 class GitDependentLoader {
-  ChangeNotifierProvider<GitProxy> loadAppWithWidget(Widget testedWidget,
-      [GitProxy? gitProxy]) {
+  GitProxy? gitProxy;
+
+  ChangeNotifierProvider<GitProxy> loadAppWithWidget(Widget testedWidget) {
     return ChangeNotifierProvider<GitProxy>(
-        create: (BuildContext context) {
-          return _initProxy(gitProxy);
-        },
+        create: (BuildContext context) => _initProxy(),
         child: MaterialApp(
             home: Material(
           child: testedWidget,
         )));
   }
 
-  GitProxy _initProxy(GitProxy? gitProxy) {
-    if (gitProxy == null) {
-      return GitProxyMock();
-    }
+  GitProxy _initProxy() {
+    gitProxy ??= GitProxyMock();
 
-    return gitProxy;
+    return gitProxy!;
   }
 }
