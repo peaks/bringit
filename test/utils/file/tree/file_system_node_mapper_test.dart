@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/utils/file/icons/file_icondata.dart';
 import 'package:git_ihm/utils/file/tree/file_system_node_mapper.dart';
 
@@ -63,6 +64,53 @@ void main() {
 
     expect(mappedResult.children.length, equals(1));
     expect(mappedResult.children.first.key, equals('EMPTY_NODE'));
+  });
+
+  test('icon is red if the path matches with an untracked directory', () {
+    const String untrackedDirectory = '/foo/bar/';
+    mapper.status = <StatusFile>[
+      const UntrackedPath(untrackedDirectory),
+    ];
+
+    final Directory entity = Directory(untrackedDirectory);
+    final Node<void> mappedResult = mapper.map(entity);
+    expect(mappedResult.iconColor, equals(Colors.red));
+  });
+
+  test('icon is red if the file is contained in an untracked directory', () {
+    const String untrackedDirectory = '/foo/bar/';
+    mapper.status = <StatusFile>[const UntrackedPath(untrackedDirectory)];
+
+    final File entity = File('${untrackedDirectory}untrackedFile');
+    final Node<void> mappedResult = mapper.map(entity);
+    expect(mappedResult.iconColor, equals(Colors.red));
+  });
+
+  test('icon is blue if the path matches an updated file', () {
+    const String path = '/foo/bar.dart';
+    mapper.status = <StatusFile>[const ModifiedFile(path)];
+
+    final File entity = File(path);
+    final Node<void> mappedResult = mapper.map(entity);
+    expect(mappedResult.iconColor, equals(Colors.blue));
+  });
+
+  test('icon is green if the path matches an added file', () {
+    const String path = '/foo/bar.dart';
+    mapper.status = <StatusFile>[const AddedFile(path)];
+
+    final File entity = File(path);
+    final Node<void> mappedResult = mapper.map(entity);
+    expect(mappedResult.iconColor, equals(Colors.green));
+  });
+
+  test('icon is brown if the path matches an ignored path', () {
+    const String path = '/foo/bar/';
+    mapper.status = <StatusFile>[const IgnoredFile(path)];
+
+    final Directory entity = Directory(path);
+    final Node<void> mappedResult = mapper.map(entity);
+    expect(mappedResult.iconColor, equals(Colors.brown));
   });
 }
 
