@@ -4,6 +4,7 @@ import 'package:git_ihm/utils/file/tree/tree_data_file_loader.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
 
+import '../data/git/status_file.dart';
 import '../data/git_proxy.dart';
 
 class FileTree extends StatefulWidget {
@@ -29,23 +30,30 @@ class _FileTreeState extends State<FileTree> {
   @override
   void initState() {
     final UtilsFactory factory =
-        Provider.of<UtilsFactory>(context, listen: false);
+    Provider.of<UtilsFactory>(context, listen: false);
     fileLoader = factory.treeDataFileLoader;
 
-    super.initState();
+    _treeViewController = TreeViewController(
+      children: <Node<void>>[],
+      selectedKey: _selectedNode,
+    );
   }
 
   @override
   void didChangeDependencies() {
-    git = Provider.of<GitProxy>(context, listen: true);
-    _initTreeViewController(git.path);
-
     super.didChangeDependencies();
+    git = Provider.of<GitProxy>(context, listen: true);
+
+    git.gitStatus(git.path).then((List<StatusFile> gitStatus) {
+      _treeViewController = _initTreeViewController(gitStatus);
+    });
   }
 
-  void _initTreeViewController(String projectPath) {
-    _treeViewController = TreeViewController(
-      children: <Node<void>>[fileLoader.getNode(projectPath)],
+  TreeViewController _initTreeViewController(List<StatusFile> gitStatus) {
+    fileLoader.status = gitStatus;
+
+    return TreeViewController(
+      children: <Node<void>>[fileLoader.getNode(git.path)],
       selectedKey: _selectedNode,
     );
   }

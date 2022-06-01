@@ -4,21 +4,25 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/utils/file/icons/file_icondata.dart';
 import 'package:git_ihm/utils/file/tree/file_system_loader.dart';
+import 'package:git_ihm/utils/file/tree/file_system_node_mapper.dart';
 import 'package:git_ihm/utils/file/tree/tree_data_file_loader.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:path/path.dart' hide equals;
 
 import 'file_system_node_mapper_test.dart';
 
+final FakeUtilsFactory factory = FakeUtilsFactory();
 final FakeFileSystemLoader fileSystem = FakeFileSystemLoader();
 final IconFetcher iconFetcherSpy = IconFetcherSpy();
+final FileSystemNodeMapperSpy nodeMapperSpy = FileSystemNodeMapperSpy();
 late TreeDataFileLoader loader;
 
 void main() {
   setUp(() {
-    loader = _buildTestSubject();
+    loader = _buildTestSubjectOnFakeFileSystem();
   });
 
   test('it returns an empty list on empty Directory', () {
@@ -65,12 +69,26 @@ void main() {
     expect(result.label, equals(basename(nodePath)));
     expect(result.expanded, true);
   });
+
+  test('it links its status property to mapper', () {
+    final TreeDataFileLoader testSubject = _buildTestSubjectOnFakeNodeMapper();
+    final List<StatusFile> gitStatus = <StatusFile>[const UntrackedPath('foo')];
+    testSubject.status = gitStatus;
+
+    expect(nodeMapperSpy.statusWasSetWith, same(gitStatus));
+  });
 }
 
-TreeDataFileLoader _buildTestSubject() {
-  final FakeUtilsFactory factory = FakeUtilsFactory();
+TreeDataFileLoader _buildTestSubjectOnFakeFileSystem() {
   factory.setIconFetcher(iconFetcherSpy);
   factory.setFileSystemLoader(fileSystem);
+
+  return factory.treeDataFileLoader;
+}
+
+TreeDataFileLoader _buildTestSubjectOnFakeNodeMapper() {
+  factory.setNodeMapper(nodeMapperSpy);
+
   return factory.treeDataFileLoader;
 }
 
@@ -96,5 +114,18 @@ class FakeUtilsFactory extends UtilsFactory {
 
   void setIconFetcher(IconFetcher fetcher) {
     iconFetcher = fetcher;
+  }
+
+  void setNodeMapper(FileSystemNodeMapper mapper) {
+    nodeMapper = mapper;
+  }
+}
+
+class FileSystemNodeMapperSpy extends Fake implements FileSystemNodeMapper {
+  List<StatusFile>? statusWasSetWith;
+
+  @override
+  set status(List<StatusFile> files) {
+    statusWasSetWith = files;
   }
 }

@@ -6,13 +6,20 @@ import 'file/tree/file_system_node_mapper.dart';
 import 'file/tree/tree_data_file_loader.dart';
 
 class UtilsFactory {
+  UtilsFactory() {
+    fileSystemLoader = FileSystemLoader();
+    iconFetcher = IconFetcher();
+    nodeMapper = FileSystemNodeMapper(iconFetcher);
+  }
+
   @protected
-  FileSystemLoader fileSystemLoader = FileSystemLoader();
+  late FileSystemLoader fileSystemLoader;
   @protected
-  IconFetcher iconFetcher = IconFetcher();
+  late IconFetcher iconFetcher;
+  @protected
+  late FileSystemNodeMapper nodeMapper;
 
   TreeDataFileLoader get treeDataFileLoader {
-    return TreeDataFileLoader(
-        fileSystemLoader, FileSystemNodeMapper(iconFetcher));
+    return TreeDataFileLoader(fileSystemLoader, nodeMapper);
   }
 }
