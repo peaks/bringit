@@ -11,4 +11,8 @@ abstract class GitProxy extends ChangeNotifier {
   String get path;
 
   set path(String newPath);
+
+  List<StatusFile> gitState = <StatusFile>[];
+
+  Future<void> getStatus();
 }

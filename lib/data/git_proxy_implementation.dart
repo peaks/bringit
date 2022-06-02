@@ -6,7 +6,9 @@ import 'git/status_file.dart';
 import 'git_proxy.dart';
 
 class GitProxyImplementation extends GitProxy {
-  GitProxyImplementation(this._registry, this._pathManager);
+  GitProxyImplementation(this._registry, this._pathManager) {
+    getStatus();
+  }
 
   final GitRegistry _registry;
   final PathManager _pathManager;
@@ -32,6 +34,12 @@ class GitProxyImplementation extends GitProxy {
   @override
   set path(String newPath) {
     _pathManager.path = newPath;
+    getStatus();
+  }
+
+  @override
+  Future<void> getStatus() async {
+    gitState = await gitStatus(path);
     notifyListeners();
   }
 }
