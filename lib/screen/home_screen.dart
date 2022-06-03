@@ -108,70 +108,72 @@ class _HomeScreenState extends State<HomeScreen> {
         level: CommandLevel.dangerous)));
 
     return Scaffold(
-      appBar: AppBar(
+        appBar: _appBar(),
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+              //Wrap(alignment: WrapAlignment.center, children: commands),
+              Flexible(
+                  flex: 1,
+                  child: Row(
+                    children: <Widget>[
+                      _gitConsole(),
+                      _info(),
+                    ],
+                  )),
+              Flexible(
+                  flex: 3,
+                  child: Row(
+                    children: <Widget>[
+                      _fileTree(),
+                      _commitTree(),
+                      _repositoryStatus()
+                    ],
+                  ))
+            ])),
+        bottomNavigationBar: _footer());
+  }
+
+  AppBar _appBar() => AppBar(
         title: Text(widget.title),
         actions: const <Widget>[PathSelector()],
-      ),
-      body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-            //Wrap(alignment: WrapAlignment.center, children: commands),
-            Flexible(
-                flex: 1,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: GitConsole(
-                        cmdController: _cmdController,
-                        cmdFocus: _cmdFocus,
-                        lastCommandSucceeded: _lastCommandSucceeded,
-                        resultController: _resultController,
-                        runCommand: _runCommand,
-                      ),
-                    ),
-                    const Expanded(
-                      flex: 1,
-                      child: PanelContainer(
-                        title: 'Smart',
-                        child: Expanded(child: CleverInfos()),
-                      ),
-                    ),
-                  ],
-                )),
-            Flexible(
-                flex: 3,
-                child: Row(
-                  children: const <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: PanelContainer(
-                        title: 'Files',
-                        child: FileTree(path: './'),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: PanelContainer(
-                        title: 'Commits',
-                        child: CommitTree(),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: PanelContainer(
-                        title: 'Status',
-                        child: Expanded(child: RepositoryStatus()),
-                      ),
-                    ),
-                  ],
-                ))
-          ])),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: const <Widget>[GitChip(), ProjectPath()],
+      );
+
+  Expanded _gitConsole() => Expanded(
+        flex: 1,
+        child: GitConsole(
+          cmdController: _cmdController,
+          cmdFocus: _cmdFocus,
+          lastCommandSucceeded: _lastCommandSucceeded,
+          resultController: _resultController,
+          runCommand: _runCommand,
         ),
+      );
+
+  Expanded _info() =>
+      _buildExpandedPanelContainer('Smart', const CleverInfos());
+
+  Expanded _buildExpandedPanelContainer(String title, Widget child) {
+    return Expanded(
+      flex: 1,
+      child: PanelContainer(
+        title: title,
+        child: child,
       ),
     );
   }
+
+  Expanded _commitTree() =>
+      _buildExpandedPanelContainer('Commits', const CommitTree());
+
+  Expanded _fileTree() =>
+      _buildExpandedPanelContainer('Files', const FileTree());
+
+  Expanded _repositoryStatus() => _buildExpandedPanelContainer(
+      'Status', const Expanded(child: RepositoryStatus()));
+
+  BottomAppBar _footer() => BottomAppBar(
+          child: Row(
+        children: const <Widget>[GitChip(), Expanded(child: ProjectPath())],
+      ));
 }

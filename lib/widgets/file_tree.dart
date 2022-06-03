@@ -23,8 +23,13 @@ class _FileTreeState extends State<FileTree> {
   late TreeViewController _treeViewController;
 
   TreeViewController _initTreeViewController(String projectPath) {
+    final List<Node<void>> childrenNode = <Node<void>>[];
+    if (projectPath != '') {
+      childrenNode.add(_fileLoader.getNode(projectPath));
+    }
+
     return TreeViewController(
-      children: <Node<void>>[_fileLoader.getNode(projectPath)],
+      children: childrenNode,
       selectedKey: _selectedNode,
     );
   }
