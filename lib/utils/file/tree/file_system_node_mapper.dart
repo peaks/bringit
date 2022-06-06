@@ -37,14 +37,14 @@ class FileSystemNodeMapper {
       return _status[entityPath]!.color;
     }
 
-    if (findParentUntrackedPath(entityPath).isNotEmpty) {
+    if (_findParentUntrackedPath(entityPath).isNotEmpty) {
       return Colors.red;
     }
 
     return Colors.white;
   }
 
-  Map<String, StatusFile> findParentUntrackedPath(String absolutePath) {
+  Map<String, StatusFile> _findParentUntrackedPath(String absolutePath) {
     final Map<String, StatusFile> untrackedPath =
         Map<String, StatusFile>.from(_status);
 
