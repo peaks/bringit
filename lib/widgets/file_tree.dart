@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:git_ihm/screen/shared/git_tree_node.dart';
 import 'package:git_ihm/utils/file/tree/tree_data_file_loader.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
@@ -79,6 +80,8 @@ class _FileTreeState extends State<FileTree> {
   TreeView _buildTreeView(TreeViewTheme theme) {
     return TreeView(
         controller: _treeViewController,
+        nodeBuilder: (BuildContext context, Node<void> node) =>
+            GitTreeNode(node),
         allowParentSelect: _allowParentSelect,
         supportParentDoubleTap: _supportParentDoubleTap,
         onExpansionChanged: (String key, bool isExpanded) =>
