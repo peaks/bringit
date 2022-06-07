@@ -12,6 +12,7 @@ class GitStatusImplementation extends GitStatusCommand {
 
   @override
   Future<List<StatusFile>> run(String path) async {
+    _parser.setProject(path);
     return _map(await _baseCommand.fetch(path));
   }
 

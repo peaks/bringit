@@ -90,7 +90,8 @@ Future<void> buildPathSelector(WidgetTester tester) async {
 
 Widget createWidgetForTesting(GitProxy gitProxy) {
   final GitDependentLoader loader = GitDependentLoader();
-  return loader.loadAppWithWidget(const PathSelector(), gitProxy);
+  loader.gitProxy = gitProxy;
+  return loader.loadAppWithWidget(const PathSelector());
 }
 
 Finder getIconButtonWithinApp() {

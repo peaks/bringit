@@ -11,8 +11,8 @@ class GitRegistryMock extends GitRegistry {
     versionCommandMock = GitVersionCommandMock();
   }
 
-  late final GitStatusCommandMock statusCommandMock;
-  late final GitVersionCommandMock versionCommandMock;
+  late GitStatusCommand statusCommandMock;
+  late GitVersionCommandMock versionCommandMock;
 
   @override
   GitStatusCommand get statusCommand => statusCommandMock;

@@ -28,4 +28,10 @@ class GitProxyMock extends GitProxy {
     _path = newPath;
     notifyListeners();
   }
+
+  @override
+  Future<void> getStatus() async {
+    gitState = <StatusFile>[];
+    notifyListeners();
+  }
 }

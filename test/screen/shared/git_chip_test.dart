@@ -18,7 +18,9 @@ void main() {
       (WidgetTester tester) async {
     final GitProxy git = GitProxyMock();
     final GitDependentLoader loader = GitDependentLoader();
-    await tester.pumpWidget(loader.loadAppWithWidget(const GitChip(), git));
+    loader.gitProxy = git;
+
+    await tester.pumpWidget(loader.loadAppWithWidget(const GitChip()));
     await tester.pumpAndSettle();
 
     expect(find.text(await git.gitVersion()), findsOneWidget);

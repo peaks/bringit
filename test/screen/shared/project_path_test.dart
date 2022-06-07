@@ -25,8 +25,8 @@ void main() {
 Future<GitProxyMock> getPathManagerFromApplication(WidgetTester tester) async {
   final GitProxyMock pathManager = GitProxyMock();
   final GitDependentLoader loader = GitDependentLoader();
-  await tester
-      .pumpWidget(loader.loadAppWithWidget(const ProjectPath(), pathManager));
+  loader.gitProxy = pathManager;
+  await tester.pumpWidget(loader.loadAppWithWidget(const ProjectPath()));
 
   return pathManager;
 }
