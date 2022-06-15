@@ -14,7 +14,8 @@ function make_git_project {
   git_project=${test_root}/gitProject
   mkdir -p $git_project
   cd $git_project || exit
-  git init -q
+  git init --quiet
+  git commit --allow-empty --quiet -m "initial commit"
 }
 
 clear_fixtures
