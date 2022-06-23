@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -28,16 +29,8 @@ class GitCommit {
   }
 
   bool _hasSameReferences(GitCommit source, GitCommit target) {
-    if (source.references.length != target.references.length) {
-      return false;
-    }
+    const ListEquality<String> comparator = ListEquality<String>();
 
-    for (final String ref in source.references) {
-      if (!target.references.contains(ref)) {
-        return false;
-      }
-    }
-
-    return true;
+    return comparator.equals(source.references, target.references);
   }
 }
