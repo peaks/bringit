@@ -1,3 +1,4 @@
+import 'package:git_ihm/data/git/git_commit.dart';
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 
@@ -33,5 +34,10 @@ class GitProxyMock extends GitProxy {
   Future<void> getStatus() async {
     gitState = <StatusFile>[];
     notifyListeners();
+  }
+
+  @override
+  Future<List<GitCommit>> gitLog() async {
+    return <GitCommit>[];
   }
 }

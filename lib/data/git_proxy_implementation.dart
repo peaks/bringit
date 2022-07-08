@@ -1,4 +1,5 @@
 import 'package:git/git.dart';
+import 'package:git_ihm/data/git/git_commit.dart';
 import 'package:git_ihm/data/path_manager.dart';
 
 import '../git/git_registry.dart';
@@ -41,5 +42,10 @@ class GitProxyImplementation extends GitProxy {
   Future<void> getStatus() async {
     gitState = await gitStatus(path);
     notifyListeners();
+  }
+
+  @override
+  Future<List<GitCommit>> gitLog() async {
+    return _registry.logCommand.run(path);
   }
 }

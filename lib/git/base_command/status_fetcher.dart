@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:git_ihm/git/base_command/terminal_command.dart';
 
-import 'package:git_ihm/git/base_command/base_command.dart';
-
-class StatusFetcher extends BaseCommand {
+class StatusFetcher {
   static const LineSplitter _splitter = LineSplitter();
 
   Future<List<String>> fetch(String path) async {
@@ -12,14 +10,9 @@ class StatusFetcher extends BaseCommand {
   }
 
   Future<String> _callGitStatus(String path) async {
-    final ProcessResult result = await Process.run(
-        'git', <String>['status', '--porcelain=v1', '--ignored=matching'],
-        workingDirectory: path);
+    final TerminalCommand command = TerminalCommand(
+        'git', <String>['status', '--porcelain=v1', '--ignored=matching']);
 
-    if (commandIsSuccessful(result)) {
-      return result.stdout as String;
-    }
-
-    return '';
+    return command.run(path);
   }
 }

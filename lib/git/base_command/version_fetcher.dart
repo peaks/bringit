@@ -1,15 +1,10 @@
-import 'dart:io';
+import 'package:git_ihm/git/base_command/terminal_command.dart';
 
-import 'base_command.dart';
-
-class VersionFetcher extends BaseCommand {
+class VersionFetcher {
   Future<String> fetch() async {
-    final ProcessResult result =
-        await Process.run('git', <String>['--version']);
+    final TerminalCommand command =
+        TerminalCommand('git', <String>['--version']);
 
-    if (commandIsSuccessful(result)) {
-      return (result.stdout as String).trim();
-    }
-    return '';
+    return command.run();
   }
 }
