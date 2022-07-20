@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:git_ihm/widgets/scrollable_panel_container.dart';
 
@@ -16,7 +14,6 @@ class PlaceholderPanel extends StatelessWidget {
     return ScrollablePanelContainer(
       flex: flex,
       title: title,
-      backgroundColor: Colors.accents[Random().nextInt(15)],
       child: Center(
         child: Text(
           title,

@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:git_ihm/screen/explorer_layout.dart';
+import 'package:git_ihm/screen/location_layout.dart';
+import 'package:git_ihm/screen/project_tab_bar.dart';
+import 'package:git_ihm/screen/side_menu.dart';
 import 'package:git_ihm/screen/staging_layout.dart';
+import 'package:git_ihm/screen/status_bar.dart';
 
-class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
-  final Row _statusBar = Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: const <Widget>[
-      Text('STATUS BAR'),
-    ],
-  );
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
 
-  final NavigationRail _navigation = NavigationRail(
-    selectedIndex: 0,
-    onDestinationSelected: (_) {},
-    destinations: const <NavigationRailDestination>[
-      NavigationRailDestination(
-        icon: Icon(
-          Icons.difference_outlined,
-          size: 48,
-        ),
-        label: Text('Staging'),
-      ),
-      NavigationRailDestination(
-        icon: Icon(Icons.folder_outlined),
-        label: Text('Explorer'),
-      ),
-    ],
-  );
+class _MainScreenState extends State<MainScreen> {
+  final List<NavigationItem> navigationItems = <NavigationItem>[
+    NavigationItem(
+        child: const StagingLayout(),
+        icon: const Icon(Icons.difference_outlined),
+        label: 'Staging'),
+    NavigationItem(
+        child: const ExplorerLayout(),
+        icon: const Icon(Icons.folder_open_outlined),
+        label: 'Explorer'),
+    NavigationItem(
+        child: const LocationLayout(),
+        icon: const Icon(Icons.commit_rounded),
+        label: 'Location'),
+  ];
+  late int selectedItem;
 
-  final Container _tabBar = Container(
-    alignment: AlignmentDirectional.centerStart,
-    padding: const EdgeInsets.all(8),
-    child: const Text('Project 1'),
-  );
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = 0;
+  }
+
+  void selectItem(int index) {
+    setState(() {
+      selectedItem = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +48,21 @@ class MainScreen extends StatelessWidget {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          _tabBar,
+          const ProjectTabBar(),
           Expanded(
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                _navigation,
+                SideMenu(
+                  navigationItems: navigationItems,
+                  onDestinationSelected: selectItem,
+                ),
                 Expanded(
                     child: Column(
-                  children: <Widget>[const StagingLayout(), _statusBar],
+                  children: <Widget>[
+                    navigationItems.elementAt(selectedItem).child,
+                    const StatusBar(),
+                  ],
                 ))
               ],
             ),

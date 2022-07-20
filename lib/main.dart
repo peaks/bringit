@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Clever Git',
       theme: ThemeData.dark(),
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }
