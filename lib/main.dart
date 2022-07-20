@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/screen/main_screen.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Clever Git',
-      theme: ThemeData.dark(),
+      theme: NordTheme.dark(),
       home: const MainScreen(),
     );
   }

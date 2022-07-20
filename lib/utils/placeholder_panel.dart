@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_ihm/widgets/scrollable_panel_container.dart';
+import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
 class PlaceholderPanel extends StatelessWidget {
   const PlaceholderPanel(this.title, {Key? key, this.flex = 1})
