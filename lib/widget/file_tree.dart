@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:git_ihm/screen/shared/git_tree_node.dart';
 import 'package:git_ihm/utils/file/tree/tree_data_file_loader.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
+import 'package:git_ihm/widget/git_tree_node.dart';
 import 'package:provider/provider.dart';
 
 import '../data/git_proxy.dart';

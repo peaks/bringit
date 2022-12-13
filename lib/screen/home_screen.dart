@@ -1,19 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:git_ihm/screen/shared/git_chip.dart';
-import 'package:git_ihm/screen/shared/project_path.dart';
 import 'package:git_ihm/utils/command_level_enum.dart';
-import 'package:git_ihm/widgets/button/command_button.dart';
-import 'package:git_ihm/widgets/clever_infos.dart';
-import 'package:git_ihm/widgets/commit_graph.dart';
-import 'package:git_ihm/widgets/console/command_result.dart';
-import 'package:git_ihm/widgets/console/git_console.dart';
-import 'package:git_ihm/widgets/file_tree.dart';
-import 'package:git_ihm/widgets/panel_container.dart';
-import 'package:git_ihm/widgets/repository_status.dart';
-
-import 'shared/path_selector.dart';
+import 'package:git_ihm/widget/button/command_button.dart';
+import 'package:git_ihm/widget/clever_infos.dart';
+import 'package:git_ihm/widget/commit_graph.dart';
+import 'package:git_ihm/widget/console/command_result.dart';
+import 'package:git_ihm/widget/console/git_console.dart';
+import 'package:git_ihm/widget/file_tree.dart';
+import 'package:git_ihm/widget/git_chip.dart';
+import 'package:git_ihm/widget/panel_container.dart';
+import 'package:git_ihm/widget/path_selector.dart';
+import 'package:git_ihm/widget/project_path.dart';
+import 'package:git_ihm/widget/repository_status.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);

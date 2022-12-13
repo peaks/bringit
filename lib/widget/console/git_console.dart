@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:git_ihm/widgets/console/command_result.dart';
-import 'package:git_ihm/widgets/console/git_console_history.dart';
-import 'package:git_ihm/widgets/console/git_console_input.dart';
+import 'package:git_ihm/widget/console/command_result.dart';
+import 'package:git_ihm/widget/console/git_console_history.dart';
+import 'package:git_ihm/widget/console/git_console_input.dart';
 
 class GitConsole extends StatefulWidget {
   const GitConsole({

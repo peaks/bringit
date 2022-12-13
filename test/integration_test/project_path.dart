@@ -3,13 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 import 'package:git_ihm/data/git_proxy_implementation.dart';
 import 'package:git_ihm/screen/home_screen.dart';
-import 'package:git_ihm/screen/shared/path_selector.dart';
+import 'package:git_ihm/widget/path_selector.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../test/git_dependent_loader.dart';
-import '../test/mock/git_registry_mock.dart';
-import '../test/mock/path_manager_mock.dart';
-import '../test/screen/shared/path_selector_test.dart';
+import '../git_dependent_loader.dart';
+import '../mock/git_registry_mock.dart';
+import '../mock/path_manager_mock.dart';
+import '../widget/path_selector_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

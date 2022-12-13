@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/data/git_proxy.dart';
-import 'package:git_ihm/screen/shared/git_chip.dart';
+import 'package:git_ihm/widget/git_chip.dart';
 
-import '../../git_dependent_loader.dart';
-import '../../mock/git_proxy_mock.dart';
+import '../git_dependent_loader.dart';
+import '../mock/git_proxy_mock.dart';
 
 void main() {
   testWidgets('it displays fetching message on loading',

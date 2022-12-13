@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:git_ihm/screen/shared/git_tree_node.dart';
+import 'package:git_ihm/widget/git_tree_node.dart';
 
 void main() {
   late Node<void> nodeSource;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/data/git_proxy.dart';
-import 'package:git_ihm/screen/shared/path_selector.dart';
+import 'package:git_ihm/widget/path_selector.dart';
 
-import '../../git_dependent_loader.dart';
-import '../../mock/git_proxy_mock.dart';
+import '../git_dependent_loader.dart';
+import '../mock/git_proxy_mock.dart';
 
 late GitProxyMock _gitProxy;
 

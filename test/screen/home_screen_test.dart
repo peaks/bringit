@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/screen/home_screen.dart';
-import 'package:git_ihm/screen/shared/git_chip.dart';
-import 'package:git_ihm/screen/shared/path_selector.dart';
+import 'package:git_ihm/widget/git_chip.dart';
+import 'package:git_ihm/widget/path_selector.dart';
 
 import '../git_dependent_loader.dart';
 import '../mock/git_proxy_mock.dart';

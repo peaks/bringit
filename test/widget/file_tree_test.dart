@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:git_ihm/widgets/file_tree.dart';
+import 'package:git_ihm/widget/file_tree.dart';
 
 import '../git_dependent_loader.dart';
 import '../utils/file/tree/tree_data_file_loader_test.dart';
