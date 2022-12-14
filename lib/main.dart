@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Clever Git',
       theme: NordTheme.dark(),
       home: const MainScreen(),
