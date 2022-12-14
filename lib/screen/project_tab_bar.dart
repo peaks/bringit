@@ -9,8 +9,18 @@ class ProjectTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: AlignmentDirectional.centerStart,
-      padding: const EdgeInsets.all(8),
-      child: const Text('Project 1'),
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: Image.asset(
+              'assets/gitlogo.png',
+              width: 100,
+            ),
+          ),
+          const Text('Project 1'),
+        ],
+      ),
     );
   }
 }
