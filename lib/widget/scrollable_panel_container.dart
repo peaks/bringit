@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 
 class ScrollablePanelContainer extends StatelessWidget {
   const ScrollablePanelContainer(
@@ -26,10 +27,11 @@ class ScrollablePanelContainer extends StatelessWidget {
           children: <Widget>[
             Text(
               title.toUpperCase(),
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: const TextStyle(color: NordColors.$8),
             ),
             const Divider(
-              color: Colors.white,
+              color: NordColors.$0,
+              thickness: 1,
             ),
             Expanded(
               child: Scrollbar(

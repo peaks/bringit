@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
 class PlaceholderPanel extends StatelessWidget {
@@ -12,6 +13,7 @@ class PlaceholderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScrollablePanelContainer(
+      backgroundColor: NordColors.$1,
       flex: flex,
       title: title,
       child: Center(

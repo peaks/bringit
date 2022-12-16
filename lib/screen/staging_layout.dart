@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:git_ihm/utils/placeholder_panel.dart';
+import 'package:git_ihm/widget/divider_vertical.dart';
 
 class StagingLayout extends StatelessWidget {
   const StagingLayout({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class StagingLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
-        children: <Expanded>[
+        children: <Widget>[
           Expanded(
             flex: 2,
             child: Column(children: const <Widget>[
@@ -20,6 +21,7 @@ class StagingLayout extends StatelessWidget {
               ),
             ]),
           ),
+          const DividerVertical(),
           Expanded(
             child: Column(children: const <Widget>[
               PlaceholderPanel(
