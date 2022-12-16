@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({
@@ -33,6 +34,7 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     return NavigationRail(
+      backgroundColor: NordColors.$3,
       selectedIndex: selectedIndex,
       onDestinationSelected: (int index) {
         selectIndex(index);

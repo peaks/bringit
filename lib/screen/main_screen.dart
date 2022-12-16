@@ -58,12 +58,13 @@ class _MainScreenState extends State<MainScreen> {
                   onDestinationSelected: selectItem,
                 ),
                 Expanded(
-                    child: Column(
-                  children: <Widget>[
-                    navigationItems.elementAt(selectedItem).child,
-                    const StatusBar(),
-                  ],
-                ))
+                  child: Column(
+                    children: <Widget>[
+                      navigationItems.elementAt(selectedItem).child,
+                      const StatusBar(),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
