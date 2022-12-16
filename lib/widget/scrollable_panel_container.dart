@@ -27,8 +27,7 @@ class ScrollablePanelContainer extends StatelessWidget {
           children: <Widget>[
             Text(
               title.toUpperCase(),
-              style: const TextStyle(
-                  color: NordColors.$8, fontWeight: FontWeight.w500),
+              style: const TextStyle(color: NordColors.$8),
             ),
             const Divider(
               color: NordColors.$0,
