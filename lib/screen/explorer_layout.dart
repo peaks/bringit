@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:git_ihm/utils/placeholder_panel.dart';
+import 'package:git_ihm/widget/divider_vertical.dart';
 
 class ExplorerLayout extends StatelessWidget {
   const ExplorerLayout({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class ExplorerLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
-        children: <Expanded>[
+        children: <Widget>[
           Expanded(
             flex: 2,
             child: Column(children: const <Widget>[
@@ -17,6 +18,7 @@ class ExplorerLayout extends StatelessWidget {
               ),
             ]),
           ),
+          const DividerVertical(),
           Expanded(
             child: Column(children: const <Widget>[
               PlaceholderPanel(

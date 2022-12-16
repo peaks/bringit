@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 
 class ProjectTabBar extends StatelessWidget {
   const ProjectTabBar({
@@ -8,6 +9,7 @@ class ProjectTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: NordColors.$3,
       alignment: AlignmentDirectional.centerStart,
       child: Row(
         children: <Widget>[
@@ -18,7 +20,10 @@ class ProjectTabBar extends StatelessWidget {
               width: 100,
             ),
           ),
-          const Text('Project 1'),
+          const Text(
+            'Project 1',
+            style: TextStyle(color: NordColors.$8),
+          ),
         ],
       ),
     );
