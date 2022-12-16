@@ -8,7 +8,8 @@ class DividerVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VerticalDivider(
       color: NordColors.$0, //color of divider
-      width: 2, //width space of divider
+      width: 2,
+      endIndent: 10, //width space of divider
     );
   }
 }
