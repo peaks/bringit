@@ -9,11 +9,13 @@ class GIconTextButton extends StatefulWidget {
     required this.title,
     required this.icon,
     this.level = ButtonLevel.unknown,
+    required this.onPressed,
   }) : super(key: key);
 
   final String title;
   final IconData icon;
   final ButtonLevel level;
+  final GestureTapCallback onPressed;
 
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
     ButtonLevel.unknown: NordColors.$0,
@@ -49,7 +51,7 @@ class _GIconTextButtonState extends State<GIconTextButton> {
           foregroundColor: Colors.white,
           backgroundColor: buttonlevel[level],
         ),
-        onPressed: () {},
+        onPressed: widget.onPressed,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
