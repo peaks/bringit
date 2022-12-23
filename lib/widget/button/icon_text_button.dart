@@ -7,10 +7,12 @@ class IconTextButton extends StatefulWidget {
     Key? key,
     required this.title,
     required this.icon,
+    required this.onPressed,
   }) : super(key: key);
 
   final String title;
   final IconData icon;
+  final GestureTapCallback onPressed;
 
   @override
   State<IconTextButton> createState() => _IconTextButtonState();
@@ -30,7 +32,7 @@ class _IconTextButtonState extends State<IconTextButton> {
             color: hovercolor,
           ),
         ),
-        onPressed: () {},
+        onPressed: widget.onPressed,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
