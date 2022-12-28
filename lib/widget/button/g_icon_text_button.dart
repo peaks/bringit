@@ -46,24 +46,27 @@ class _GIconTextButtonState extends State<GIconTextButton> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: buttonlevel[level],
-        ),
-        onPressed: widget.onPressed,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(widget.title),
-            const SizedBox(
-              width: 5,
-            ),
-            Icon(
-              widget.icon,
-              size: 16,
-            ),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: buttonlevel[level],
+          ),
+          onPressed: widget.onPressed,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(widget.title),
+              const SizedBox(
+                width: 5,
+              ),
+              Icon(
+                widget.icon,
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ),
       onHover: (PointerHoverEvent s) {

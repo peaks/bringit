@@ -16,6 +16,7 @@ class StagingLayout extends StatelessWidget {
               PlaceholderPanel(
                 'Staging',
               ),
+              // StagingGButton(),
               PlaceholderPanel(
                 'Diff',
               ),
