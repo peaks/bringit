@@ -14,7 +14,7 @@ class StagingGButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: Row(
+            child: Wrap(
               children: <Widget>[
                 GIconTextButton(
                   title: 'Restore',

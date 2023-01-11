@@ -19,9 +19,9 @@ class GIconTextButton extends StatefulWidget {
 
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
     ButtonLevel.unknown: NordColors.$0,
-    ButtonLevel.careful: Colors.orange,
-    ButtonLevel.safe: Colors.green,
-    ButtonLevel.risky: Colors.red,
+    ButtonLevel.careful: NordColors.$12,
+    ButtonLevel.safe: NordColors.$14,
+    ButtonLevel.risky: NordColors.$11,
   };
 
   @override

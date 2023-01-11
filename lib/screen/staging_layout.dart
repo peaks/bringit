@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:git_ihm/utils/placeholder_panel.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
+import 'package:git_ihm/widget/staging_g_button.dart';
 
 class StagingLayout extends StatelessWidget {
   const StagingLayout({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class StagingLayout extends StatelessWidget {
               PlaceholderPanel(
                 'Staging',
               ),
-              // StagingGButton(),
+              StagingGButton(),
               PlaceholderPanel(
                 'Diff',
               ),
