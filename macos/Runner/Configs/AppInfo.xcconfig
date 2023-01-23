@@ -5,7 +5,7 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = git_ihm
+PRODUCT_NAME = Git Gud
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.example.gitIhm
