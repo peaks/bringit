@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
-import 'package:git_ihm/widget/button/g_icon_text_button.dart';
+
+import 'button/gamified_icon_text_button.dart';
 
 class StagingGButton extends StatelessWidget {
   const StagingGButton({Key? key}) : super(key: key);
@@ -16,31 +17,31 @@ class StagingGButton extends StatelessWidget {
           Expanded(
             child: Wrap(
               children: <Widget>[
-                GIconTextButton(
+                GamifiedIconTextButton(
                   title: 'Restore',
                   icon: Icons.restore,
                   onPressed: () {},
                   level: ButtonLevel.risky,
                 ),
-                GIconTextButton(
+                GamifiedIconTextButton(
                   title: 'Add All',
                   icon: Icons.arrow_circle_right_rounded,
                   onPressed: () {},
                   level: ButtonLevel.safe,
                 ),
-                GIconTextButton(
+                GamifiedIconTextButton(
                   title: 'Stash',
                   icon: Icons.cloud_download,
                   onPressed: () {},
                   level: ButtonLevel.safe,
                 ),
-                GIconTextButton(
+                GamifiedIconTextButton(
                   title: 'Restore staged',
                   icon: Icons.arrow_circle_left_rounded,
                   onPressed: () {},
                   level: ButtonLevel.safe,
                 ),
-                GIconTextButton(
+                GamifiedIconTextButton(
                   title: 'Delete',
                   icon: Icons.delete,
                   onPressed: () {},
@@ -51,7 +52,7 @@ class StagingGButton extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              GIconTextButton(
+              GamifiedIconTextButton(
                 title: 'Commit',
                 icon: Icons.check,
                 onPressed: () {},
