@@ -5,7 +5,7 @@ class CommitParser {
     if (consoleCommit.length < 3) {
       return null;
     }
-
+    final String commitBody = consoleCommit[3];
     final String commitSubject = consoleCommit[1];
     final List<String> hashTimeStampAuthor =
         _splitOnAntiSlash(consoleCommit[0]);
@@ -15,6 +15,7 @@ class CommitParser {
         _buildDateFromTimeStamp(hashTimeStampAuthor),
         _getCommitAuthor(hashTimeStampAuthor),
         commitSubject,
+        commitBody,
         _getReferences(consoleCommit));
   }
 

@@ -7,13 +7,14 @@ void main() {
       DateTime? date,
       String author = 'John Doe',
       String subject = 'a nice commit',
+      String body = 'body commit',
       List<String>? references}) {
     date = (date is DateTime) ? date : DateTime(2022, 12, 25);
     references = (references is List<String>)
         ? references
         : <String>['master', 'first-branch'];
 
-    return GitCommit(hash, date, author, subject, references);
+    return GitCommit(hash, date, author, subject, body, references);
   }
 
   test('Two GitCommit instances with same values are equals', () {

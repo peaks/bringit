@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 
 @immutable
 class GitCommit {
-  const GitCommit(this.hashValue, this.date, this.author, this.subject,
+  const GitCommit(
+      this.hashValue, this.date, this.author, this.subject, this.body,
       [this.references = const <String>[]]);
 
   final String hashValue;
   final DateTime date;
   final String author;
   final String subject;
+
   final List<String> references;
+  final String body;
 
   @override
   int get hashCode => hashValue.hashCode;

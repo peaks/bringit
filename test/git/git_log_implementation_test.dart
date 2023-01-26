@@ -49,6 +49,7 @@ void main() {
             DateTime.fromMillisecondsSinceEpoch(1655709244 * 1000),
             'lreus',
             'commit subject',
+            'commit body',
             const <String>['master'])
       ]);
     });
@@ -69,12 +70,14 @@ void main() {
             DateTime.fromMillisecondsSinceEpoch(1655709244 * 1000),
             'lreus',
             'next commit',
+            '',
             const <String>['master']),
         GitCommit(
             'a0ed13f',
             DateTime.fromMillisecondsSinceEpoch(1655400000 * 1000),
             'lreus',
             'first commit',
+            '',
             const <String>['origin/another-feat'])
       ]);
     });

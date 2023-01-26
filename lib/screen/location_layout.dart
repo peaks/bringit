@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:git_ihm/utils/placeholder_panel.dart';
+import 'package:git_ihm/widget/commit_summary.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
@@ -11,18 +13,17 @@ class LocationLayout extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-              flex: 2,
-              child: Column(children: const <Widget>[
-                ScrollablePanelContainer(
-                  title: 'Commits',
-                  child: Center(
-                    child: Text(
-                      'Content',
-                      style: TextStyle(fontSize: 32),
-                    ),
-                  ),
-                ),
-              ])),
+            flex: 2,
+            child: Column(children: const <Widget>[
+              PlaceholderPanel(
+                'Commits',
+              ),
+              PlaceholderPanel(
+                'Commit Summary',
+                widget: CommitSummary(),
+              ),
+            ]),
+          ),
           const DividerVertical(),
           Expanded(
               flex: 1,
