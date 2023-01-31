@@ -5,7 +5,7 @@ class CommitParser {
     if (consoleCommit.length < 3) {
       return null;
     }
-    final String commitBody = consoleCommit[3];
+    const String commitBody = '<<body parsing not implemented>>';
     final String commitSubject = consoleCommit[1];
     final List<String> hashTimeStampAuthor =
         _splitOnAntiSlash(consoleCommit[0]);

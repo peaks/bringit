@@ -3,18 +3,17 @@ import 'package:git_ihm/data/git/git_commit.dart';
 import 'package:git_ihm/data/git_list_commit.dart';
 
 class ListCommitSummary extends StatefulWidget {
-  ListCommitSummary({
+  const ListCommitSummary({
     Key? key,
     required this.hashValue,
   }) : super(key: key);
 
-  String hashValue;
+  final String hashValue;
   @override
   State<ListCommitSummary> createState() => _ListCommitSummaryState();
 }
 
 class _ListCommitSummaryState extends State<ListCommitSummary> {
-  @override
   late String hash;
   late final GitCommit commit = getCommit(hash);
 
@@ -48,12 +47,12 @@ class _ListCommitSummaryState extends State<ListCommitSummary> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         Row(
-                          children: [
+                          children: <Widget>[
                             Container(child: Text(commit.author)),
                             Container(child: const Text('email')),
                           ],
@@ -78,7 +77,10 @@ class _ListCommitSummaryState extends State<ListCommitSummary> {
                       alignment: Alignment.topLeft,
                     ),
                     Row(
-                      children: const [Text('branch name'), Text('version')],
+                      children: const <Text>[
+                        Text('branch name'),
+                        Text('version')
+                      ],
                     ),
                   ],
                 ),

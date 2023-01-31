@@ -6,7 +6,7 @@ class CommitSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListCommitSummary(
+    return const ListCommitSummary(
       hashValue: '454fdf5d',
     );
   }
