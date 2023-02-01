@@ -5,8 +5,9 @@ class CommitParser {
     if (consoleCommit.length < 3) {
       return null;
     }
-    const String commitBody = '<<body parsing not implemented>>';
+    const String commitBody = 'body parsing not implemented';
     final String commitSubject = consoleCommit[1];
+    const String commitEmail = 'not@yet.implemented';
     final List<String> hashTimeStampAuthor =
         _splitOnAntiSlash(consoleCommit[0]);
 
@@ -14,6 +15,7 @@ class CommitParser {
         _getCommitHash(hashTimeStampAuthor),
         _buildDateFromTimeStamp(hashTimeStampAuthor),
         _getCommitAuthor(hashTimeStampAuthor),
+        commitEmail,
         commitSubject,
         commitBody,
         _getReferences(consoleCommit));

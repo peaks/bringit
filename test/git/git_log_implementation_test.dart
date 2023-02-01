@@ -21,7 +21,6 @@ void main() {
 
     Future<void> _thenImplementationReturns(List<GitCommit> expected) async {
       final List<GitCommit> testResult = await _doTest('any path');
-
       expect(_listAreEquals(expected, testResult), true);
     }
 
@@ -48,6 +47,7 @@ void main() {
             'a0ed12h',
             DateTime.fromMillisecondsSinceEpoch(1655709244 * 1000),
             'lreus',
+            'not@yet.implemented',
             'commit subject',
             'commit body',
             const <String>['master'])
@@ -69,6 +69,7 @@ void main() {
             'a0ed12h',
             DateTime.fromMillisecondsSinceEpoch(1655709244 * 1000),
             'lreus',
+            'not@yet.implemented',
             'next commit',
             '',
             const <String>['master']),
@@ -76,6 +77,7 @@ void main() {
             'a0ed13f',
             DateTime.fromMillisecondsSinceEpoch(1655400000 * 1000),
             'lreus',
+            'not@yet.implemented',
             'first commit',
             '',
             const <String>['origin/another-feat'])

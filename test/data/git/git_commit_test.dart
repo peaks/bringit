@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 void main() {
   GitCommit _buildNewCommit(
       {String hash = 'commitHash',
+      String email = 'hot@yet.implemente',
       DateTime? date,
       String author = 'John Doe',
       String subject = 'a nice commit',
@@ -14,7 +15,7 @@ void main() {
         ? references
         : <String>['master', 'first-branch'];
 
-    return GitCommit(hash, date, author, subject, body, references);
+    return GitCommit(hash, date, author, subject, body, email, references);
   }
 
   test('Two GitCommit instances with same values are equals', () {
