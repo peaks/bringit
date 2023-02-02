@@ -18,7 +18,7 @@ class LocationLayout extends StatelessWidget {
                   child: Center(
                     child: Text(
                       'Content',
-                      style: const TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 32),
                     ),
                   ),
                 ),
@@ -32,7 +32,7 @@ class LocationLayout extends StatelessWidget {
                   child: Center(
                     child: Text(
                       'Content',
-                      style: const TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 32),
                     ),
                   ),
                 ),
@@ -41,7 +41,7 @@ class LocationLayout extends StatelessWidget {
                   child: Center(
                     child: Text(
                       'Content',
-                      style: const TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 32),
                     ),
                   ),
                 ),

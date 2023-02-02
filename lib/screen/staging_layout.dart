@@ -14,24 +14,23 @@ class StagingLayout extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Column(children: const <Widget>[
+              // removed PlaceholderPanel because useless just extra layer
               ScrollablePanelContainer(
                 title: 'Staging',
                 child: Center(
                   child: Text(
                     'Content',
-                    style: const TextStyle(fontSize: 32),
+                    style: TextStyle(fontSize: 32),
                   ),
                 ),
               ),
-              Expanded(
-                child: StagingGButton(),
-              ),
+              StagingGButton(),
               ScrollablePanelContainer(
                 title: 'Diff',
                 child: Center(
                   child: Text(
                     'Content',
-                    style: const TextStyle(fontSize: 32),
+                    style: TextStyle(fontSize: 32),
                   ),
                 ),
               ),
@@ -42,38 +41,26 @@ class StagingLayout extends StatelessWidget {
               flex: 1,
               child: Column(children: const <Widget>[
                 ScrollablePanelContainer(
+                  flex: 2,
                   title: 'Commits',
                   child: Center(
                     child: Text(
                       'Content',
-                      style: const TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 32),
                     ),
                   ),
                 ),
                 ScrollablePanelContainer(
+                  flex: 1,
                   title: 'Console',
                   child: Center(
                     child: Text(
                       'Content',
-                      style: const TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 32),
                     ),
                   ),
                 ),
               ])),
-          // Expanded(
-          //   flex: 2,
-          //   child: Column(children: <PlaceholderPanel>[
-          //     PlaceholderPanel('Staging'),
-          //     PlaceholderPanel('Diff'),
-          //   ]),
-          // ),
-          // Expanded(
-          //   flex: 1,
-          //   child: Column(children: <PlaceholderPanel>[
-          //     PlaceholderPanel('Commits', flex: 2),
-          //     PlaceholderPanel('Console'),
-          //   ]),
-          // ),
         ],
       ),
     );

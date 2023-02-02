@@ -10,26 +10,35 @@ class ScrollablePanelContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
-    return Container(
-      padding: const EdgeInsets.all(8),
-      color: backgroundColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(
-            title.toUpperCase(),
-            style: const TextStyle(color: NordColors.$8),
-          ),
-          const Divider(
-            color: NordColors.$0,
-            thickness: 1,
-          ),
-          SingleChildScrollView(
-            controller: _scrollController,
-            child: child,
-          ),
-        ],
+    return Expanded(
+      flex: flex,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        color: NordColors.$1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Text(
+              title.toUpperCase(),
+              style: const TextStyle(color: NordColors.$8),
+            ),
+            const Divider(
+              color: NordColors.$0,
+              thickness: 1,
+            ),
+            Expanded(
+              child: Scrollbar(
+                controller: _scrollController,
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: child,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

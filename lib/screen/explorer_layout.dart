@@ -15,43 +15,54 @@ class ExplorerLayout extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Text(
-                  'File viewer'.toUpperCase(),
-                  style: const TextStyle(color: NordColors.$8),
-                ),
-                const Divider(
-                  color: NordColors.$0,
-                  thickness: 1,
-                ),
-                FileTree(),
-              ],
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              color: NordColors.$1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Text(
+                    'File viewer'.toUpperCase(),
+                    style: const TextStyle(color: NordColors.$8),
+                  ),
+                  const Divider(
+                    color: NordColors.$0,
+                    thickness: 1,
+                  ),
+                  // file tree to re code but for now to complicated to but in a ScrollablePanelContainer because already contains a scroll management
+                  const FileTree(),
+                ],
+              ),
             ),
           ),
           const DividerVertical(),
           Expanded(
               flex: 1,
               child: Column(children: const <Widget>[
-                ScrollablePanelContainer(
-                  title: 'Explorer',
-                  child: Center(
-                    child: Text(
-                      'Content',
-                      style: const TextStyle(fontSize: 32),
-                    ),
-                  ),
-                ),
-                ScrollablePanelContainer(
-                    title: 'Console',
+                Expanded(
+                  flex: 2,
+                  child: ScrollablePanelContainer(
+                    title: 'Explorer',
                     child: Center(
                       child: Text(
                         'Content',
-                        style: const TextStyle(fontSize: 32),
+                        style: TextStyle(fontSize: 32),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ScrollablePanelContainer(
+                      title: 'Console',
+                      child: Center(
+                        child: Text(
+                          'Content',
+                          style: TextStyle(fontSize: 32),
+                        ),
+                      )),
+                ),
               ])),
         ],
       ),

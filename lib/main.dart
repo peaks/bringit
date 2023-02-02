@@ -8,6 +8,7 @@ import 'data/git/git_factory.dart';
 import 'data/git_proxy.dart';
 
 Future<void> main() async {
+  // added to run the app. Crash without it
   WidgetsFlutterBinding.ensureInitialized();
   final GitFactory f = GitFactory();
   final GitProxy git = await f.getGit();

@@ -29,43 +29,49 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: Image.asset(
-            'assets/gitlogo.png',
-            width: 200,
-            height: 200,
+      // add preferredSize to customise appbar height
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(35.0),
+        // appbar widget to us here instead of top widget in body
+        child: AppBar(
+          elevation: 0,
+          leadingWidth: 100,
+          leading: Container(
+              height: 35,
+              child: Image.asset(
+                'assets/gitlogo.png',
+                fit: BoxFit.fitHeight,
+              )),
+          title: Container(
+            alignment: Alignment.centerLeft,
+            child: const Text(
+              'Project 1',
+              style: TextStyle(color: NordColors.$8, fontSize: 14),
+            ),
           ),
+          // actions in appbar to add buttons here the selection of the  project's path
+          actions: const <Widget>[PathSelector()],
         ),
-        title: const Text(
-          'Project 1',
-          style: TextStyle(color: NordColors.$8),
-        ),
-        actions: const <Widget>[PathSelector()],
       ),
       body: Row(
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
+          // flutter library added in pubspec.yaml
+          // library offer a lot of possibilities
+          // collapsing & labels etc
           SideMenu(
             style: SideMenuStyle(
-                displayMode: SideMenuDisplayMode.compact,
-                hoverColor: NordColors.$2,
-                selectedIconColor: Colors.white,
-                unselectedIconColor: Colors.grey,
-                backgroundColor: NordColors.$3,
-                compactSideMenuWidth: 70,
-                iconSize: 25,
-                itemBorderRadius: const BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-                showTooltip: true,
-                itemHeight: 60.0,
-                itemInnerSpacing: 8.0,
-                itemOuterPadding: const EdgeInsets.all(5.0),
-                toggleColor: Colors.black54),
+              displayMode: SideMenuDisplayMode.compact,
+              selectedIconColor: NordColors.$8,
+              backgroundColor: NordColors.$3,
+              selectedColor: Colors.transparent,
+              compactSideMenuWidth: 70,
+              iconSize: 25,
+              itemHeight: 60.0,
+              itemInnerSpacing: 8.0,
+              itemOuterPadding: const EdgeInsets.all(5.0),
+            ),
             controller: sideMenu,
-            items: [
+            items: <SideMenuItem>[
               SideMenuItem(
                 priority: 0,
                 onTap: (int page, _) {
@@ -87,16 +93,21 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 icon: const Icon(Icons.commit_rounded),
               ),
-              const SideMenuItem(
-                priority: 7,
-                icon: Icon(Icons.exit_to_app),
-              ),
             ],
           ),
           Expanded(
-            child: PageView(
-              controller: page,
-              children: [StagingLayout(), ExplorerLayout(), LocationLayout(), StatusBar()],
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  // use pageview when menu nav is used to switch body display on same Scaffold screen
+                  child: PageView(
+                    controller: page,
+                    children: const <Widget>[StagingLayout(), ExplorerLayout(), LocationLayout()],
+                  ),
+                ),
+                // statusBAr placed here to stay whatever content is displayed
+                const StatusBar()
+              ],
             ),
           ),
         ],
