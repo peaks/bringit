@@ -36,6 +36,7 @@ dependencies:
   path: ^1.8.0
   flutter_treeview: ^1.0.7+1
   flutter_nord_theme: ^2.1.0
+  easy_sidemenu: ^0.4.1+1
 
 dev_dependencies:
   mockito: ^5.2.0

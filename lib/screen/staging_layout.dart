@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:git_ihm/utils/placeholder_panel.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
+import 'package:git_ihm/widget/scrollable_panel_container.dart';
 import 'package:git_ihm/widget/staging_g_button.dart';
 
 class StagingLayout extends StatelessWidget {
@@ -8,33 +8,58 @@ class StagingLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 2,
             child: Column(children: const <Widget>[
-              PlaceholderPanel(
-                'Staging',
+              ScrollablePanelContainer(
+                title: 'Staging',
+                child: Center(
+                  child: Text(
+                    'Content',
+                    style: const TextStyle(fontSize: 32),
+                  ),
+                ),
               ),
-              StagingGButton(),
-              PlaceholderPanel(
-                'Diff',
+              Expanded(
+                child: StagingGButton(),
+              ),
+              ScrollablePanelContainer(
+                title: 'Diff',
+                child: Center(
+                  child: Text(
+                    'Content',
+                    style: const TextStyle(fontSize: 32),
+                  ),
+                ),
               ),
             ]),
           ),
           const DividerVertical(),
           Expanded(
-            child: Column(children: const <Widget>[
-              PlaceholderPanel(
-                'Commits',
-                flex: 2,
-              ),
-              PlaceholderPanel(
-                'Console',
-              ),
-            ]),
-          ),
+              flex: 1,
+              child: Column(children: const <Widget>[
+                ScrollablePanelContainer(
+                  title: 'Commits',
+                  child: Center(
+                    child: Text(
+                      'Content',
+                      style: const TextStyle(fontSize: 32),
+                    ),
+                  ),
+                ),
+                ScrollablePanelContainer(
+                  title: 'Console',
+                  child: Center(
+                    child: Text(
+                      'Content',
+                      style: const TextStyle(fontSize: 32),
+                    ),
+                  ),
+                ),
+              ])),
           // Expanded(
           //   flex: 2,
           //   child: Column(children: <PlaceholderPanel>[
