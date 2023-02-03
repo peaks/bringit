@@ -4,6 +4,7 @@ import 'package:git_ihm/data/git_list_commit.dart';
 import 'package:git_ihm/widget/commit_info.dart';
 import 'package:git_ihm/widget/commit_timestamp.dart';
 import 'package:git_ihm/widget/info_user_commit.dart';
+import 'package:git_ihm/widget/profile_user.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -33,47 +34,51 @@ class CommitSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final String commitRelativeDate = getTimeAgoCommit(commit.date);
     final String formmattedDate = formatDate(commit.date);
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 8, left: 8),
-            child: CircleAvatar(
-              backgroundImage: const AssetImage('assets/utilisateur.png'),
-              radius: 25,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 0,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InfoUserCommit(
-                            userAuthor: commit.author, userEmail: commit.email),
-                        CommitTimestamp(
-                          commitDate: formmattedDate,
-                          commitRelativeDate: commitRelativeDate,
-                        ),
-                      ],
-                    ),
-                    CommitInfo(
-                        commitHash: commit.hashValue,
-                        commitsubject: commit.subject,
-                        commitBody: commit.body),
-                  ],
-                ),
+                padding: const EdgeInsets.only(top: 8),
+                child: ProfileUser(userEmail: commit.email),
               ),
             ),
-          )
-        ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          InfoUserCommit(
+                              userAuthor: commit.author,
+                              userEmail: commit.email),
+                          CommitTimestamp(
+                            commitDate: formmattedDate,
+                            commitRelativeDate: commitRelativeDate,
+                          ),
+                        ],
+                      ),
+                      CommitInfo(
+                          commitHash: commit.hashValue,
+                          commitsubject: commit.subject,
+                          commitBody: commit.body),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

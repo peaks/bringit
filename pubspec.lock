@@ -219,6 +219,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_gravatar:
+    dependency: "direct main"
+    description:
+      name: flutter_gravatar
+      sha256: cf501cf3743992a2064b0d1fb5ef57bc343db4a3a252fbc46fd870828910360f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   flutter_nord_theme:
     dependency: "direct main"
     description:
