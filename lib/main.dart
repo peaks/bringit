@@ -8,14 +8,11 @@ import 'data/git/git_factory.dart';
 import 'data/git_proxy.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final GitFactory f = GitFactory();
   final GitProxy git = await f.getGit();
-
   final MultiProvider myApp = MultiProvider(
-    providers: <InheritedProvider<dynamic>>[
-      ChangeNotifierProvider<GitProxy>(create: (BuildContext context) => git),
-      Provider<UtilsFactory>(create: (_) => UtilsFactory())
-    ],
+    providers: <InheritedProvider<dynamic>>[ChangeNotifierProvider<GitProxy>(create: (BuildContext context) => git), Provider<UtilsFactory>(create: (_) => UtilsFactory())],
     child: const MyApp(),
   );
 
