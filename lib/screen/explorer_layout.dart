@@ -14,7 +14,8 @@ class ExplorerLayout extends StatelessWidget {
       child: Row(
         children: <Widget>[
           const ScrollablePanelContainer(
-            title: 'File viewer',
+            flex: 2,
+            title: 'Preview',
             child: Center(
               child: Text(
                 'Content',
