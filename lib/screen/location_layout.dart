@@ -28,6 +28,7 @@ class LocationLayout extends StatelessWidget {
               flex: 1,
               child: Column(children: const <Widget>[
                 ScrollablePanelContainer(
+                  flex: 2,
                   title: 'Locations',
                   child: Center(
                     child: Text(
