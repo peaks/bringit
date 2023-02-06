@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:git_ihm/utils/placeholder_panel.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
+import 'package:git_ihm/widget/scrollable_panel_container.dart';
 import 'package:git_ihm/widget/staging_g_button.dart';
 
 class StagingLayout extends StatelessWidget {
@@ -8,47 +8,59 @@ class StagingLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 2,
             child: Column(children: const <Widget>[
-              PlaceholderPanel(
-                'Staging',
+              // removed PlaceholderPanel because useless just extra layer
+              ScrollablePanelContainer(
+                title: 'Staging',
+                child: Center(
+                  child: Text(
+                    'Content',
+                    style: TextStyle(fontSize: 32),
+                  ),
+                ),
               ),
               StagingGButton(),
-              PlaceholderPanel(
-                'Diff',
+              ScrollablePanelContainer(
+                title: 'Diff',
+                child: Center(
+                  child: Text(
+                    'Content',
+                    style: TextStyle(fontSize: 32),
+                  ),
+                ),
               ),
             ]),
           ),
           const DividerVertical(),
           Expanded(
-            child: Column(children: const <Widget>[
-              PlaceholderPanel(
-                'Commits',
-                flex: 2,
-              ),
-              PlaceholderPanel(
-                'Console',
-              ),
-            ]),
-          ),
-          // Expanded(
-          //   flex: 2,
-          //   child: Column(children: <PlaceholderPanel>[
-          //     PlaceholderPanel('Staging'),
-          //     PlaceholderPanel('Diff'),
-          //   ]),
-          // ),
-          // Expanded(
-          //   flex: 1,
-          //   child: Column(children: <PlaceholderPanel>[
-          //     PlaceholderPanel('Commits', flex: 2),
-          //     PlaceholderPanel('Console'),
-          //   ]),
-          // ),
+              flex: 1,
+              child: Column(children: const <Widget>[
+                ScrollablePanelContainer(
+                  flex: 2,
+                  title: 'Commits',
+                  child: Center(
+                    child: Text(
+                      'Content',
+                      style: TextStyle(fontSize: 32),
+                    ),
+                  ),
+                ),
+                ScrollablePanelContainer(
+                  flex: 1,
+                  title: 'Console',
+                  child: Center(
+                    child: Text(
+                      'Content',
+                      style: TextStyle(fontSize: 32),
+                    ),
+                  ),
+                ),
+              ])),
         ],
       ),
     );
