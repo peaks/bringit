@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
+import 'package:git_ihm/widget/git_chip.dart';
+import 'package:git_ihm/widget/project_path.dart';
 
 class StatusBar extends StatelessWidget {
   const StatusBar({
@@ -18,9 +20,11 @@ class StatusBar extends StatelessWidget {
             height: 0,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: const <Widget>[
-              Text('STATUS BAR'),
+              GitChip(),
+              ProjectPath(),
             ],
           ),
         ],

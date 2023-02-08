@@ -43,12 +43,25 @@ class LocationLayout extends StatelessWidget {
                     ),
                   ),
                 ),
-                ScrollablePanelContainer(
-                  title: 'Console',
-                  child: Center(
-                    child: Text(
-                      'Content',
-                      style: TextStyle(fontSize: 32),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    color: NordColors.$1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Text(
+                          'Console'.toUpperCase(),
+                          style: const TextStyle(color: NordColors.$8),
+                        ),
+                        const Divider(
+                          color: NordColors.$0,
+                          thickness: 1,
+                        ),
+                        // file tree to re code but for now to complicated to but in a ScrollablePanelContainer because already contains a scroll management
+                        const GitConsole(),
+                      ],
                     ),
                   ),
                 ),

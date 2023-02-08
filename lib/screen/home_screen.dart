@@ -26,28 +26,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cmdController = TextEditingController();
   final FocusNode _cmdFocus = FocusNode();
-  final TextEditingController _resultController = TextEditingController();
   bool _lastCommandSucceeded = true;
 
   CommandResult _runCommand(String command) {
     _setCurrentCommand(command);
-    final ProcessResult result = Process.runSync('git', command.split(' '),
-        includeParentEnvironment: false, workingDirectory: './');
+    final ProcessResult result = Process.runSync('git', command.split(' '), includeParentEnvironment: false, workingDirectory: './');
     setState(() {
       _lastCommandSucceeded = result.exitCode == 0;
     });
     _cmdFocus.requestFocus();
-    return CommandResult(
-        stdout: result.stdout.toString(),
-        stderr: result.stderr.toString(),
-        success: result.exitCode == 0);
+    return CommandResult(stdout: result.stdout.toString(), stderr: result.stderr.toString(), success: result.exitCode == 0);
   }
 
   void _setCurrentCommand(String command) {
     _cmdController.text = command;
     _cmdFocus.requestFocus();
-    _cmdController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _cmdController.text.length));
+    _cmdController.selection = TextSelection.fromPosition(TextPosition(offset: _cmdController.text.length));
   }
 
   final List<String> infoCommands = <String>[
@@ -93,41 +87,27 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => _runCommand(command),
           level: CommandLevel.info,
         )));
-    commands.addAll(remoteCommands.map((String command) => CommandButton(
-        title: command,
-        onPressed: () => _runCommand(command),
-        level: CommandLevel.remote)));
-    commands.addAll(safeCommands.map((String command) => CommandButton(
-        title: command,
-        onPressed: () => _runCommand(command),
-        level: CommandLevel.safe)));
-    commands.addAll(dangerousCommands.map((String command) => CommandButton(
-        title: command,
-        onPressed: () => _runCommand(command),
-        level: CommandLevel.dangerous)));
+    commands.addAll(remoteCommands.map((String command) => CommandButton(title: command, onPressed: () => _runCommand(command), level: CommandLevel.remote)));
+    commands.addAll(safeCommands.map((String command) => CommandButton(title: command, onPressed: () => _runCommand(command), level: CommandLevel.safe)));
+    commands.addAll(dangerousCommands.map((String command) => CommandButton(title: command, onPressed: () => _runCommand(command), level: CommandLevel.dangerous)));
 
     return Scaffold(
         appBar: _appBar(),
-        body: Padding(
+        body: Container(
             padding: const EdgeInsets.all(8.0),
             child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-              //Wrap(alignment: WrapAlignment.center, children: commands),
               Flexible(
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      _gitConsole(),
+                      GitConsole(),
                       _info(),
                     ],
                   )),
               Flexible(
                   flex: 3,
                   child: Row(
-                    children: <Widget>[
-                      _fileTree(),
-                      _commitTree(),
-                      _repositoryStatus()
-                    ],
+                    children: <Widget>[_fileTree(), _commitTree(), _repositoryStatus()],
                   ))
             ])),
         bottomNavigationBar: _footer());
@@ -138,19 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: const <Widget>[PathSelector()],
       );
 
-  Expanded _gitConsole() => Expanded(
-        flex: 1,
-        child: GitConsole(
-          cmdController: _cmdController,
-          cmdFocus: _cmdFocus,
-          lastCommandSucceeded: _lastCommandSucceeded,
-          resultController: _resultController,
-          runCommand: _runCommand,
-        ),
-      );
-
-  Expanded _info() =>
-      _buildExpandedPanelContainer('Smart', const CleverInfos());
+  Expanded _info() => _buildExpandedPanelContainer('Smart', const CleverInfos());
 
   Expanded _buildExpandedPanelContainer(String title, Widget child) {
     return Expanded(
@@ -162,14 +130,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Expanded _commitTree() =>
-      _buildExpandedPanelContainer('Commits', const CommitTree());
+  Expanded _commitTree() => _buildExpandedPanelContainer('Commits', const CommitTree());
 
-  Expanded _fileTree() =>
-      _buildExpandedPanelContainer('Files', const FileTree());
+  Expanded _fileTree() => _buildExpandedPanelContainer('Files', const FileTree());
 
-  Expanded _repositoryStatus() => _buildExpandedPanelContainer(
-      'Status', const Expanded(child: RepositoryStatus()));
+  Expanded _repositoryStatus() => _buildExpandedPanelContainer('Status', const Expanded(child: RepositoryStatus()));
 
   BottomAppBar _footer() => BottomAppBar(
           child: Row(
