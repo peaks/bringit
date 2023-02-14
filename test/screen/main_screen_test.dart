@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/screen/main_screen.dart';
-import 'package:git_ihm/screen/project_tab_bar.dart';
 import 'package:git_ihm/screen/side_menu.dart';
 import 'package:git_ihm/screen/status_bar.dart';
 
@@ -20,7 +19,7 @@ void main() {
     const String expectedTitle = 'Project 1';
     await buildMainScreen(tester);
 
-    expect(find.widgetWithText(ProjectTabBar, expectedTitle), findsOneWidget);
+    expect(find.widgetWithText(AppBar, expectedTitle), findsOneWidget);
   });
   testWidgets('contains a SideMenu widget', (WidgetTester tester) async {
     await buildMainScreen(tester);
@@ -56,7 +55,7 @@ Finder findStatusBarInApp() {
 }
 
 Finder findTabBar() {
-  return find.byType(ProjectTabBar);
+  return find.byType(AppBar);
 }
 
 Finder findSideMenu() {

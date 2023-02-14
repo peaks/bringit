@@ -4,7 +4,6 @@ import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/screen/explorer_layout.dart';
 import 'package:git_ihm/screen/location_layout.dart';
 import 'package:git_ihm/screen/staging_layout.dart';
-import 'package:git_ihm/screen/status_bar.dart';
 import 'package:git_ihm/widget/path_selector.dart';
 
 class MainScreen extends StatefulWidget {
