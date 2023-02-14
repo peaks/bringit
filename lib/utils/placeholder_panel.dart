@@ -3,8 +3,11 @@ import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
 class PlaceholderPanel extends StatelessWidget {
-  const PlaceholderPanel(this.title, {Key? key, this.flex = 1})
-      : super(
+  const PlaceholderPanel(
+    this.title, {
+    Key? key,
+    this.flex = 1,
+  }) : super(
           key: key,
         );
   final String title;
