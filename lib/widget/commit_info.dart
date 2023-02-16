@@ -11,7 +11,7 @@ class CommitInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ExpansionTile(
-        // shape: InputBorder.none,
+        shape: InputBorder.none,
         tilePadding: EdgeInsets.zero,
         controlAffinity: ListTileControlAffinity.leading,
         iconColor: NordColors.$4,
