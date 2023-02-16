@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/screen/explorer_layout.dart';
 import 'package:git_ihm/screen/location_layout.dart';
+import 'package:git_ihm/screen/side_menu.dart' as side_menu_custom;
 import 'package:git_ihm/screen/staging_layout.dart';
 import 'package:git_ihm/screen/status_bar.dart';
 import 'package:git_ihm/widget/path_selector.dart';
@@ -58,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
           // flutter library added in pubspec.yaml
           // library offer a lot of possibilities
           // collapsing & labels etc
-          SideMenu(
+          side_menu_custom.SideMenu(
             style: SideMenuStyle(
               displayMode: SideMenuDisplayMode.compact,
               selectedIconColor: NordColors.$8,
