@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 
 class CommitInfo extends StatelessWidget {
-  const CommitInfo(
-      {Key? key,
-      required this.commitHash,
-      required this.commitsubject,
-      required this.commitBody})
-      : super(key: key);
+  const CommitInfo({Key? key, required this.commitHash, required this.commitsubject, required this.commitBody}) : super(key: key);
   final String commitHash;
   final String commitsubject;
   final String commitBody;
@@ -16,7 +11,7 @@ class CommitInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ExpansionTile(
-        shape: InputBorder.none,
+        // shape: InputBorder.none,
         tilePadding: EdgeInsets.zero,
         controlAffinity: ListTileControlAffinity.leading,
         iconColor: NordColors.$4,
