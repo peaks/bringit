@@ -1,9 +1,28 @@
+// ignore_for_file: implementation_imports
+
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:easy_sidemenu/src/global/global.dart';
 import 'package:easy_sidemenu/src/side_menu_toggle.dart';
 import 'package:flutter/material.dart';
 
 class SideMenu extends StatefulWidget {
+  /// ### Easy Sidemenu widget
+  ///
+  /// Sidemenu is a menu that is usually located
+  /// on the left or right of the page and can used for navigation
+  const SideMenu({
+    Key? key,
+    required this.items,
+    required this.controller,
+    this.title,
+    this.footer,
+    this.style,
+    this.showToggle = false,
+    this.onDisplayModeChanged,
+    this.alwaysShowFooter = false,
+    this.collapseWidth = 600,
+  }) : super(key: key);
+
   /// Page controller to control [PageView] widget
   final SideMenuController controller;
 
@@ -34,23 +53,6 @@ class SideMenu extends StatefulWidget {
 
   /// Width when will our open menu collapse into the compact one
   final int? collapseWidth;
-
-  /// ### Easy Sidemenu widget
-  ///
-  /// Sidemenu is a menu that is usually located
-  /// on the left or right of the page and can used for navigation
-  const SideMenu({
-    Key? key,
-    required this.items,
-    required this.controller,
-    this.title,
-    this.footer,
-    this.style,
-    this.showToggle = false,
-    this.onDisplayModeChanged,
-    this.alwaysShowFooter = false,
-    this.collapseWidth = 600,
-  }) : super(key: key);
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -111,7 +113,7 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     Global.controller = widget.controller;
-    widget.items.sort((a, b) => a.priority.compareTo(b.priority));
+    widget.items.sort((SideMenuItem a, SideMenuItem b) => a.priority.compareTo(b.priority));
     Global.style = widget.style ?? SideMenuStyle();
     _currentWidth = _widthSize(Global.style.displayMode ?? SideMenuDisplayMode.auto, context);
 
@@ -120,10 +122,10 @@ class _SideMenuState extends State<SideMenu> {
       height: MediaQuery.of(context).size.height,
       decoration: _decoration(widget.style),
       child: Stack(
-        children: [
+        children: <Widget>[
           SingleChildScrollView(
             child: Column(
-              children: [
+              children: <Widget>[
                 if (Global.style.displayMode == SideMenuDisplayMode.compact && showToggle)
                   const SizedBox(
                     height: 42,
@@ -140,7 +142,7 @@ class _SideMenuState extends State<SideMenu> {
               padding: EdgeInsets.symmetric(horizontal: Global.displayModeState.value == SideMenuDisplayMode.open ? 0 : 4, vertical: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                children: <Widget>[
                   SideMenuToggle(
                     onTap: () {
                       if (Global.displayModeState.value == SideMenuDisplayMode.compact) {
