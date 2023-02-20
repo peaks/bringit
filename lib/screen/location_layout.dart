@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/utils/placeholder_panel.dart';
 import 'package:git_ihm/widget/commit_summary.dart';
+import 'package:git_ihm/widget/console/git_console.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
@@ -32,8 +33,8 @@ class LocationLayout extends StatelessWidget {
           const DividerVertical(),
           Expanded(
               flex: 1,
-              child: Column(children: const <Widget>[
-                ScrollablePanelContainer(
+              child: Column(children: <Widget>[
+                const ScrollablePanelContainer(
                   flex: 2,
                   title: 'Locations',
                   child: Center(
@@ -44,6 +45,7 @@ class LocationLayout extends StatelessWidget {
                   ),
                 ),
                 Expanded(
+                  flex: 1,
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     color: NordColors.$1,
@@ -59,7 +61,6 @@ class LocationLayout extends StatelessWidget {
                           color: NordColors.$0,
                           thickness: 1,
                         ),
-                        // file tree to re code but for now to complicated to but in a ScrollablePanelContainer because already contains a scroll management
                         const GitConsole(),
                       ],
                     ),

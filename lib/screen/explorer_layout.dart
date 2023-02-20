@@ -15,7 +15,7 @@ class ExplorerLayout extends StatefulWidget {
 
 class _ExplorerLayoutState extends State<ExplorerLayout> {
   void runCommand() {
-    print("here");
+    print('here');
   }
 
   @override
@@ -67,6 +67,7 @@ class _ExplorerLayoutState extends State<ExplorerLayout> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           'Console'.toUpperCase(),
@@ -76,7 +77,6 @@ class _ExplorerLayoutState extends State<ExplorerLayout> {
                           color: NordColors.$0,
                           thickness: 1,
                         ),
-                        // file tree to re code but for now to complicated to but in a ScrollablePanelContainer because already contains a scroll management
                         const GitConsole(),
                       ],
                     ),
