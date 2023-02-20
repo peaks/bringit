@@ -26,14 +26,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cmdController = TextEditingController();
   final FocusNode _cmdFocus = FocusNode();
-  bool _lastCommandSucceeded = true;
 
   CommandResult _runCommand(String command) {
     _setCurrentCommand(command);
     final ProcessResult result = Process.runSync('git', command.split(' '), includeParentEnvironment: false, workingDirectory: './');
-    setState(() {
-      _lastCommandSucceeded = result.exitCode == 0;
-    });
+    setState(() {});
     _cmdFocus.requestFocus();
     return CommandResult(stdout: result.stdout.toString(), stderr: result.stderr.toString(), success: result.exitCode == 0);
   }
@@ -100,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   flex: 1,
                   child: Row(
                     children: <Widget>[
-                      GitConsole(),
+                      const GitConsole(),
                       _info(),
                     ],
                   )),
