@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/data/git_proxy.dart';
 import 'package:git_ihm/data/git_proxy_implementation.dart';
-import 'package:git_ihm/screen/home_screen.dart';
+import 'package:git_ihm/screen/main_screen.dart';
 import 'package:git_ihm/widget/path_selector.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -34,10 +34,10 @@ GitProxyImplementation buildGitProxyWithMocks() {
 }
 
 Future<void> loadApplication(WidgetTester tester, GitProxy git) async {
-  const HomeScreen homeScreen = HomeScreen(title: 'any title');
+  const MainScreen mainScreen = MainScreen();
   final GitDependentLoader loader = GitDependentLoader();
   loader.gitProxy = git;
-  await tester.pumpWidget(loader.loadAppWithWidget(homeScreen));
+  await tester.pumpWidget(loader.loadAppWithWidget(mainScreen));
 }
 
 Future<void> updateProjectPath(WidgetTester tester, String newPath) async {
