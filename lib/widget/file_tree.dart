@@ -17,7 +17,6 @@ class FileTree extends StatefulWidget {
 class _FileTreeState extends State<FileTree> {
   final bool _allowParentSelect = false;
   final bool _supportParentDoubleTap = false;
-  final ScrollController _scrollController = ScrollController();
 
   late TreeDataFileLoader _fileLoader;
   late String _selectedNode = '';

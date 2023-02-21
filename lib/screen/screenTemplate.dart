@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/helpers/wording.dart';
+import 'package:git_ihm/widget/button/staging_g_button.dart';
 import 'package:git_ihm/widget/commit_summary.dart';
 import 'package:git_ihm/widget/console/git_console.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 import 'package:git_ihm/widget/file_tree.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
-import 'package:git_ihm/widget/staging_g_button.dart';
 
 class ScreenTemplate extends StatefulWidget {
   const ScreenTemplate({Key? key, this.type, this.title}) : super(key: key);

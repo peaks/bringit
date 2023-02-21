@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
 
-import 'button/gamified_icon_text_button.dart';
+import 'gamified_icon_text_button.dart';
 
 class StagingGButton extends StatelessWidget {
   const StagingGButton({Key? key}) : super(key: key);

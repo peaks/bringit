@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:git_ihm/widget/button/staging_g_button.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
-import 'package:git_ihm/widget/staging_g_button.dart';
 
 class StagingLayout extends StatelessWidget {
   const StagingLayout({Key? key}) : super(key: key);
