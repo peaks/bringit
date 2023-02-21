@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
-import 'package:git_ihm/utils/placeholder_panel.dart';
 import 'package:git_ihm/widget/commit_summary.dart';
 import 'package:git_ihm/widget/console/git_console.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
@@ -17,8 +16,13 @@ class LocationLayout extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Column(children: <Widget>[
-              const PlaceholderPanel(
-                'Commits',
+              const ScrollablePanelContainer(
+                backgroundColor: NordColors.$1,
+                flex: 1,
+                title: 'Commit',
+                child: Text(
+                  'Content',
+                ),
               ),
               ScrollablePanelContainer(
                 backgroundColor: NordColors.$1,

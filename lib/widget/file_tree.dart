@@ -108,20 +108,7 @@ class _FileTreeState extends State<FileTree> {
     return isExpanded ? _fileLoader.getNodes(nodeKey) : null;
   }
 
-  Expanded _buildTreeContainer(TreeView treeView) {
-    return Expanded(
-      child: Container(
-        height: double.infinity,
-        child: Scrollbar(
-          controller: _scrollController,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            controller: _scrollController,
-            child: treeView,
-          ),
-        ),
-      ),
-    );
+  TreeView _buildTreeContainer(TreeView treeView) {
+    return treeView;
   }
 }

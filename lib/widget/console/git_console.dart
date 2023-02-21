@@ -103,7 +103,6 @@ class _GitConsoleState extends State<GitConsole> {
     return Expanded(
       child: Column(
         children: <Widget>[
-          GitConsoleInput(cmdController: cmdController, cmdFocus: cmdFocus, lastCommandSucceeded: lastCommandSucceeded, runCommand: runCommand),
           Expanded(
               child: Scrollbar(
                   controller: _scrollController,
@@ -117,6 +116,7 @@ class _GitConsoleState extends State<GitConsole> {
                             reverse: true,
                             children: _gitConsoleHistory.values.toList(),
                           ))))),
+          GitConsoleInput(cmdController: cmdController, cmdFocus: cmdFocus, lastCommandSucceeded: lastCommandSucceeded, runCommand: runCommand),
         ],
       ),
     );

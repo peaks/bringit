@@ -37,28 +37,10 @@ class _ExplorerLayoutState extends State<ExplorerLayout> {
           Expanded(
               flex: 1,
               child: Column(children: <Widget>[
-                Expanded(
+                const ScrollablePanelContainer(
                   flex: 2,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    color: NordColors.$1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Text(
-                          'Explorer'.toUpperCase(),
-                          style: const TextStyle(color: NordColors.$8),
-                        ),
-                        const Divider(
-                          color: NordColors.$0,
-                          thickness: 1,
-                        ),
-                        // file tree to re code but for now to complicated to but in a ScrollablePanelContainer because already contains a scroll management
-                        const FileTree(),
-                      ],
-                    ),
-                  ),
+                  title: 'Explorer',
+                  child: FileTree(),
                 ),
                 Expanded(
                   child: Container(

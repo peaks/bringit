@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_ihm/screen/main_screen.dart';
-import 'package:git_ihm/screen/side_menu.dart' as side_menu_custom;
-import 'package:git_ihm/screen/status_bar.dart';
+import 'package:git_ihm/widget/side_menu.dart' as side_menu_custom;
+import 'package:git_ihm/widget/status_bar.dart';
 
 import '../git_dependent_loader.dart';
 import '../mock/git_proxy_mock.dart';
