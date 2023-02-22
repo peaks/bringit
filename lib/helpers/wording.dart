@@ -1,4 +1,5 @@
 class Wording {
+  /// strings used in app
   static const String stagingScreenTitle = 'staging';
   static const String explorerScreenTitle = 'explorer';
   static const String locationScreenTitle = 'location';
@@ -12,6 +13,7 @@ class Wording {
   static const String diffBlockTitle = 'DIFF';
   static const String consoleBlockTitle = 'CONSOLE';
 
+  /// list of strings by screen
   static const List<String> stagingScreenTitles = <String>[
     stagingBlockTitle,
     commitBlockTitle,
@@ -29,6 +31,7 @@ class Wording {
     commitSummaryBlockTitle,
   ];
 
+  /// map blokes titles with screen title to get corresponding titles
   static const Map<String, List<String>> mapScreenTitles = <String, List<String>>{
     stagingScreenTitle: stagingScreenTitles,
     explorerScreenTitle: explorerScreenTitles,

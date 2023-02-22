@@ -8,6 +8,9 @@ import 'package:git_ihm/widget/divider_vertical.dart';
 import 'package:git_ihm/widget/file_tree.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
+/// the 3 main screen are almost the same
+/// type 1 has only one child int the first column of the row
+
 class ScreenTemplate extends StatefulWidget {
   const ScreenTemplate({Key? key, this.type, this.title}) : super(key: key);
   final int? type;
@@ -18,42 +21,29 @@ class ScreenTemplate extends StatefulWidget {
 }
 
 class _ScreenTemplateState extends State<ScreenTemplate> {
+  /// OPEN to refactor
   Widget buildChild(String title, int child) {
     if (title == Wording.locationScreenTitle && child == 2) {
       return CommitSummary(
         commitHash: '454fdf5d',
       );
     } else if (title == Wording.stagingScreenTitle && child == 0) {
+      // different for now because buttons are not in a scroll view (maybe redefine "ScrollablePanelContainer")
       return Expanded(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          color: NordColors.$1,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: <Widget>[
-                Text(
-                  Wording.mapScreenTitles[widget.title]![0],
-                  style: const TextStyle(color: NordColors.$8),
-                ),
-                const Divider(
-                  color: NordColors.$0,
-                  thickness: 1,
-                )
-              ]),
-              Expanded(
-                child: Column(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const <Widget>[
-                  Text(
-                    'Content',
-                    style: TextStyle(fontSize: 32),
-                  ),
-                  StagingGButton()
-                ]),
-              )
-            ],
+        child: Column(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+          ScrollablePanelContainer(
+            flex: 1,
+            title: Wording.mapScreenTitles[widget.title]![0],
+            child: const Center(
+              child: Text(
+                'Content',
+                style: TextStyle(fontSize: 32),
+              ),
+            ),
           ),
-        ),
+          // height here otherwise test crash
+          Container(height: 60, child: const StagingGButton())
+        ]),
       );
     } else if (title == Wording.explorerScreenTitle && child == 1) {
       return const FileTree();
@@ -79,14 +69,11 @@ class _ScreenTemplateState extends State<ScreenTemplate> {
                 buildChild(widget.title!, 0)
               else
                 ScrollablePanelContainer(
-                  flex: 2,
                   title: Wording.mapScreenTitles[widget.title]![0],
                   child: buildChild(widget.title!, 0),
                 ),
               if (widget.type == 2)
                 ScrollablePanelContainer(
-                  backgroundColor: NordColors.$1,
-                  flex: 1,
                   title: Wording.mapScreenTitles[widget.title]![2],
                   child: buildChild(widget.title!, 2),
                 ),
@@ -98,9 +85,12 @@ class _ScreenTemplateState extends State<ScreenTemplate> {
               child: Column(children: <Widget>[
                 ScrollablePanelContainer(
                   flex: 2,
+                  // usage of mapped titles ex : title staging elem 1 = COMMIT
                   title: Wording.mapScreenTitles[widget.title]![1],
                   child: buildChild(widget.title!, 1),
                 ),
+
+                // try to put in ScrollablePanelContainer with console as child
                 Expanded(
                   flex: 1,
                   child: Container(

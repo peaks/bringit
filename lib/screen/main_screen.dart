@@ -105,11 +105,11 @@ class _MainScreenState extends State<MainScreen> {
                     children: const <Widget>[
                       ScreenTemplate(type: 2, title: Wording.stagingScreenTitle),
                       ScreenTemplate(type: 1, title: Wording.explorerScreenTitle),
-                      ScreenTemplate(type: 2, title: 'location')
+                      ScreenTemplate(type: 2, title: Wording.locationScreenTitle)
                     ],
                   ),
                 ),
-                // statusBAr placed here to stay whatever content is displayed
+                // statusBar placed here to stay whatever content is displayed
                 const StatusBar()
               ],
             ),

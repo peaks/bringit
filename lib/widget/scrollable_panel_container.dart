@@ -16,10 +16,11 @@ class ScrollablePanelContainer extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         color: NordColors.$1,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
+              // no need to uppercase if it's applied to written string and not value got from somewhere (api or else)
               title!,
               style: const TextStyle(color: NordColors.$8),
             ),

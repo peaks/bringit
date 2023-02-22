@@ -13,6 +13,7 @@ class StagingGButton extends StatelessWidget {
       color: NordColors.$1,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Expanded(
             child: Wrap(
@@ -50,16 +51,15 @@ class StagingGButton extends StatelessWidget {
               ],
             ),
           ),
-          Row(
-            children: <Widget>[
-              GamifiedIconTextButton(
-                title: 'Commit',
-                icon: Icons.check,
-                onPressed: () {},
-                level: ButtonLevel.safe,
-              ),
-            ],
-          ),
+          // use wrap as well to have same button height that the rest : maybe set button height in buttons with them
+          Wrap(children: <Widget>[
+            GamifiedIconTextButton(
+              title: 'Commit',
+              icon: Icons.check,
+              onPressed: () {},
+              level: ButtonLevel.safe,
+            )
+          ]),
         ],
       ),
     );
