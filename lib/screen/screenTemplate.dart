@@ -3,12 +3,11 @@ import 'package:git_ihm/widget/console/git_console.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 
 /// the 3 main screen are almost the same
-/// sections : amount of children in the screen
+/// sections : amount of children in the first part of the screen
 
 class ScreenTemplate extends StatefulWidget {
-  const ScreenTemplate({Key? key, this.sections, this.title, required this.children}) : super(key: key);
+  const ScreenTemplate({Key? key, this.sections, this.children}) : super(key: key);
   final int? sections;
-  final String? title;
   final List<Widget>? children;
 
   @override
