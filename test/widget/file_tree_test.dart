@@ -29,7 +29,6 @@ Future<void> loadFileTreeInTestApp(WidgetTester tester) async {
 
   await tester.pumpWidget(loader.loadAppWithWidget(Row(
     children: <Widget>[
-      // just added what was removed in file tree file
       Expanded(
         child: Container(
           height: double.infinity,

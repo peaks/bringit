@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/helpers/wording.dart';
 import 'package:git_ihm/widget/console/command_result.dart';
 import 'package:git_ihm/widget/console/git_console_history.dart';
 import 'package:git_ihm/widget/console/git_console_input.dart';
+import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
 class GitConsole extends StatefulWidget {
   const GitConsole({
@@ -25,6 +27,7 @@ class _GitConsoleState extends State<GitConsole> {
 
   final ScrollController _scrollController = ScrollController();
 
+  // TODO(thibault):  check used methods
   void _setCurrentCommand(String command) {
     cmdController.text = command;
     cmdFocus.requestFocus();
@@ -100,25 +103,16 @@ class _GitConsoleState extends State<GitConsole> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-              child: Scrollbar(
-                  controller: _scrollController,
-                  thumbVisibility: true,
-                  child: SingleChildScrollView(
-                      controller: _scrollController,
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ListView(
-                            shrinkWrap: true,
-                            reverse: true,
-                            children: _gitConsoleHistory.values.toList(),
-                          ))))),
-          GitConsoleInput(cmdController: cmdController, cmdFocus: cmdFocus, lastCommandSucceeded: lastCommandSucceeded, runCommand: runCommand),
-        ],
-      ),
+    return ScrollablePanelContainer(
+      title: Wording.consoleBlockTitle,
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ListView(
+            shrinkWrap: true,
+            reverse: true,
+            children: _gitConsoleHistory.values.toList(),
+          )),
+      footer: GitConsoleInput(cmdController: cmdController, cmdFocus: cmdFocus, lastCommandSucceeded: lastCommandSucceeded, runCommand: runCommand),
     );
   }
 }

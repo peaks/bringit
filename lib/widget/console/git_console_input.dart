@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 
 class GitConsoleInput extends StatelessWidget {
   const GitConsoleInput({
@@ -16,29 +17,30 @@ class GitConsoleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Flexible(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: TextField(
-                  controller: cmdController,
-                  focusNode: cmdFocus,
-                  style: const TextStyle(
-                      fontSize: 16, fontFamily: 'FantasqueSansMono'),
-                  textAlign: TextAlign.left,
-                  decoration: const InputDecoration(
-                    prefixIcon: Text(
-                      ' git ',
-                      style: TextStyle(
-                          fontSize: 16, fontFamily: 'FantasqueSansMono'),
+    return Container(
+      color: NordColors.$1,
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: TextField(
+                    controller: cmdController,
+                    focusNode: cmdFocus,
+                    style: const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono'),
+                    textAlign: TextAlign.left,
+                    decoration: const InputDecoration(
+                      prefixIcon: Text(
+                        ' git ',
+                        style: TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono'),
+                      ),
+                      prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
                     ),
-                    prefixIconConstraints:
-                        BoxConstraints(minWidth: 0, minHeight: 0),
-                  ),
-                  onSubmitted: (String command) => runCommand(command),
-                ))),
-      ],
+                    onSubmitted: (String command) => runCommand(command),
+                  ))),
+        ],
+      ),
     );
   }
 }

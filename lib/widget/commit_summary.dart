@@ -37,7 +37,6 @@ class CommitSummary extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Expended trop utilisé dans le projet. Faire attention car source de bug d'affichage
           const Padding(
             padding: EdgeInsets.only(top: 8),
             child: CircleAvatar(

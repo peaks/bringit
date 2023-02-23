@@ -10,6 +10,7 @@ class StagingGButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 60,
       color: NordColors.$1,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

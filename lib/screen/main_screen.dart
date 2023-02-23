@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/helpers/wording.dart';
 import 'package:git_ihm/screen/screenTemplate.dart';
+import 'package:git_ihm/widget/button/staging_g_button.dart';
+import 'package:git_ihm/widget/commit_summary.dart';
+import 'package:git_ihm/widget/file_tree.dart';
 import 'package:git_ihm/widget/path_selector.dart';
+import 'package:git_ihm/widget/scrollable_panel_container.dart';
 import 'package:git_ihm/widget/side_menu.dart' as side_menu_custom;
 import 'package:git_ihm/widget/status_bar.dart';
 
@@ -15,11 +19,98 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  List<Widget>? stagingChildren;
+  List<Widget>? explorerChildren;
+  List<Widget>? commitsChildren;
+
   @override
   void initState() {
     super.initState();
     sideMenu.addListener((int p0) {
       page.jumpToPage(p0);
+    });
+    buildChildren();
+  }
+
+  void buildChildren() {
+    setState(() {
+      stagingChildren = <Widget>[
+        const ScrollablePanelContainer(
+          flex: 1,
+          title: Wording.stagingBlockTitle,
+          child: Center(
+            child: Text(
+              'Content',
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+          footer: StagingGButton(),
+        ),
+        const ScrollablePanelContainer(
+          title: Wording.diffBlockTitle,
+          child: Center(
+            child: Text(
+              'Content',
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+        ),
+        const ScrollablePanelContainer(
+          flex: 2,
+          title: Wording.commitBlockTitle,
+          child: Center(
+            child: Text(
+              'Content',
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+        )
+      ];
+
+      explorerChildren = <Widget>[
+        const ScrollablePanelContainer(
+          title: Wording.previewBlockTitle,
+          child: Center(
+            child: Text(
+              'Content',
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+        ),
+        const ScrollablePanelContainer(
+          flex: 2,
+          title: Wording.explorerBlockTitle,
+          child: FileTree(),
+        )
+      ];
+
+      commitsChildren = <Widget>[
+        const ScrollablePanelContainer(
+          title: Wording.commitBlockTitle,
+          child: Center(
+            child: Text(
+              'Content',
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+        ),
+        ScrollablePanelContainer(
+          title: Wording.commitSummaryBlockTitle,
+          child: CommitSummary(
+            commitHash: '454fdf5d',
+          ),
+        ),
+        const ScrollablePanelContainer(
+          flex: 2,
+          title: Wording.locationBlockTitle,
+          child: Center(
+            child: Text(
+              'Content',
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+        ),
+      ];
     });
   }
 
@@ -102,10 +193,10 @@ class _MainScreenState extends State<MainScreen> {
                   // use pageview when menu nav is used to switch body display on same Scaffold screen
                   child: PageView(
                     controller: page,
-                    children: const <Widget>[
-                      ScreenTemplate(type: 2, title: Wording.stagingScreenTitle),
-                      ScreenTemplate(type: 1, title: Wording.explorerScreenTitle),
-                      ScreenTemplate(type: 2, title: Wording.locationScreenTitle)
+                    children: <Widget>[
+                      ScreenTemplate(sections: 2, title: Wording.stagingScreenTitle, children: stagingChildren!),
+                      ScreenTemplate(sections: 1, title: Wording.explorerScreenTitle, children: explorerChildren!),
+                      ScreenTemplate(sections: 2, title: Wording.locationScreenTitle, children: commitsChildren!)
                     ],
                   ),
                 ),
