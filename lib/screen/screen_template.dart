@@ -5,26 +5,21 @@ import 'package:git_ihm/widget/divider_vertical.dart';
 /// the 3 main screen are almost the same
 /// sections : amount of children in the first part of the screen
 
-class ScreenTemplate extends StatefulWidget {
-  const ScreenTemplate({Key? key, this.sections, this.children}) : super(key: key);
-  final int? sections;
-  final List<Widget>? children;
+class ScreenTemplate extends StatelessWidget {
+  const ScreenTemplate({Key? key, required this.sections, required this.children}) : super(key: key);
+  final int sections;
+  final List<Widget> children;
 
-  @override
-  State<ScreenTemplate> createState() => _ScreenTemplateState();
-}
-
-class _ScreenTemplateState extends State<ScreenTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Row(children: <Widget>[
       Expanded(
         flex: 2,
-        child: Column(children: widget.children!.sublist(0, widget.sections)),
+        child: Column(children: children.sublist(0, sections)),
       ),
       const DividerVertical(),
-      Expanded(flex: 1, child: Column(children: <Widget>[widget.children!.last, const GitConsole()]))
+      Expanded(flex: 1, child: Column(children: <Widget>[children.last, const GitConsole()]))
     ]));
   }
 }

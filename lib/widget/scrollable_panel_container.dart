@@ -5,7 +5,7 @@ class ScrollablePanelContainer extends StatelessWidget {
   const ScrollablePanelContainer({Key? key, required this.child, required this.title, this.flex = 1, this.footer}) : super(key: key);
   final Widget child;
   final Widget? footer;
-  final String? title;
+  final String title;
   final int flex;
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ScrollablePanelContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    title!,
+                    title,
                     style: const TextStyle(color: NordColors.$8),
                   ),
                   const Divider(
