@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_ihm/helpers/wording.dart';
-import 'package:git_ihm/screen/screenTemplate.dart';
+import 'package:git_ihm/screen/screen_template.dart';
 import 'package:git_ihm/widget/button/staging_g_button.dart';
 import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
