@@ -5,8 +5,8 @@ import 'package:git_ihm/widget/scrollable_panel_container.dart';
 
 import '../widget/file_tree.dart';
 
-class ExplorerLayout extends StatelessWidget {
-  ExplorerLayout({Key? key}) : super(key: key);
+class ExplorerScreen extends StatelessWidget {
+  ExplorerScreen({Key? key}) : super(key: key);
 
   final List<Widget> explorerChildren = <Widget>[
     const ScrollablePanelContainer(

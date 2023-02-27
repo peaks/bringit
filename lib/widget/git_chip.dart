@@ -11,20 +11,19 @@ class GitChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // chip are usually used to display deletable items
+    // TODO(thibault): use better suited widget
     return Chip(
         avatar: const Icon(MdiIcons.git, size: 20),
         label: Consumer<GitProxy>(
-          builder: (BuildContext context, GitProxy git, _) =>
-              FutureBuilder<String>(
+          builder: (BuildContext context, GitProxy git, _) => FutureBuilder<String>(
             future: git.gitVersion(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               String versionMessage = 'fetching git version...';
               if (snapshot.hasData) {
                 versionMessage = snapshot.data!;
               }
-              return Text(versionMessage,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold));
+              return Text(versionMessage, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold));
             },
           ),
         ));
