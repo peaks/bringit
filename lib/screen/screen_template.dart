@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/widget/console/git_console.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 
@@ -13,13 +14,14 @@ class ScreenTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: NordColors.$1,
         child: Row(children: <Widget>[
-      Expanded(
-        flex: 2,
-        child: Column(children: children.sublist(0, sections)),
-      ),
-      const DividerVertical(),
-      Expanded(flex: 1, child: Column(children: <Widget>[children.last, const GitConsole()]))
-    ]));
+          Expanded(
+            flex: 2,
+            child: Column(  children: children.sublist(0, sections)),
+          ),
+          const DividerVertical(),
+          Expanded(flex: 1, child: Column(children: <Widget>[children.last, const GitConsole()]))
+        ]));
   }
 }

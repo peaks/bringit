@@ -9,7 +9,6 @@ class StagingScreen extends StatelessWidget {
 
   final List<Widget> stagingChildren = <Widget>[
     const ScrollablePanelContainer(
-      flex: 1,
       title: Wording.stagingBlockTitle,
       child: Center(
         child: Text(
