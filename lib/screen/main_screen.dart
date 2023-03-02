@@ -1,12 +1,13 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
-import 'package:git_ihm/screen/explorer_layout.dart';
-import 'package:git_ihm/screen/location_layout.dart';
-import 'package:git_ihm/screen/side_menu.dart' as side_menu_custom;
-import 'package:git_ihm/screen/staging_layout.dart';
-import 'package:git_ihm/screen/status_bar.dart';
 import 'package:git_ihm/widget/path_selector.dart';
+import 'package:git_ihm/widget/side_menu.dart' as side_menu_custom;
+import 'package:git_ihm/widget/status_bar.dart';
+
+import 'commits_screen.dart';
+import 'explorer_screen.dart';
+import 'staging_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -103,10 +104,10 @@ class _MainScreenState extends State<MainScreen> {
                   // use pageview when menu nav is used to switch body display on same Scaffold screen
                   child: PageView(
                     controller: page,
-                    children: const <Widget>[StagingLayout(), ExplorerLayout(), LocationLayout()],
+                    children: <Widget>[StagingScreen(), ExplorerScreen(), CommitsScreen()],
                   ),
                 ),
-                // statusBAr placed here to stay whatever content is displayed
+                // statusBar placed here to stay whatever content is displayed
                 const StatusBar()
               ],
             ),

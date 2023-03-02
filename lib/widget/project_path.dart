@@ -10,10 +10,15 @@ class ProjectPath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-        avatar: const Icon(Icons.folder, size: 20),
-        label: Consumer<GitProxy>(
-          builder: (BuildContext context, GitProxy git, _) => Text(git.path),
-        ));
+    return Container(
+        width: 220,
+        child: Chip(
+            avatar: const Icon(Icons.folder, size: 20),
+            label: Consumer<GitProxy>(
+              builder: (BuildContext context, GitProxy git, _) => Text(
+                git.path,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )));
   }
 }

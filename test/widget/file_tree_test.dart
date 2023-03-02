@@ -25,8 +25,24 @@ void main() {
 Future<void> loadFileTreeInTestApp(WidgetTester tester) async {
   mockedFactory.setFileSystemLoader(mockedFileSystem);
   loader.utilsFactory = mockedFactory;
+  final ScrollController _scrollController = ScrollController();
 
   await tester.pumpWidget(loader.loadAppWithWidget(Row(
-    children: const <Widget>[FileTree()],
+    children: <Widget>[
+      Expanded(
+        child: Container(
+          height: double.infinity,
+          child: Scrollbar(
+            controller: _scrollController,
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              controller: _scrollController,
+              child: const FileTree(),
+            ),
+          ),
+        ),
+      )
+    ],
   )));
 }

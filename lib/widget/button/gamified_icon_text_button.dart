@@ -103,84 +103,52 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: InkWell(
-          onTapDown: (_) {
-            beginLongPressAnimation();
-          },
-          onTapUp: (_) {
-            stopLongPressAnimation();
-          },
-          onHover: (_) {
-            setState(() {
-              level = state;
-            });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                color: buttonlevel[level],
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(width: 2, color: Colors.transparent)),
-            child: Column(
+      child: InkWell(
+        onTapDown: (_) {
+          beginLongPressAnimation();
+        },
+        onTapUp: (_) {
+          stopLongPressAnimation();
+        },
+        onHover: (_) {
+          setState(() {
+            level = state;
+          });
+        },
+        child: Container(
+          margin: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+              color: buttonlevel[level],
+              borderRadius: BorderRadius.circular(5),
+              ),
+          child:
+            Row(
               children: <Widget>[
-                if (level == ButtonLevel.risky)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(widget.title),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      SizedBox(
-                          height: 25,
-                          width: 25,
-                          child: Stack(
-                            children: <Widget>[
-                              CircularProgressIndicator(
-                                value: percent / 100.0,
-                                strokeWidth: 4,
-                                color: Colors.white,
-                              ),
-                              Center(
-                                child: Icon(
-                                  widget.icon,
-                                  size: 16,
-                                ),
-                              ),
-                            ],
-                          )),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                    ],
-                  )
-                else
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(widget.title),
-                      ),
-                      const SizedBox(
-                        width: 9,
-                      ),
-                      Icon(
-                        widget.icon,
-                        size: 16,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  )
+                Text(widget.title),
+                const SizedBox(width: 5),
+                Container(
+                    height: 18,
+                    width: 18,
+                    child: Stack(
+                      children: <Widget>[
+                        Center(
+                          child: CircularProgressIndicator(
+                            value:(level == ButtonLevel.risky? percent : 0) / 100.0,
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Center(
+                          child: Icon(
+                            widget.icon,
+                            size: 16,
+                          ),
+                        ),
+                      ],
+                    )),
               ],
-            ),
-          ),
+            )
         ),
       ),
       onExit: (PointerExitEvent s) {
