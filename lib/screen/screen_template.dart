@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/widget/console/git_console.dart';
 import 'package:git_ihm/widget/divider_vertical.dart';
 
@@ -7,21 +6,26 @@ import 'package:git_ihm/widget/divider_vertical.dart';
 /// sections : amount of children in the first part of the screen
 
 class ScreenTemplate extends StatelessWidget {
-  const ScreenTemplate({Key? key, required this.sections, required this.children}) : super(key: key);
+  const ScreenTemplate(
+      {Key? key, required this.sections, required this.children})
+      : super(key: key);
   final int sections;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: NordColors.$1,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(children: <Widget>[
           Expanded(
             flex: 2,
-            child: Column(  children: children.sublist(0, sections)),
+            child: Column(children: children.sublist(0, sections)),
           ),
           const DividerVertical(),
-          Expanded(flex: 1, child: Column(children: <Widget>[children.last, const GitConsole()]))
+          Expanded(
+              flex: 1,
+              child:
+                  Column(children: <Widget>[children.last, const GitConsole()]))
         ]));
   }
 }

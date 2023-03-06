@@ -14,7 +14,8 @@ import '../test/widget/path_selector_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets('it updates project path on updates', (WidgetTester tester) async {
+  testWidgets('it updates project path on updates',
+      (WidgetTester tester) async {
     await runTestApplication(tester);
 
     const String newPath = '/tmp/git-ihm/gitProject';
@@ -30,7 +31,8 @@ Future<void> runTestApplication(WidgetTester tester) async {
 }
 
 GitProxyImplementation buildGitProxyWithMocks() {
-  return GitProxyImplementation(GitRegistryMock(), PathManagerMock('/original/path'));
+  return GitProxyImplementation(
+      GitRegistryMock(), PathManagerMock('/original/path'));
 }
 
 Future<void> loadApplication(WidgetTester tester, GitProxy git) async {

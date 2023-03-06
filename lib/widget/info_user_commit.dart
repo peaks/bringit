@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class InfoUserCommit extends StatelessWidget {
   const InfoUserCommit(
@@ -11,14 +12,21 @@ class InfoUserCommit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Container(child: Text(userAuthor)),
+        Container(
+            child: Text(
+          userAuthor,
+          style: GoogleFonts.roboto(
+            textStyle: Theme.of(context).textTheme.titleMedium,
+          ),
+        )),
         const SizedBox(
           width: 5,
         ),
         Container(
             child: Text(
           userEmail,
-          style: const TextStyle(
+          style: GoogleFonts.roboto(
+            textStyle: Theme.of(context).textTheme.titleMedium,
             decoration: TextDecoration.underline,
           ),
         )),

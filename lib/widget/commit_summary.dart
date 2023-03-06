@@ -37,11 +37,12 @@ class CommitSummary extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 8),
             child: CircleAvatar(
-              backgroundImage: AssetImage('assets/utilisateur.png'),
+              backgroundImage: const AssetImage('assets/utilisateur.png'),
               radius: 25,
+              backgroundColor: Theme.of(context).colorScheme.primary,
             ),
           ),
           Expanded(
@@ -55,14 +56,18 @@ class CommitSummary extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        InfoUserCommit(userAuthor: commit.author, userEmail: commit.email),
+                        InfoUserCommit(
+                            userAuthor: commit.author, userEmail: commit.email),
                         CommitTimestamp(
                           commitDate: formmattedDate,
                           commitRelativeDate: commitRelativeDate,
                         ),
                       ],
                     ),
-                    CommitInfo(commitHash: commit.hashValue, commitsubject: commit.subject, commitBody: commit.body),
+                    CommitInfo(
+                        commitHash: commit.hashValue,
+                        commitsubject: commit.subject,
+                        commitBody: commit.body),
                   ],
                 ),
               ),

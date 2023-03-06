@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
+import 'package:git_ihm/git_gud_theme.dart';
 import 'package:git_ihm/screen/main_screen.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,10 @@ Future<void> main() async {
   final GitFactory f = GitFactory();
   final GitProxy git = await f.getGit();
   final MultiProvider myApp = MultiProvider(
-    providers: <InheritedProvider<dynamic>>[ChangeNotifierProvider<GitProxy>(create: (BuildContext context) => git), Provider<UtilsFactory>(create: (_) => UtilsFactory())],
+    providers: <InheritedProvider<dynamic>>[
+      ChangeNotifierProvider<GitProxy>(create: (BuildContext context) => git),
+      Provider<UtilsFactory>(create: (_) => UtilsFactory())
+    ],
     child: const MyApp(),
   );
 
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Clever Git',
-      theme: NordTheme.dark(),
+      theme: GitGudTheme().darkTheme,
       home: const MainScreen(),
     );
   }

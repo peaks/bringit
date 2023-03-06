@@ -28,14 +28,17 @@ class GitConsoleInput extends StatelessWidget {
                   child: TextField(
                     controller: cmdController,
                     focusNode: cmdFocus,
-                    style: const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono'),
+                    style: const TextStyle(
+                        fontSize: 16, fontFamily: 'FantasqueSansMono'),
                     textAlign: TextAlign.left,
                     decoration: const InputDecoration(
                       prefixIcon: Text(
                         ' git ',
-                        style: TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono'),
+                        style: TextStyle(
+                            fontSize: 16, fontFamily: 'FantasqueSansMono'),
                       ),
-                      prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
+                      prefixIconConstraints:
+                          BoxConstraints(minWidth: 0, minHeight: 0),
                     ),
                     onSubmitted: (String command) => runCommand(command),
                   ))),
