@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/git_gud_theme.dart';
@@ -14,12 +12,11 @@ class GamifiedIconTextButton extends StatefulWidget {
     required this.onPressed,
   }) : super(key: key);
 
-  static double longPressDuration = 2000;
-
   final String title;
   final IconData icon;
   final ButtonLevel level;
   final GestureTapCallback onPressed;
+  static Duration longPressDuration = const Duration(seconds: 2);
 
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
     ButtonLevel.unknown: GitGudTheme.unknowColor,
@@ -32,72 +29,31 @@ class GamifiedIconTextButton extends StatefulWidget {
   State<GamifiedIconTextButton> createState() => _GamifiedIconTextButtonState();
 }
 
-class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
+class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
+    with SingleTickerProviderStateMixin {
   late ButtonLevel defaultlevel = ButtonLevel.unknown;
   late Map<ButtonLevel, Color> buttonlevel;
   late ButtonLevel level = defaultlevel;
   late ButtonLevel state;
-  Stopwatch animationStopWatch = Stopwatch();
-  Timer animationRefreshTimer = Timer(const Duration(milliseconds: 1), () {});
-  bool longPressAnimationRunning = true;
-
-  double percent = 0;
-  double elapsedTime = 0;
-  int timeSoFar = 0;
-
-  double millisecondsToPercentage(double time, double loadTime) {
-    final double percent = (time * 100) / loadTime;
-    return percent;
-  }
-
-  void refreshAnimation(Timer timer) {
-    if (animationStopWatch.isRunning) {
-      setState(() {
-        longPressAnimationRunning = false;
-        elapsedTime = animationStopWatch.elapsedMilliseconds.toDouble();
-        percent = millisecondsToPercentage(
-            elapsedTime, GamifiedIconTextButton.longPressDuration);
-        if (elapsedTime >= GamifiedIconTextButton.longPressDuration) {
-          stopLongPressAnimation();
-        }
-      });
-    }
-  }
-
-  void beginLongPressAnimation() {
-    longPressAnimationRunning = true;
-    animationStopWatch.start();
-    animationRefreshTimer =
-        Timer.periodic(const Duration(milliseconds: 10), refreshAnimation);
-  }
-
-  void stopLongPressAnimation() {
-    longPressAnimationRunning = false;
-    animationStopWatch.stop();
-    animationStopWatch.reset();
-    setElapsedTime();
-    longPressAnimationRunning = true;
-    percent = 0;
-  }
-
-  void setElapsedTime() {
-    final int timeSoFar = animationStopWatch.elapsedMilliseconds;
-    setState(() {
-      elapsedTime = timeSoFar.toDouble();
-    });
-  }
+  late AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {
     state = widget.level;
     buttonlevel = widget.colorByLevel;
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    animationRefreshTimer.cancel();
-    super.dispose();
+    controller = AnimationController(
+        duration: GamifiedIconTextButton.longPressDuration, vsync: this);
+    animation = Tween<double>(begin: 0, end: 1).animate(controller)
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          controller.reset();
+        }
+      })
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
   @override
@@ -105,10 +61,11 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
     return MouseRegion(
       child: InkWell(
         onTapDown: (_) {
-          beginLongPressAnimation();
+          controller.forward();
         },
         onTapUp: (_) {
-          stopLongPressAnimation();
+          controller.stop();
+          controller.reset();
         },
         onHover: (_) {
           setState(() {
@@ -136,8 +93,9 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
                       children: <Widget>[
                         Center(
                           child: CircularProgressIndicator(
-                            value: (level == ButtonLevel.risky ? percent : 0) /
-                                100.0,
+                            value: level == ButtonLevel.risky
+                                ? animation.value
+                                : 0,
                             strokeWidth: 2,
                             color: Theme.of(context).colorScheme.primary,
                           ),
