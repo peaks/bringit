@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CommitInfo extends StatelessWidget {
   const CommitInfo(
@@ -26,17 +25,12 @@ class CommitInfo extends StatelessWidget {
           children: <Widget>[
             Text(
               commitHash,
-              style: GoogleFonts.roboto(
-                textStyle: Theme.of(context).textTheme.titleMedium,
-                color: Theme.of(context).colorScheme.tertiary,
-              ),
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(width: 5),
             Text(
               commitsubject,
-              style: GoogleFonts.roboto(
-                textStyle: Theme.of(context).textTheme.titleMedium,
-              ),
+              style: Theme.of(context).textTheme.titleMedium,
             )
           ],
         ),
@@ -45,9 +39,7 @@ class CommitInfo extends StatelessWidget {
               title: Container(
                   child: Text(
             commitBody,
-            style: GoogleFonts.roboto(
-              textStyle: Theme.of(context).textTheme.titleMedium,
-            ),
+            style: Theme.of(context).textTheme.titleMedium,
           ))),
         ],
       ),

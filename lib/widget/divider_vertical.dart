@@ -6,11 +6,8 @@ class DividerVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VerticalDivider(
-      color: Theme.of(context).primaryColorDark, //color of divider
-      width: 2,
-      thickness: 3,
-      endIndent: 3, //width space of divider
+    return const VerticalDivider(
+      width: 2, //width space of divider
     );
   }
 }

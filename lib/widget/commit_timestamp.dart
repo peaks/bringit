@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CommitTimestamp extends StatelessWidget {
   const CommitTimestamp(
@@ -13,18 +12,14 @@ class CommitTimestamp extends StatelessWidget {
       children: <Widget>[
         Text(
           commitDate,
-          style: GoogleFonts.roboto(
-            textStyle: Theme.of(context).textTheme.titleMedium,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(
           width: 5,
         ),
         Text(
           '($commitRelativeDate)',
-          style: GoogleFonts.roboto(
-            textStyle: Theme.of(context).textTheme.titleMedium,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         )
       ],
     );

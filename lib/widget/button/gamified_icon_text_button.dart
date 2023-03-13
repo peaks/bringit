@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/git_gud_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GamifiedIconTextButton extends StatefulWidget {
   GamifiedIconTextButton({
@@ -127,11 +126,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
               children: <Widget>[
                 Text(
                   widget.title,
-                  style: GoogleFonts.roboto(
-                      textStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          color: Theme.of(context).colorScheme.primary)),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(width: 5),
                 Container(
