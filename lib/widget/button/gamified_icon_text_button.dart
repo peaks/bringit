@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:git_ihm/git_gud_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
 
@@ -16,13 +17,14 @@ class GamifiedIconTextButton extends StatefulWidget {
   final IconData icon;
   final ButtonLevel level;
   final GestureTapCallback onPressed;
+  static bool isGamificationEnabled = true;
   static Duration longPressDuration = const Duration(seconds: 2);
-
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
     ButtonLevel.unknown: GitGudTheme.unknowColor,
     ButtonLevel.careful: GitGudTheme.carefulColor,
     ButtonLevel.safe: GitGudTheme.successColor,
     ButtonLevel.risky: GitGudTheme.warningColor,
+    ButtonLevel.standard: GitGudTheme.standardColor,
   };
 
   @override
@@ -37,10 +39,12 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
   late ButtonLevel state;
   late AnimationController controller;
   late Animation<double> animation;
+  Color hovercolor = GitGudTheme.unknowColor;
 
   @override
   void initState() {
     state = widget.level;
+
     buttonlevel = widget.colorByLevel;
     super.initState();
     controller = AnimationController(
@@ -69,16 +73,24 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
         },
         onHover: (_) {
           setState(() {
-            level = state;
+            if (GamifiedIconTextButton.isGamificationEnabled == false) {
+              hovercolor = GitGudTheme.standardColor;
+              level = defaultlevel;
+            } else {
+              level = state;
+            }
           });
         },
         child: Container(
             margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: buttonlevel[level],
-              borderRadius: BorderRadius.circular(5),
-            ),
+                color: buttonlevel[level],
+                borderRadius: BorderRadius.circular(5),
+                border: GamifiedIconTextButton.isGamificationEnabled == true
+                    ? Border.all(style: BorderStyle.none)
+                    : Border.all(
+                        color: hovercolor, style: BorderStyle.solid, width: 2)),
             child: Row(
               children: <Widget>[
                 Text(
@@ -93,7 +105,10 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
                       children: <Widget>[
                         Center(
                           child: CircularProgressIndicator(
-                            value: level == ButtonLevel.risky
+                            value: level == ButtonLevel.risky &&
+                                    GamifiedIconTextButton
+                                            .isGamificationEnabled ==
+                                        true
                                 ? animation.value
                                 : 0,
                             strokeWidth: 2,
@@ -115,6 +130,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
       onExit: (PointerExitEvent s) {
         setState(() {
           level = defaultlevel;
+          hovercolor = GitGudTheme.unknowColor;
         });
       },
     );

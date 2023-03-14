@@ -1,1 +1,1 @@
-enum ButtonLevel { safe, careful, risky, unknown }
+enum ButtonLevel { safe, careful, risky, unknown, standard }
