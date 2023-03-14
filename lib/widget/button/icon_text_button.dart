@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
+import 'package:git_ihm/git_gud_theme.dart';
 
 class IconTextButton extends StatefulWidget {
   const IconTextButton({
@@ -19,15 +19,15 @@ class IconTextButton extends StatefulWidget {
 }
 
 class _IconTextButtonState extends State<IconTextButton> {
-  Color hovercolor = NordColors.$0;
+  Color hovercolor = GitGudTheme.unknowColor;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: NordColors.$0,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: GitGudTheme.unknowColor,
           side: BorderSide(
             color: hovercolor,
           ),
@@ -49,12 +49,12 @@ class _IconTextButtonState extends State<IconTextButton> {
       ),
       onHover: (PointerHoverEvent s) {
         setState(() {
-          hovercolor = Colors.white;
+          hovercolor = Theme.of(context).colorScheme.primary;
         });
       },
       onExit: (PointerExitEvent s) {
         setState(() {
-          hovercolor = NordColors.$0;
+          hovercolor = GitGudTheme.unknowColor;
         });
       },
     );

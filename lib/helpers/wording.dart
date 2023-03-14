@@ -32,7 +32,8 @@ class Wording {
   ];
 
   /// map blokes titles with screen title to get corresponding titles
-  static const Map<String, List<String>> mapScreenTitles = <String, List<String>>{
+  static const Map<String, List<String>> mapScreenTitles =
+      <String, List<String>>{
     stagingScreenTitle: stagingScreenTitles,
     explorerScreenTitle: explorerScreenTitles,
     locationScreenTitle: locationScreenTitles,

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
+import 'package:git_ihm/git_gud_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
 
 class GamifiedIconTextButton extends StatefulWidget {
@@ -22,10 +22,10 @@ class GamifiedIconTextButton extends StatefulWidget {
   final GestureTapCallback onPressed;
 
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
-    ButtonLevel.unknown: NordColors.$0,
-    ButtonLevel.careful: NordColors.$12,
-    ButtonLevel.safe: NordColors.$14,
-    ButtonLevel.risky: NordColors.$11,
+    ButtonLevel.unknown: GitGudTheme.unknowColor,
+    ButtonLevel.careful: GitGudTheme.carefulColor,
+    ButtonLevel.safe: GitGudTheme.successColor,
+    ButtonLevel.risky: GitGudTheme.warningColor,
   };
 
   @override
@@ -116,16 +116,18 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
           });
         },
         child: Container(
-          margin: const EdgeInsets.all(5),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
+            margin: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
               color: buttonlevel[level],
               borderRadius: BorderRadius.circular(5),
-              ),
-          child:
-            Row(
+            ),
+            child: Row(
               children: <Widget>[
-                Text(widget.title),
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
                 const SizedBox(width: 5),
                 Container(
                     height: 18,
@@ -134,22 +136,23 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton> {
                       children: <Widget>[
                         Center(
                           child: CircularProgressIndicator(
-                            value:(level == ButtonLevel.risky? percent : 0) / 100.0,
+                            value: (level == ButtonLevel.risky ? percent : 0) /
+                                100.0,
                             strokeWidth: 2,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         Center(
                           child: Icon(
                             widget.icon,
                             size: 16,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ],
                     )),
               ],
-            )
-        ),
+            )),
       ),
       onExit: (PointerExitEvent s) {
         setState(() {

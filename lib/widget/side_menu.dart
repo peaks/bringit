@@ -88,7 +88,8 @@ class _SideMenuState extends State<SideMenu> {
 
   /// Set [SideMenu] width according to displayMode and notify parent widget
   double _widthSize(SideMenuDisplayMode mode, BuildContext context) {
-    if (mode == SideMenuDisplayMode.compact && Global.displayModeState.value != SideMenuDisplayMode.compact) {
+    if (mode == SideMenuDisplayMode.compact &&
+        Global.displayModeState.value != SideMenuDisplayMode.compact) {
       Global.displayModeState.change(SideMenuDisplayMode.compact);
       _notifyParent();
       Global.showTrailing = false;
@@ -104,7 +105,8 @@ class _SideMenuState extends State<SideMenu> {
       );
     } else {
       if (menuStyle.backgroundColor != null) {
-        menuStyle.decoration = menuStyle.decoration!.copyWith(color: menuStyle.backgroundColor);
+        menuStyle.decoration =
+            menuStyle.decoration!.copyWith(color: menuStyle.backgroundColor);
       }
       return menuStyle.decoration!;
     }
@@ -113,9 +115,11 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     Global.controller = widget.controller;
-    widget.items.sort((SideMenuItem a, SideMenuItem b) => a.priority.compareTo(b.priority));
+    widget.items.sort(
+        (SideMenuItem a, SideMenuItem b) => a.priority.compareTo(b.priority));
     Global.style = widget.style ?? SideMenuStyle();
-    _currentWidth = _widthSize(Global.style.displayMode ?? SideMenuDisplayMode.auto, context);
+    _currentWidth = _widthSize(
+        Global.style.displayMode ?? SideMenuDisplayMode.auto, context);
 
     return Container(
       width: _currentWidth,
@@ -126,7 +130,8 @@ class _SideMenuState extends State<SideMenu> {
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                if (Global.style.displayMode == SideMenuDisplayMode.compact && showToggle)
+                if (Global.style.displayMode == SideMenuDisplayMode.compact &&
+                    showToggle)
                   const SizedBox(
                     height: 42,
                   ),
@@ -135,23 +140,35 @@ class _SideMenuState extends State<SideMenu> {
               ],
             ),
           ),
-          if ((widget.footer != null && Global.displayModeState.value != SideMenuDisplayMode.compact) || (widget.footer != null && alwaysShowFooter))
+          if ((widget.footer != null &&
+                  Global.displayModeState.value !=
+                      SideMenuDisplayMode.compact) ||
+              (widget.footer != null && alwaysShowFooter))
             Align(alignment: Alignment.bottomCenter, child: widget.footer!),
-          if (Global.style.displayMode != SideMenuDisplayMode.auto && showToggle)
+          if (Global.style.displayMode != SideMenuDisplayMode.auto &&
+              showToggle)
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Global.displayModeState.value == SideMenuDisplayMode.open ? 0 : 4, vertical: 0),
+              padding: EdgeInsets.symmetric(
+                  horizontal:
+                      Global.displayModeState.value == SideMenuDisplayMode.open
+                          ? 0
+                          : 4,
+                  vertical: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   SideMenuToggle(
                     onTap: () {
-                      if (Global.displayModeState.value == SideMenuDisplayMode.compact) {
+                      if (Global.displayModeState.value ==
+                          SideMenuDisplayMode.compact) {
                         setState(() {
                           Global.style.displayMode = SideMenuDisplayMode.open;
                         });
-                      } else if (Global.displayModeState.value == SideMenuDisplayMode.open) {
+                      } else if (Global.displayModeState.value ==
+                          SideMenuDisplayMode.open) {
                         setState(() {
-                          Global.style.displayMode = SideMenuDisplayMode.compact;
+                          Global.style.displayMode =
+                              SideMenuDisplayMode.compact;
                         });
                       }
                     },

@@ -10,11 +10,17 @@ class CommitTimestamp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Text(commitDate),
+        Text(
+          commitDate,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(
           width: 5,
         ),
-        Text('($commitRelativeDate)')
+        Text(
+          '($commitRelativeDate)',
+          style: Theme.of(context).textTheme.titleMedium,
+        )
       ],
     );
   }

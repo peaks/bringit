@@ -1,6 +1,5 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 import 'package:git_ihm/widget/path_selector.dart';
 import 'package:git_ihm/widget/side_menu.dart' as side_menu_custom;
 import 'package:git_ihm/widget/status_bar.dart';
@@ -46,9 +45,10 @@ class _MainScreenState extends State<MainScreen> {
               )),
           title: Container(
             alignment: Alignment.centerLeft,
-            child: const Text(
+            child: Text(
               'Project 1',
-              style: TextStyle(color: NordColors.$8, fontSize: 14),
+              style: Theme.of(context).textTheme.titleLarge,
+              //TextStyle(color: NordColors.$8, fontSize: 14),
             ),
           ),
           // actions in appbar to add buttons here the selection of the  project's path
@@ -63,8 +63,8 @@ class _MainScreenState extends State<MainScreen> {
           side_menu_custom.SideMenu(
             style: SideMenuStyle(
               displayMode: SideMenuDisplayMode.compact,
-              selectedIconColor: NordColors.$8,
-              backgroundColor: NordColors.$3,
+              selectedIconColor: Theme.of(context).colorScheme.secondary,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               selectedColor: Colors.transparent,
               compactSideMenuWidth: 70,
               iconSize: 25,
@@ -104,7 +104,11 @@ class _MainScreenState extends State<MainScreen> {
                   // use pageview when menu nav is used to switch body display on same Scaffold screen
                   child: PageView(
                     controller: page,
-                    children: <Widget>[StagingScreen(), ExplorerScreen(), CommitsScreen()],
+                    children: <Widget>[
+                      StagingScreen(),
+                      ExplorerScreen(),
+                      CommitsScreen()
+                    ],
                   ),
                 ),
                 // statusBar placed here to stay whatever content is displayed

@@ -37,7 +37,8 @@ class _FileTreeState extends State<FileTree> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _fileLoader = Provider.of<UtilsFactory>(context, listen: false).treeDataFileLoader;
+    _fileLoader =
+        Provider.of<UtilsFactory>(context, listen: false).treeDataFileLoader;
     final GitProxy git = Provider.of<GitProxy>(context, listen: true);
     _fileLoader.status = git.gitState;
     _treeViewController = _initTreeViewController(git.path);
@@ -69,21 +70,26 @@ class _FileTreeState extends State<FileTree> {
     );
   }
 
-  TextStyle _getLabelStyle() => const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono');
+  TextStyle _getLabelStyle() =>
+      const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono');
 
-  TextStyle _getBoldLabelStyle() => _getLabelStyle().copyWith(fontWeight: FontWeight.bold);
+  TextStyle _getBoldLabelStyle() =>
+      _getLabelStyle().copyWith(fontWeight: FontWeight.bold);
 
   TreeView _buildTreeView(TreeViewTheme theme) {
     return TreeView(
         controller: _treeViewController,
-        nodeBuilder: (BuildContext context, Node<void> node) => GitTreeNode(node),
+        nodeBuilder: (BuildContext context, Node<void> node) =>
+            GitTreeNode(node),
         allowParentSelect: _allowParentSelect,
         supportParentDoubleTap: _supportParentDoubleTap,
-        onExpansionChanged: (String key, bool isExpanded) => _toggleNodeState(key, isExpanded),
+        onExpansionChanged: (String key, bool isExpanded) =>
+            _toggleNodeState(key, isExpanded),
         onNodeTap: (String key) {
           setState(() {
             _selectedNode = (_selectedNode == key) ? '' : key;
-            _treeViewController = _treeViewController.copyWith<dynamic>(selectedKey: _selectedNode);
+            _treeViewController = _treeViewController.copyWith<dynamic>(
+                selectedKey: _selectedNode);
           });
         },
         theme: theme,
@@ -94,13 +100,18 @@ class _FileTreeState extends State<FileTree> {
     final Node<void>? node = _treeViewController.getNode(key);
     if (node != null) {
       setState(() {
-        _treeViewController = _treeViewController.copyWith(children: _updateNode(node, isExpanded));
+        _treeViewController = _treeViewController.copyWith(
+            children: _updateNode(node, isExpanded));
       });
     }
   }
 
   List<Node<void>> _updateNode(Node<void> node, bool isExpanded) {
-    return _treeViewController.updateNode(node.key, node.copyWith(children: _getNodeChildren(node.key, isExpanded), expanded: isExpanded));
+    return _treeViewController.updateNode(
+        node.key,
+        node.copyWith(
+            children: _getNodeChildren(node.key, isExpanded),
+            expanded: isExpanded));
   }
 
   List<Node<void>>? _getNodeChildren(String nodeKey, bool isExpanded) {

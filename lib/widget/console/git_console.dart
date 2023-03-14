@@ -17,7 +17,9 @@ class GitConsole extends StatefulWidget {
 }
 
 class _GitConsoleState extends State<GitConsole> {
-  final Map<GlobalKey<GitConsoleHistoryState>, GitConsoleHistory> _gitConsoleHistory = <GlobalKey<GitConsoleHistoryState>, GitConsoleHistory>{};
+  final Map<GlobalKey<GitConsoleHistoryState>, GitConsoleHistory>
+      _gitConsoleHistory =
+      <GlobalKey<GitConsoleHistoryState>, GitConsoleHistory>{};
 
   final TextEditingController cmdController = TextEditingController();
 
@@ -31,7 +33,8 @@ class _GitConsoleState extends State<GitConsole> {
   void _setCurrentCommand(String command) {
     cmdController.text = command;
     cmdFocus.requestFocus();
-    cmdController.selection = TextSelection.fromPosition(TextPosition(offset: cmdController.text.length));
+    cmdController.selection = TextSelection.fromPosition(
+        TextPosition(offset: cmdController.text.length));
   }
 
   final List<String> infoCommands = <String>[
@@ -71,12 +74,16 @@ class _GitConsoleState extends State<GitConsole> {
 
   CommandResult _runCommand(String command) {
     _setCurrentCommand(command);
-    final ProcessResult result = Process.runSync('git', command.split(' '), includeParentEnvironment: false, workingDirectory: './');
+    final ProcessResult result = Process.runSync('git', command.split(' '),
+        includeParentEnvironment: false, workingDirectory: './');
     setState(() {
       lastCommandSucceeded = result.exitCode == 0;
     });
     cmdFocus.requestFocus();
-    return CommandResult(stdout: result.stdout.toString(), stderr: result.stderr.toString(), success: result.exitCode == 0);
+    return CommandResult(
+        stdout: result.stdout.toString(),
+        stderr: result.stderr.toString(),
+        success: result.exitCode == 0);
   }
 
   void runCommand(String command) {
@@ -87,7 +94,8 @@ class _GitConsoleState extends State<GitConsole> {
       _gitConsoleHistory.keys.last.currentState?.expanded(false);
     }
 
-    final GlobalKey<GitConsoleHistoryState> historyKey = GlobalKey<GitConsoleHistoryState>();
+    final GlobalKey<GitConsoleHistoryState> historyKey =
+        GlobalKey<GitConsoleHistoryState>();
     _gitConsoleHistory.putIfAbsent(
         historyKey,
         () => GitConsoleHistory(
@@ -97,7 +105,8 @@ class _GitConsoleState extends State<GitConsole> {
               stderr: result.stderr,
               success: result.success,
             ));
-    _scrollController.animateTo(_scrollController.position.minScrollExtent, curve: Curves.bounceIn, duration: const Duration(microseconds: 10));
+    _scrollController.animateTo(_scrollController.position.minScrollExtent,
+        curve: Curves.bounceIn, duration: const Duration(microseconds: 10));
     cmdController.text = '';
   }
 
@@ -112,7 +121,11 @@ class _GitConsoleState extends State<GitConsole> {
             reverse: true,
             children: _gitConsoleHistory.values.toList(),
           )),
-      footer: GitConsoleInput(cmdController: cmdController, cmdFocus: cmdFocus, lastCommandSucceeded: lastCommandSucceeded, runCommand: runCommand),
+      footer: GitConsoleInput(
+          cmdController: cmdController,
+          cmdFocus: cmdFocus,
+          lastCommandSucceeded: lastCommandSucceeded,
+          runCommand: runCommand),
     );
   }
 }
