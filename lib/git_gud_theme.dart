@@ -9,6 +9,7 @@ class GitGudTheme {
   static Color unknowColor = NordColors.$0;
   static Color carefulColor = NordColors.$12;
   static Color secondaryColor = NordColors.$8;
+  static Color standardColor = NordColors.$4;
 
   static ThemeData _buildDarkTheme() {
     final ThemeData base = NordTheme.dark();
@@ -58,6 +59,7 @@ class GitGudTheme {
         ),
         buttonTheme: const ButtonThemeData(
           buttonColor: NordColors.$0,
+          textTheme: ButtonTextTheme.normal,
         ),
         colorScheme: const ColorScheme.dark(
           primary: NordColors.$4,
