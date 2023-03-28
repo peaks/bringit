@@ -56,4 +56,8 @@ class Wording {
     explorerScreenTitle: explorerScreenTitles,
     locationScreenTitle: locationScreenTitles,
   };
+
+  static const String modifiedFiles = 'Modified';
+  static const String stagedFiles = 'Staged (waiting to be committed)';
+  static const String untrackedFiles = 'Untracked';
 }

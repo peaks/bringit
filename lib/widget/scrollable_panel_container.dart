@@ -17,6 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/utils/theme/nord_colors.dart';
 
 class ScrollablePanelContainer extends StatelessWidget {
   const ScrollablePanelContainer(
@@ -47,23 +48,13 @@ class ScrollablePanelContainer extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              color: Theme.of(context).primaryColorDark,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  title,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      const Divider(
+                        color: NordColors.$0,
+                        thickness: 1,
                       ),
                       Expanded(
                         child: Scrollbar(

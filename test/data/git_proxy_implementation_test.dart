@@ -119,7 +119,7 @@ class GitProxyImplementationSpy extends GitProxyImplementation {
   String actualPath = '/mocked/path';
 
   Future<List<StatusFile>> gitStatusResult = Future<List<StatusFile>>(
-      () => <StatusFile>[const UntrackedPath('any/path')]);
+      () => <StatusFile>[const UntrackedPath('any/path', 'any/path')]);
 
   @override
   String get path => actualPath;
@@ -146,7 +146,7 @@ class GitStatusCommandSpy extends Fake implements GitStatusCommand {
   String? pathProvidedToRun;
 
   List<StatusFile> commandResult = <StatusFile>[
-    const UntrackedPath('any/path')
+    const UntrackedPath('any/path', 'any/path')
   ];
 
   @override

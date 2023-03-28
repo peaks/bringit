@@ -50,37 +50,74 @@ void main() {
     final List<StatusFile> result = await command.run(projectPath);
 
     expect(
-        result.contains(const UntrackedPath('$projectPath$filePath')), isTrue);
+        result.contains(const UntrackedPath('$projectPath$filePath', filePath)),
+        isTrue);
+  });
+
+  test('returns deleted file in results', () async {
+    const String filePath = 'my/deleted/file/path';
+    mockedCommand.pushDeletedStagedResult(filePath);
+
+    final List<StatusFile> result = await command.run(projectPath);
+    expect(
+        result.contains(const DeletedFile('$projectPath$filePath', filePath)),
+        isTrue);
+  });
+
+  test('returns renamed file in results', () async {
+    const String filePath = 'my/oldName/file/path';
+    const String filePath1 = 'my/renamed/file1/path';
+    const String filePath2 = 'my/renamed/file2/path';
+    mockedCommand.pushRenamedResult(filePath1, filePath);
+    mockedCommand.pushRenamedUnstagedResult(filePath2, filePath);
+
+    final List<StatusFile> result = await command.run(projectPath);
+    expect(
+        result.contains(const RenamedFile(
+            '$projectPath$filePath -> $filePath1', '$filePath -> $filePath1')),
+        isTrue);
+    expect(
+        result.contains(const RenamedFile('$projectPath$filePath2', filePath2)),
+        isTrue);
   });
 
   test('returns modified file in results', () async {
-    const String filePath = 'my/modified/file/path';
-    mockedCommand.pushModifiedResult(filePath);
+    const String filePath1 = 'my/modified/file1/path';
+    const String filePath2 = 'my/modified/file2/path';
+    const String filePath3 = 'my/modified/file3/path';
+    mockedCommand.pushModifiedUnstagedResult(filePath1);
+    mockedCommand.pushModifiedStagedResult(filePath2);
+    mockedCommand.pushModifiedStagedThenModifiedResult(filePath3);
 
     final List<StatusFile> result = await command.run(projectPath);
 
     expect(
-        result.contains(const ModifiedFile('$projectPath$filePath')), isTrue);
+        result
+            .contains(const ModifiedFile('$projectPath$filePath1', filePath1)),
+        isTrue);
+    expect(
+        result
+            .contains(const ModifiedFile('$projectPath$filePath2', filePath2)),
+        isTrue);
+    expect(
+        result
+            .contains(const ModifiedFile('$projectPath$filePath3', filePath3)),
+        isTrue);
   });
 
   test('returns added files in results', () async {
     const String filePath1 = 'my/added/file1/path';
     const String filePath2 = 'my/added/file2/path';
-    mockedCommand.pushModifiedOrAddedResult(filePath1);
-    mockedCommand.pushUntrackedAndAdded(filePath2);
+    mockedCommand.pushAdded(filePath1);
+    mockedCommand.pushAddedModified(filePath2);
 
     final List<StatusFile> result = await command.run(projectPath);
 
-    expect(result.contains(const AddedFile('$projectPath$filePath1')), isTrue);
-    expect(result.contains(const AddedFile('$projectPath$filePath2')), isTrue);
-  });
-
-  test('returns ignored file in results', () async {
-    const String filePath = 'my/modified/file/path';
-    mockedCommand.pushIgnoredResult(filePath);
-
-    final List<StatusFile> result = await command.run(projectPath);
-
-    expect(result.contains(const IgnoredFile('$projectPath$filePath')), isTrue);
+    expect(
+        result.contains(const AddedFile('$projectPath$filePath1', filePath1)),
+        isTrue);
+    expect(
+        result.contains(const AddedFile('$projectPath$filePath2', filePath2)),
+        isTrue);
   });
 }

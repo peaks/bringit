@@ -32,7 +32,7 @@ class InfoUserCommit extends StatelessWidget {
         Container(
             child: Text(
           userAuthor,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.bodyMedium,
         )),
         const SizedBox(
           width: 5,
