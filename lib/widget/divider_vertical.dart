@@ -6,8 +6,6 @@ class DividerVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const VerticalDivider(
-      width: 2, //width space of divider
-    );
+    return const VerticalDivider();
   }
 }

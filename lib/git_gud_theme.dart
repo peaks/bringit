@@ -70,9 +70,9 @@ class GitGudTheme {
         ),
         secondaryHeaderColor: NordColors.$8,
         dividerTheme: const DividerThemeData(
-          color: NordColors.$0, //color of divider
-          thickness: 3,
-          endIndent: 3,
-        ));
+            color: NordColors.$0, //color of divider
+            thickness: 3,
+            endIndent: 3,
+            space: 2));
   }
 }
