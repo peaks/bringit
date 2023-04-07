@@ -4,7 +4,7 @@ import 'package:git_ihm/data/git_list_commit.dart';
 import 'package:git_ihm/widget/commit_info.dart';
 import 'package:git_ihm/widget/commit_timestamp.dart';
 import 'package:git_ihm/widget/info_user_commit.dart';
-import 'package:git_ihm/widget/profile_user.dart';
+import 'package:git_ihm/widget/user_profile_picture.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -45,7 +45,7 @@ class CommitSummary extends StatelessWidget {
               flex: 0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 8),
-                child: ProfileUser(userEmail: commit.email),
+                child: UserProfilePicture(userEmail: commit.email),
               ),
             ),
             Expanded(

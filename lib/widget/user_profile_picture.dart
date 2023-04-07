@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gravatar/flutter_gravatar.dart';
 
-class ProfileUser extends StatelessWidget {
-  const ProfileUser({Key? key, required this.userEmail}) : super(key: key);
+class UserProfilePicture extends StatelessWidget {
+  const UserProfilePicture({Key? key, required this.userEmail})
+      : super(key: key);
   final String userEmail;
 
   @override
