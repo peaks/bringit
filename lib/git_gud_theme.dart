@@ -52,6 +52,11 @@ class GitGudTheme {
               decoration: TextDecoration.underline,
             ),
           ),
+          headlineLarge: GoogleFonts.roboto(
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 28,
+                  color: NordColors.$4)),
         ),
         expansionTileTheme: const ExpansionTileThemeData(
           iconColor: NordColors.$4,
@@ -67,6 +72,8 @@ class GitGudTheme {
           tertiary: NordColors.$15,
           background: NordColors.$1,
           surface: NordColors.$3,
+          primaryContainer: NordColors.$9,
+          secondaryContainer: NordColors.$2,
         ),
         secondaryHeaderColor: NordColors.$8,
         dividerTheme: const DividerThemeData(
