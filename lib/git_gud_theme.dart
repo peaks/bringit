@@ -28,6 +28,13 @@ class GitGudTheme {
               color: NordColors.$4,
             ),
           ),
+          labelSmall: GoogleFonts.roboto(
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: NordColors.$0,
+            ),
+          ),
           titleSmall:
               const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono'),
           headlineMedium: const TextStyle(
@@ -57,6 +64,13 @@ class GitGudTheme {
                   fontWeight: FontWeight.w400,
                   fontSize: 28,
                   color: NordColors.$4)),
+          displayLarge: const TextStyle(
+              color: NordColors.$8, fontWeight: FontWeight.w300, fontSize: 18),
+          bodyMedium: GoogleFonts.roboto(
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: NordColors.$4)),
         ),
         expansionTileTheme: const ExpansionTileThemeData(
           iconColor: NordColors.$4,
@@ -67,15 +81,16 @@ class GitGudTheme {
           textTheme: ButtonTextTheme.normal,
         ),
         colorScheme: const ColorScheme.dark(
-          primary: NordColors.$4,
-          secondary: NordColors.$8,
-          tertiary: NordColors.$15,
-          background: NordColors.$1,
-          surface: NordColors.$3,
-          primaryContainer: NordColors.$9,
-          secondaryContainer: NordColors.$2,
-        ),
-        secondaryHeaderColor: NordColors.$8,
+            primary: NordColors.$4,
+            secondary: NordColors.$8,
+            tertiary: NordColors.$15,
+            background: NordColors.$1,
+            surface: NordColors.$3,
+            primaryContainer: NordColors.$9,
+            secondaryContainer: NordColors.$2,
+            onError: NordColors.$12,
+            onPrimary: NordColors.$14),
+        secondaryHeaderColor: NordColors.$9,
         dividerTheme: const DividerThemeData(
             color: NordColors.$0, //color of divider
             thickness: 3,
