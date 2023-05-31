@@ -18,6 +18,16 @@ if [ -n "$hasChanges" ]; then
 fi
 printf '%s\n' "${avar}"
 
+# Checking gpl3 license
+bash ./.githooks/license_validation.sh ./ .java .dart .kt
+if [ $? -ne 0 ]; then
+  printf "\e[31;1m%s\e[0m\n" '=== License error ==='
+  pop_stash_files
+  exit 1
+fi
+printf "\e[33;1m%s\e[0m\n" 'Finished license check'
+printf '%s\n' "${avar}"
+
 # Validating author email
 authorinfo=$(git var GIT_AUTHOR_IDENT)
 name=$(printf '%s\n\n' "${authorinfo}" | sed -n 's/^\(.*\) <.*$/\1/p')
