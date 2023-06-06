@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:git_ihm/widget/modal/new_git_project_form.dart';
+import 'package:git_ihm/widget/modal/new_modal.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../widget/button/home_button.dart';
@@ -11,6 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void displayModalCreateNewGitProject() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => NewProjectModal(
+        icon: MdiIcons.git,
+        modalContent: const NewGitProjectForm(),
+        title: 'Create Git Project',
+        onSubmit: () {},
+        titleAction: 'Create',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,14 +35,10 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
           leadingWidth: 180,
           leading: Container(
-              height: 35,
               child: Image.asset(
-                'assets/gitguglogo.png',
-                fit: BoxFit.fitHeight,
-              )),
-          title: Container(
-            alignment: Alignment.centerLeft,
-          ),
+            'assets/gitguglogo.png',
+            fit: BoxFit.fill,
+          )),
         ),
       ),
       body: Container(
@@ -35,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: HomeButton(
             title: 'Create Git Project',
             icon: MdiIcons.git,
-            onPressed: () {},
+            onPressed: () {
+              displayModalCreateNewGitProject();
+            },
           ),
         ),
       ),
