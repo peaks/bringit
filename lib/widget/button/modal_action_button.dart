@@ -4,12 +4,12 @@ class ModalActionButton extends StatelessWidget {
   const ModalActionButton(
       {Key? key,
       this.enable = true,
-      required this.onPressed,
+      required this.onSubmit,
       required this.title})
       : super(key: key);
 
   final bool enable;
-  final GestureTapCallback onPressed;
+  final GestureTapCallback onSubmit;
   final String title;
 
   @override
@@ -26,7 +26,7 @@ class ModalActionButton extends StatelessWidget {
               side: BorderSide(
                 color: Theme.of(context).colorScheme.surface,
               )),
-      onPressed: enable ? onPressed : null,
+      onPressed: enable ? onSubmit : null,
       child: Text(
         title,
         style: enable

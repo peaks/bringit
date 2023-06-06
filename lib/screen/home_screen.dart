@@ -16,11 +16,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void displayModalCreateNewGitProject() {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => NewModal(
+      builder: (BuildContext context) => NewProjectModal(
         icon: MdiIcons.git,
         modalContent: const NewGitProjectForm(),
         title: 'Create Git Project',
-        onPressed: () {},
+        onSubmit: () {},
         titleAction: 'Create',
       ),
     );

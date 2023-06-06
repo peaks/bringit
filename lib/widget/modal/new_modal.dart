@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-class NewModal extends StatefulWidget {
-  const NewModal(
+class NewProjectModal extends StatefulWidget {
+  const NewProjectModal(
       {Key? key,
       required this.title,
       required this.icon,
       required this.titleAction,
-      required this.onPressed,
+      required this.onSubmit,
       required this.modalContent})
       : super(key: key);
 
   final String title;
   final IconData icon;
   final String titleAction;
-  final GestureTapCallback onPressed;
+  final GestureTapCallback onSubmit;
   final Widget modalContent;
 
   @override
-  State<NewModal> createState() => _NewModalState();
+  State<NewProjectModal> createState() => _NewProjectModalState();
 }
 
-class _NewModalState extends State<NewModal> {
+class _NewProjectModalState extends State<NewProjectModal> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

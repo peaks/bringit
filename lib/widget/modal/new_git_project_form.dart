@@ -96,7 +96,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
               children: <Widget>[
                 Expanded(
                     child: ModalActionButton(
-                  onPressed: () {
+                  onSubmit: () {
                     Navigator.of(context).pop();
                   },
                   title: 'Cancel',
@@ -106,7 +106,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                 ),
                 Expanded(
                     child: ModalActionButton(
-                  onPressed: () {
+                  onSubmit: () {
                     Navigator.push<MaterialPageRoute<dynamic>>(
                         context,
                         MaterialPageRoute<MaterialPageRoute<dynamic>>(
