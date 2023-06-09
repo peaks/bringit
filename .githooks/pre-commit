@@ -19,7 +19,13 @@ fi
 printf '%s\n' "${avar}"
 
 # Checking gpl3 license
-bash ./.githooks/license_validation.sh ./ .java .dart .kt
+bash ./.githooks/license_validation.sh ./lib/ .dart
+if [ $? -ne 0 ]; then
+  printf "\e[31;1m%s\e[0m\n" '=== License error ==='
+  pop_stash_files
+  exit 1
+fi
+bash ./.githooks/license_validation.sh ./test/ .dart
 if [ $? -ne 0 ]; then
   printf "\e[31;1m%s\e[0m\n" '=== License error ==='
   pop_stash_files
