@@ -13,8 +13,9 @@
 
   <a href="https://project.peaks.fr/peaks-ri/git-ihm/-/pipelines"><img src="https://project.peaks.fr/peaks-ri/git-ihm/badges/master/pipeline.svg" alt="build status"/></a>
   <a href=""><img src="https://img.shields.io/gitlab/coverage/internal/mdc/master" alt="code coverage"/></a>
-  <a href=""><img src="https://img.shields.io/badge/licence-Copyright%20%C2%A9%20Peaks%202021-blue" alt="licence"/></a>
+  <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="licence"/></a>
   <a href="code_of_conduct.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg" alt="Contributor Covenant"/></a>
+  <a href="https://flutter.dev/"><img src="https://img.shields.io/badge/Build_with-Flutter-0553B1" alt="Contributor Covenant"/></a>
 
   <img src="screenshot.gif" width="75%"/>
 </div>
@@ -242,9 +243,9 @@ to learn more on them. They can be launched with the command:
 
 # License
 
-<img src="logo-peaks.svg" alt="Peaks" width="100">
+GitGud is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-(c) Copyright 2021 [PEAKS](https://peaks.fr/), all rights reserved.
+Please see the [COPYING](COPYING) file in our repository for the full text.
 
 # Troubleshooting
 
