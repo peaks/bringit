@@ -62,7 +62,7 @@ files_without_license_gpl3=()
 while IFS= read -r -d '' file; do
     # Check specified extensions
     for ext in "${extensions[@]}"; do
-        if [[ $file == *"$ext" ]]; then
+        if [[ $file == *"$ext" && $file != *"generated_"* ]]; then
             file_contents=$(cleaned_flattened_extracted_comment_block "$file")
             if [ "$debug" = true ]; then
                 write_in_green "DEBUG: Here is the first extracted comment block from the file: $file"

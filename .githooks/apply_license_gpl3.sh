@@ -68,7 +68,7 @@ files_without_license_gpl3=()
 while IFS= read -r -d '' file; do
     # Check the specified extensions
     for ext in "${extensions[@]}"; do
-        if [[ $file == *"$ext" ]]; then
+        if [[ $file == *"$ext" && $file != *"generated_"* ]]; then
             first_line=$(extract_first_non_empty_line "$file")
             [ "$debug" = true ] && write_in_green "DEBUG: $file: Here is the first non-empty line of the file: $first_line"
             if [[ $first_line != "/*" && $first_line != "/**" ]]; then # The first line of the analyzed file is not a comment block

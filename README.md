@@ -15,7 +15,7 @@
   <a href=""><img src="https://img.shields.io/gitlab/coverage/internal/mdc/master" alt="code coverage"/></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="licence"/></a>
   <a href="code_of_conduct.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg" alt="Contributor Covenant"/></a>
-  <img src="https://img.shields.io/badge/Build_with-Flutter-0553B1" alt="Contributor Covenant"/>
+  <a href="https://flutter.dev/"><img src="https://img.shields.io/badge/Build_with-Flutter-0553B1" alt="Contributor Covenant"/></a>
 
   <img src="screenshot.gif" width="75%"/>
 </div>
