@@ -6,6 +6,12 @@ before_script:
 stages:
   - analyze-and-test
 
+check-license:
+  stage: analyze-and-test
+  script:
+    - bash ./.githooks/license_validation.sh ./lib/ .dart
+    - bash ./.githooks/license_validation.sh ./test/ .dart
+
 lint:
   stage: analyze-and-test
   script:
