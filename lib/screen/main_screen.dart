@@ -18,6 +18,7 @@
  */
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:git_ihm/git_gud_theme.dart';
 import 'package:git_ihm/widget/path_selector.dart';
 import 'package:git_ihm/widget/side_menu.dart' as side_menu_custom;
 import 'package:git_ihm/widget/status_bar.dart';
@@ -56,9 +57,11 @@ class _MainScreenState extends State<MainScreen> {
           elevation: 0,
           leadingWidth: 100,
           leading: Container(
-              height: 35,
+              padding: const EdgeInsets.all(4),
+              //color: Theme.of(context).colorScheme.background,
               child: Image.asset(
-                'assets/gitlogo.png',
+                'assets/bg-compact.png',
+                color: Theme.of(context).colorScheme.background,
                 fit: BoxFit.fitHeight,
               )),
           title: Container(

@@ -51,12 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: const Size.fromHeight(35.0),
         child: AppBar(
           elevation: 0,
-          leadingWidth: 180,
+          leadingWidth: 200,
           leading: Container(
+              padding: const EdgeInsets.all(4),
               child: Image.asset(
-            'assets/gitguglogo.png',
-            fit: BoxFit.fill,
-          )),
+                'assets/bg-full.png',
+                color: Theme.of(context).colorScheme.background,
+                fit: BoxFit.fitHeight,
+              )),
         ),
       ),
       body: Container(
