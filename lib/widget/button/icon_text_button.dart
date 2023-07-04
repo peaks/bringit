@@ -1,24 +1,24 @@
 /*
  * Copyright (c) 2020 Peaks
  *
- * This file is part of GitGud
+ * This file is part of Brin'Git
  *
- * GitGud is free software: you can redistribute it and/or modify
+ * Brin'Git is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GitGud is distributed in the hope that it will be useful,
+ * Brin'Git is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GitGud.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:git_ihm/git_gud_theme.dart';
+import 'package:git_ihm/bringit_theme.dart';
 
 class IconTextButton extends StatefulWidget {
   const IconTextButton({
@@ -37,7 +37,7 @@ class IconTextButton extends StatefulWidget {
 }
 
 class _IconTextButtonState extends State<IconTextButton> {
-  Color hovercolor = GitGudTheme.unknowColor;
+  Color hovercolor = BrinGitTheme.unknowColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _IconTextButtonState extends State<IconTextButton> {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           foregroundColor: Theme.of(context).colorScheme.primary,
-          backgroundColor: GitGudTheme.unknowColor,
+          backgroundColor: BrinGitTheme.unknowColor,
           side: BorderSide(
             color: hovercolor,
           ),
@@ -72,7 +72,7 @@ class _IconTextButtonState extends State<IconTextButton> {
       },
       onExit: (PointerExitEvent s) {
         setState(() {
-          hovercolor = GitGudTheme.unknowColor;
+          hovercolor = BrinGitTheme.unknowColor;
         });
       },
     );

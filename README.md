@@ -1,7 +1,7 @@
 
 <div align="center">
 
-  <a href=""><img src="gitgud.png" alt="Git Gud" width="200"></a>
+  <a href=""><img src="bg-logo.png" alt="Brin'Git" width="200"></a>
 
   **A didactic and transparent GUI for Git using Gamification**
 
@@ -243,7 +243,7 @@ to learn more on them. They can be launched with the command:
 
 # License
 
-GitGud is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+Brin'Git is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 Please see the [COPYING](COPYING) file in our repository for the full text.
 
