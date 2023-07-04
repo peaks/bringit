@@ -1,25 +1,25 @@
 /*
  * Copyright (c) 2020 Peaks
  *
- * This file is part of GitGud
+ * This file is part of Brin'Git
  *
- * GitGud is free software: you can redistribute it and/or modify
+ * Brin'Git is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GitGud is distributed in the hope that it will be useful,
+ * Brin'Git is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GitGud.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:git_ihm/git_gud_theme.dart';
+import 'package:git_ihm/bringit_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
 
 class GamifiedIconTextButton extends StatefulWidget {
@@ -38,11 +38,11 @@ class GamifiedIconTextButton extends StatefulWidget {
   static bool isGamificationEnabled = true;
   static Duration longPressDuration = const Duration(seconds: 2);
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
-    ButtonLevel.unknown: GitGudTheme.unknowColor,
-    ButtonLevel.careful: GitGudTheme.carefulColor,
-    ButtonLevel.safe: GitGudTheme.successColor,
-    ButtonLevel.risky: GitGudTheme.warningColor,
-    ButtonLevel.standard: GitGudTheme.standardColor,
+    ButtonLevel.unknown: BrinGitTheme.unknowColor,
+    ButtonLevel.careful: BrinGitTheme.carefulColor,
+    ButtonLevel.safe: BrinGitTheme.successColor,
+    ButtonLevel.risky: BrinGitTheme.warningColor,
+    ButtonLevel.standard: BrinGitTheme.standardColor,
   };
 
   @override
@@ -57,7 +57,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
   late ButtonLevel state;
   late AnimationController controller;
   late Animation<double> animation;
-  Color hovercolor = GitGudTheme.unknowColor;
+  Color hovercolor = BrinGitTheme.unknowColor;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
         onHover: (_) {
           setState(() {
             if (GamifiedIconTextButton.isGamificationEnabled == false) {
-              hovercolor = GitGudTheme.standardColor;
+              hovercolor = BrinGitTheme.standardColor;
               level = defaultlevel;
             } else {
               level = state;
@@ -148,7 +148,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
       onExit: (PointerExitEvent s) {
         setState(() {
           level = defaultlevel;
-          hovercolor = GitGudTheme.unknowColor;
+          hovercolor = BrinGitTheme.unknowColor;
         });
       },
     );

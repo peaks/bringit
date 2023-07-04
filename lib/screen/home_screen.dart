@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2020 Peaks
  *
- * This file is part of GitGud
+ * This file is part of Brin'Git
  *
- * GitGud is free software: you can redistribute it and/or modify
+ * Brin'Git is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GitGud is distributed in the hope that it will be useful,
+ * Brin'Git is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GitGud.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
 import 'package:git_ihm/widget/modal/new_git_project_form.dart';
@@ -51,12 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: const Size.fromHeight(35.0),
         child: AppBar(
           elevation: 0,
-          leadingWidth: 180,
+          leadingWidth: 200,
           leading: Container(
+              padding: const EdgeInsets.all(4),
               child: Image.asset(
-            'assets/gitguglogo.png',
-            fit: BoxFit.fill,
-          )),
+                'assets/bg-full.png',
+                color: Theme.of(context).colorScheme.background,
+                fit: BoxFit.fitHeight,
+              )),
         ),
       ),
       body: Container(

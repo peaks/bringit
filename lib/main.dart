@@ -1,26 +1,26 @@
 /*
  * Copyright (c) 2020 Peaks
  *
- * This file is part of GitGud
+ * This file is part of Brin'Git
  *
- * GitGud is free software: you can redistribute it and/or modify
+ * Brin'Git is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GitGud is distributed in the hope that it will be useful,
+ * Brin'Git is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GitGud.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'dart:io';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:git_ihm/git_gud_theme.dart';
+import 'package:git_ihm/bringit_theme.dart';
 import 'package:git_ihm/screen/home_screen.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Clever Git',
-      theme: GitGudTheme().darkTheme,
+      theme: BrinGitTheme().darkTheme,
       home: const HomeScreen(),
     );
   }
