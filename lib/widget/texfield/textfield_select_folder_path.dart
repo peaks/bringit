@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 import '../modal/custom_form_field.dart';
@@ -47,7 +47,7 @@ class _TextfieldSelectFolderPathState extends State<TextfieldSelectFolderPath> {
   }
 
   Future<void> selectDirectory() async {
-    selectedDirectory = await FilePicker.platform.getDirectoryPath();
+    selectedDirectory = await getDirectoryPath();
     if (selectedDirectory == null) {
       print('No file selected');
     } else {
