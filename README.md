@@ -1,7 +1,7 @@
 
 <div align="center">
 
-  <a href=""><img src="bg-logo.png" alt="Brin'Git" width="200"></a>
+  <a href=""><img src="bringit-logo.gif" alt="Brin'Git" width="200"></a>
 
   **A didactic and transparent GUI for Git using Gamification**
 
@@ -15,7 +15,7 @@
   <a href="code_of_conduct.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg" alt="Contributor Covenant"/></a>
   <a href="https://flutter.dev/"><img src="https://img.shields.io/badge/Build_with-Flutter-0553B1" alt="Contributor Covenant"/></a>
 
-  <img src="screenshot.gif" width="75%"/>
+  <img src="bringit-screen.gif" width="75%"/>
 </div>
 <br><br>
 
