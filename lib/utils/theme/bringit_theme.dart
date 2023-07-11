@@ -17,7 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
+import 'package:git_ihm/utils/theme/nord_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BrinGitTheme {

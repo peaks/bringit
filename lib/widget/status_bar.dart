@@ -37,12 +37,12 @@ class StatusBar extends StatelessWidget {
             endIndent: 3,
             height: 0,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              children: const <Widget>[
+              children: <Widget>[
                 GitChip(),
                 ProjectPath(),
               ],

@@ -20,8 +20,8 @@ import 'dart:io';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:git_ihm/bringit_theme.dart';
 import 'package:git_ihm/screen/home_screen.dart';
+import 'package:git_ihm/utils/theme/bringit_theme.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
 import 'package:provider/provider.dart';
 

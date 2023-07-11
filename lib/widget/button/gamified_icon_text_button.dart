@@ -19,8 +19,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:git_ihm/bringit_theme.dart';
 import 'package:git_ihm/utils/button_level.dart';
+import 'package:git_ihm/utils/theme/bringit_theme.dart';
 
 class GamifiedIconTextButton extends StatefulWidget {
   GamifiedIconTextButton({

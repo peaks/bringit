@@ -17,7 +17,6 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_nord_theme/flutter_nord_theme.dart';
 
 class GitConsoleInput extends StatelessWidget {
   const GitConsoleInput({
@@ -36,7 +35,7 @@ class GitConsoleInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: NordColors.$1,
+      color: Theme.of(context).colorScheme.background,
       padding: const EdgeInsets.all(8),
       child: Row(
         children: <Widget>[
