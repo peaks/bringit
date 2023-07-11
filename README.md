@@ -11,8 +11,6 @@
   <a href="#how-to-contribute">How to contribute</a> •
   <a href="#troubleshooting">Troubleshooting</a>
 
-  <a href="https://project.peaks.fr/peaks-ri/git-ihm/-/pipelines"><img src="https://project.peaks.fr/peaks-ri/git-ihm/badges/master/pipeline.svg" alt="build status"/></a>
-  <a href=""><img src="https://img.shields.io/gitlab/coverage/internal/mdc/master" alt="code coverage"/></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="licence"/></a>
   <a href="code_of_conduct.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg" alt="Contributor Covenant"/></a>
   <a href="https://flutter.dev/"><img src="https://img.shields.io/badge/Build_with-Flutter-0553B1" alt="Contributor Covenant"/></a>
@@ -20,10 +18,6 @@
   <img src="screenshot.gif" width="75%"/>
 </div>
 <br><br>
-
-# Table of contents
-
-[TOC]
 
 # Ambition
 
@@ -66,8 +60,7 @@ flutter config --enable-linux-desktop
 > ```
 
 ## Build from sources
-
-1. `git clone git@git.peaks.fr:peaks-ri/git-ihm.git` *clone the project*
+1. Clone the project
 2. `flutter pub get` *download dependencies*
 3. `flutter devices` *list devices, ensure your OS is available*
 4. `flutter run -d <device>` *run the project on \<device>, linux, windows or macos*
@@ -76,40 +69,7 @@ flutter config --enable-linux-desktop
 
 # Gamification
 
-<details>
-<summary><h4>Color codes</h4></summary>
-
 > Coming soon...
-
-</details>
-
-<details>
-<summary><h4>Impact zone highlighting</h4></summary>
-
-> Coming soon...
-
-</details>
-
-<details>
-<summary><h4>Long press confirmation</h4></summary>
-
-> Coming soon...
-
-</details>
-
-<details>
-<summary><h4>Sandbox area</h4></summary>
-
-> Coming soon...
-
-</details>
-
-<details>
-<summary><h4>Progression tracker</h4></summary>
-
-> Coming soon...
-
-</details>
 
 # Roadmap
 
@@ -138,21 +98,16 @@ flutter config --enable-linux-desktop
 
 1. Clone the project
 
-   ```bash
-   git clone git@git.peaks.fr:peaks-ri/git-ihm.git
-   ```
-
 2. Enable project specific git hooks
 
    ```bash
-   cd git-ihm/
+   cd bringit/
    git config core.hooksPath .githooks
    ```
 
-3. Choose your issue from the [project's board](https://project.peaks.fr/peaks-ri/git-ihm/-/boards)
-4. Create a Merge Request from the issue (and get the branch name)
-5. Resolve the issue following the [Developer's guide](https://project.peaks.fr/peaks-ri/charte-projets-ri)
-6. Push your code on the corresponding branch
+3. Resolve the issue/bug following the [Developer's guide](CONTRIBUTE.md)
+
+4. Push your code on the corresponding branch
 
    ```bash
    git switch -c <issue-number>-<issue-name>
@@ -160,7 +115,7 @@ flutter config --enable-linux-desktop
    git push
    ```
 
-7. Submit your Merge Request !
+5. Submit your Merge Request !
 
 ## Directory Structure
 
