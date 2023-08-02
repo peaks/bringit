@@ -21,8 +21,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/widget/button/modal_action_button.dart';
 import 'package:git_ihm/widget/texfield/textfield_project_name.dart';
+import 'package:logger/logger.dart';
 
 import '../../screen/main_screen.dart';
+import '../../utils/git_gud_logger.dart';
 import '../texfield/textfield_select_folder_path.dart';
 
 class NewGitProjectForm extends StatefulWidget {
@@ -34,8 +36,8 @@ class NewGitProjectForm extends StatefulWidget {
 
 class _NewGitProjectFormState extends State<NewGitProjectForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  late String newProjectPath = '';
+  late Logger log;
+  late String pathToNewProject = '';
   late String projectNameMessageError = '';
   bool isProjectPathValid = false;
   bool isProjectNameValid = true;
@@ -70,11 +72,11 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
   Future<void> onProjectNameChanged(String? val) async {
     projectNameMessageError = '';
     final String pathDirectory = pathDirectoryController.text;
-    final String pathToNewProject = '$pathDirectory/$val';
+    pathToNewProject = '$pathDirectory/$val';
     isProjectNameNotYetModified = false;
 
     if (val!.isEmpty) {
-      projectNameMessageError = '$val is not a valid project name';
+      projectNameMessageError = 'the project name cannot be empty';
       isProjectNameValid = false;
     } else {
       isProjectNameValid = true;
@@ -84,7 +86,14 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
         isProjectNameValid = false;
       }
     }
+
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    log = getLogger(runtimeType.toString());
+    super.initState();
   }
 
   @override
@@ -130,6 +139,8 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                         MaterialPageRoute<MaterialPageRoute<dynamic>>(
                             builder: (BuildContext context) =>
                                 const MainScreen()));
+                    log.i(
+                        "git project '$pathToNewProject' successfully created");
                   },
                   enable: isProjectNameValid && !isProjectNameNotYetModified,
                   title: 'Create',

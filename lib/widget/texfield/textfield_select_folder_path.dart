@@ -18,7 +18,9 @@
  */
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
+import '../../utils/git_gud_logger.dart';
 import '../modal/custom_form_field.dart';
 
 class TextfieldSelectFolderPath extends StatefulWidget {
@@ -39,20 +41,22 @@ class TextfieldSelectFolderPath extends StatefulWidget {
 
 class _TextfieldSelectFolderPathState extends State<TextfieldSelectFolderPath> {
   String? selectedDirectory;
+  late Logger log;
   TextEditingController pathDirectory = TextEditingController();
   @override
   void initState() {
     super.initState();
+    log = getLogger(runtimeType.toString());
     pathDirectory = widget.pathDirectoryController;
   }
 
   Future<void> selectDirectory() async {
     selectedDirectory = await getDirectoryPath();
     if (selectedDirectory == null) {
-      print('No file selected');
+      log.t('No folder selected');
     } else {
       pathDirectory.text = selectedDirectory.toString();
-      print(selectedDirectory);
+      log.t('parent folder selected $selectedDirectory');
     }
   }
 

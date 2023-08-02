@@ -18,6 +18,9 @@
  */
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+import '../../utils/git_gud_logger.dart';
 
 class GitConsoleHistory extends StatefulWidget {
   const GitConsoleHistory(
@@ -40,14 +43,19 @@ class GitConsoleHistory extends StatefulWidget {
 class GitConsoleHistoryState extends State<GitConsoleHistory> {
   ExpandableController expandableController =
       ExpandableController(initialExpanded: true);
-
+  late Logger log;
   @override
   void initState() {
+    log = getLogger(runtimeType.toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.success) {
+      log.i('${widget.command} command launched successfully');
+    } else
+      log.i('${widget.command} command returned an error');
     return ExpandablePanel(
       controller: expandableController,
       header: Row(
