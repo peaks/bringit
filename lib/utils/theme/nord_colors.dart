@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_field_initializers_in_const_classes, flutter_style_todos, avoid_classes_with_only_static_members, always_specify_types, overridden_fields
-
 /*
  * Copyright (c) 2020 Peaks
  *
@@ -22,6 +20,7 @@ import 'package:flutter/material.dart';
 
 /// This file is heavily inspired by https://github.com/Firefnix/flutter-nord-theme/
 
+// ignore_for_file: avoid_field_initializers_in_const_classes, flutter_style_todos, avoid_classes_with_only_static_members, always_specify_types, overridden_fields
 abstract class NordColorCodes {
   /// Polar night
   static const int $0 = 0xFF2e3440;

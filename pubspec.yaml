@@ -89,6 +89,17 @@ flutter:
           weight: 700
         - asset: assets/fonts/FantasqueSansMono-Italic.ttf
           style: italic
+
+    - family: Hack
+      fonts:
+        - asset: assets/fonts/Hack-Regular.ttf
+        - asset: assets/fonts/Hack-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Hack-BoldItalic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/Hack-Italic.ttf
+          style: italic
     - family: Seti
       fonts:
         - asset: assets/fonts/seti.ttf

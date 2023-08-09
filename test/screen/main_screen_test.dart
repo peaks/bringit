@@ -47,7 +47,6 @@ void main() {
 
   testWidgets('contains a StatusBar widget', (WidgetTester tester) async {
     await buildMainScreen(tester);
-
     expect(findStatusBarInApp(), findsOneWidget);
   });
 }

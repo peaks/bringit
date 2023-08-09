@@ -17,6 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'dart:convert';
+
 import 'package:git_ihm/git/base_command/terminal_command.dart';
 
 class StatusFetcher {
@@ -28,8 +29,9 @@ class StatusFetcher {
   }
 
   Future<String> _callGitStatus(String path) async {
+    // don't send back ignored files
     final TerminalCommand command = TerminalCommand(
-        'git', <String>['status', '--porcelain=v1', '--ignored=matching']);
+        'git', <String>['status', '--porcelain=v1', '--ignored=no']);
 
     return command.run(path);
   }

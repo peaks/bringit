@@ -38,7 +38,7 @@ class GitStatusImplementation extends GitStatusCommand {
     final List<StatusFile> results = <StatusFile>[];
 
     for (final String element in gitStatus) {
-      results.add(_parser.parse(element));
+      results.addAll(_parser.parse(element));
     }
 
     return results;

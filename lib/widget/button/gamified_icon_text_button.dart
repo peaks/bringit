@@ -38,7 +38,7 @@ class GamifiedIconTextButton extends StatefulWidget {
   static bool isGamificationEnabled = true;
   static Duration longPressDuration = const Duration(seconds: 2);
   final Map<ButtonLevel, Color> colorByLevel = <ButtonLevel, Color>{
-    ButtonLevel.unknown: BrinGitTheme.unknowColor,
+    ButtonLevel.unknown: BrinGitTheme.unknownColor,
     ButtonLevel.careful: BrinGitTheme.carefulColor,
     ButtonLevel.safe: BrinGitTheme.successColor,
     ButtonLevel.risky: BrinGitTheme.warningColor,
@@ -57,7 +57,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
   late ButtonLevel state;
   late AnimationController controller;
   late Animation<double> animation;
-  Color hovercolor = BrinGitTheme.unknowColor;
+  Color hovercolor = BrinGitTheme.unknownColor;
 
   @override
   void initState() {
@@ -148,7 +148,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
       onExit: (PointerExitEvent s) {
         setState(() {
           level = defaultlevel;
-          hovercolor = BrinGitTheme.unknowColor;
+          hovercolor = BrinGitTheme.unknownColor;
         });
       },
     );

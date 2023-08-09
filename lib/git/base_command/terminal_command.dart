@@ -31,7 +31,8 @@ class TerminalCommand {
         workingDirectory: workingDirectory);
 
     if (_commandIsSuccessful(result)) {
-      return (result.stdout as String).trim();
+      // don't trim because it removes essential white space in front of first file status
+      return result.stdout as String;
     }
 
     return '';

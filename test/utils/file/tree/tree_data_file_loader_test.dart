@@ -90,7 +90,9 @@ void main() {
 
   test('it links its status property to mapper', () {
     final TreeDataFileLoader testSubject = _buildTestSubjectOnFakeNodeMapper();
-    final List<StatusFile> gitStatus = <StatusFile>[const UntrackedPath('foo')];
+    final List<StatusFile> gitStatus = <StatusFile>[
+      const UntrackedPath('foo', 'foo')
+    ];
     testSubject.status = gitStatus;
 
     expect(nodeMapperSpy.statusWasSetWith, same(gitStatus));

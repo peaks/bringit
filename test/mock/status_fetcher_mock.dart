@@ -38,16 +38,41 @@ class StatusFetcherMock extends StatusFetcher {
     runResult.add('?? $filePath');
   }
 
-  void pushModifiedResult(String filePath) {
+  void pushRenamedResult(String filePath, String oldFilePath) {
+    runResult.add('R  $oldFilePath -> $filePath');
+    print(runResult);
+  }
+
+  void pushRenamedUnstagedResult(String filePath, String oldFilePath) {
+    runResult.add(' R $oldFilePath -> $filePath');
+  }
+
+  void pushDeletedUnstagedResult(String filePath) {
+    runResult.add(' D $filePath');
+  }
+
+  void pushDeletedStagedResult(String filePath) {
+    runResult.add('D  $filePath');
+  }
+
+  void pushModifiedUnstagedResult(String filePath) {
     runResult.add(' M $filePath');
   }
 
-  void pushModifiedOrAddedResult(String filePath) {
+  void pushModifiedStagedResult(String filePath) {
     runResult.add('M  $filePath');
   }
 
-  void pushUntrackedAndAdded(String filePath) {
+  void pushModifiedStagedThenModifiedResult(String filePath) {
+    runResult.add('MM $filePath');
+  }
+
+  void pushAdded(String filePath) {
     runResult.add('A  $filePath');
+  }
+
+  void pushAddedModified(String filePath) {
+    runResult.add('AM $filePath');
   }
 
   void willRunFor(String gitDirectory) {

@@ -48,7 +48,7 @@ class CommitInfo extends StatelessWidget {
             const SizedBox(width: 5),
             Text(
               commitsubject,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.bodyMedium,
             )
           ],
         ),
@@ -57,7 +57,7 @@ class CommitInfo extends StatelessWidget {
               title: Container(
                   child: Text(
             commitBody,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.bodyMedium,
           ))),
         ],
       ),

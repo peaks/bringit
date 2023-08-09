@@ -24,6 +24,7 @@ import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:git_ihm/data/git/status_file.dart';
 import 'package:git_ihm/utils/file/icons/file_icondata.dart';
 import 'package:git_ihm/utils/file/tree/file_system_node_mapper.dart';
+import 'package:git_ihm/utils/theme/bringit_theme.dart';
 
 late FileSystemNodeMapper mapper;
 late IconFetcherSpy fetcher;
@@ -84,51 +85,51 @@ void main() {
     expect(mappedResult.children.first.key, equals('EMPTY_NODE'));
   });
 
-  test('icon is red if the path matches with an untracked directory', () {
+  test('icon is yellow if the path matches with an untracked directory', () {
     const String untrackedDirectory = '/foo/bar/';
     mapper.status = <StatusFile>[
-      const UntrackedPath(untrackedDirectory),
+      const UntrackedPath(untrackedDirectory, untrackedDirectory),
     ];
 
     final Directory entity = Directory(untrackedDirectory);
     final Node<void> mappedResult = mapper.map(entity);
-    expect(mappedResult.iconColor, equals(Colors.red));
+    expect(mappedResult.iconColor, equals(BrinGitTheme.untrackedColor));
   });
 
-  test('icon is red if the file is contained in an untracked directory', () {
-    const String untrackedDirectory = '/foo/bar/';
-    mapper.status = <StatusFile>[const UntrackedPath(untrackedDirectory)];
-
-    final File entity = File('${untrackedDirectory}untrackedFile');
-    final Node<void> mappedResult = mapper.map(entity);
-    expect(mappedResult.iconColor, equals(Colors.red));
-  });
-
-  test('icon is blue if the path matches an updated file', () {
+  test('icon is red if the file matches with a deleted file', () {
     const String path = '/foo/bar.dart';
-    mapper.status = <StatusFile>[const ModifiedFile(path)];
+    mapper.status = <StatusFile>[const DeletedFile(path, path)];
 
     final File entity = File(path);
     final Node<void> mappedResult = mapper.map(entity);
-    expect(mappedResult.iconColor, equals(Colors.blue));
+    expect(mappedResult.iconColor, equals(BrinGitTheme.warningColor));
+  });
+
+  test('icon is orange if the path matches an updated file', () {
+    const String path = '/foo/bar.dart';
+    mapper.status = <StatusFile>[const ModifiedFile(path, path)];
+
+    final File entity = File(path);
+    final Node<void> mappedResult = mapper.map(entity);
+    expect(mappedResult.iconColor, equals(BrinGitTheme.carefulColor));
   });
 
   test('icon is green if the path matches an added file', () {
     const String path = '/foo/bar.dart';
-    mapper.status = <StatusFile>[const AddedFile(path)];
+    mapper.status = <StatusFile>[const AddedFile(path, path)];
 
     final File entity = File(path);
     final Node<void> mappedResult = mapper.map(entity);
-    expect(mappedResult.iconColor, equals(Colors.green));
+    expect(mappedResult.iconColor, equals(BrinGitTheme.successColor));
   });
 
-  test('icon is brown if the path matches an ignored path', () {
+  test('icon is purple if the path matches an ignored path', () {
     const String path = '/foo/bar/';
-    mapper.status = <StatusFile>[const IgnoredFile(path)];
+    mapper.status = <StatusFile>[const IgnoredFile(path, path)];
 
     final Directory entity = Directory(path);
     final Node<void> mappedResult = mapper.map(entity);
-    expect(mappedResult.iconColor, equals(Colors.brown));
+    expect(mappedResult.iconColor, equals(BrinGitTheme.ignoredColor));
   });
 }
 

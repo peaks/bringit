@@ -35,7 +35,7 @@ class FileSystemNodeMapper {
   set status(List<StatusFile> files) {
     _status.clear();
     for (final StatusFile element in files) {
-      _status[element.path] = element;
+      _status[element.fileAbsolutePath] = element;
     }
   }
 

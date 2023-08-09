@@ -18,34 +18,53 @@
  */
 // ignore_for_file: hash_and_equals
 import 'package:flutter/material.dart';
+import 'package:git_ihm/utils/theme/bringit_theme.dart';
 
-enum GitFileState { untracked, modified, added, renamed, ignored }
+// added deleted state
+enum GitFileState { untracked, modified, added, renamed, ignored, deleted }
+
+// added diff file state list to separate them and switch the state with user actions
+enum GitDiffFileState { unstaged, staged }
 
 @immutable
 abstract class StatusFile {
-  const StatusFile(this._path);
+  // added as optional parameter the diff file state by default to unstaged
+  const StatusFile(this._fileAbsolutePath, this._fileRelativePath,
+      [this._fileState]);
 
-  final String _path;
+  final String _fileAbsolutePath;
+  final String _fileRelativePath;
+  final GitDiffFileState? _fileState;
 
-  String get path => _path;
-  Color get color => Colors.white;
+  String get fileAbsolutePath => _fileAbsolutePath;
+  String get fileRelativePath => _fileRelativePath;
+  GitDiffFileState? get fileState => _fileState;
+  Color get color => BrinGitTheme.secondaryColor;
+  String get prefix => '!!';
 
   @override
   bool operator ==(Object other) {
-    return other is StatusFile && other.path == path;
+    return other is StatusFile && other.fileAbsolutePath == fileAbsolutePath;
   }
 
   @override
-  int get hashCode => path.hashCode;
+  int get hashCode => fileAbsolutePath.hashCode;
 
   GitFileState get state;
 }
 
 class UntrackedPath extends StatusFile {
-  const UntrackedPath(String path) : super(path);
+  const UntrackedPath(
+    String newPath,
+    String fileRelativePath,
+  ) : super(newPath, fileRelativePath);
 
   @override
-  Color get color => Colors.red;
+  // pass to yellow to follow figma
+  Color get color => BrinGitTheme.untrackedColor;
+
+  @override
+  String get prefix => 'U ';
 
   @override
   GitFileState get state => GitFileState.untracked;
@@ -57,10 +76,15 @@ class UntrackedPath extends StatusFile {
 }
 
 class AddedFile extends StatusFile {
-  const AddedFile(String path) : super(path);
+  const AddedFile(String newPath, String fileRelativePath,
+      [GitDiffFileState fileState = GitDiffFileState.unstaged])
+      : super(newPath, fileRelativePath, fileState);
 
   @override
-  Color get color => Colors.green;
+  Color get color => BrinGitTheme.successColor;
+
+  @override
+  String get prefix => 'A ';
 
   @override
   GitFileState get state => GitFileState.added;
@@ -72,10 +96,15 @@ class AddedFile extends StatusFile {
 }
 
 class ModifiedFile extends StatusFile {
-  const ModifiedFile(String path) : super(path);
+  const ModifiedFile(String newPath, String fileRelativePath,
+      [GitDiffFileState fileState = GitDiffFileState.unstaged])
+      : super(newPath, fileRelativePath, fileState);
 
   @override
-  Color get color => Colors.blue;
+  Color get color => BrinGitTheme.carefulColor;
+
+  @override
+  String get prefix => 'M ';
 
   @override
   GitFileState get state => GitFileState.modified;
@@ -87,10 +116,15 @@ class ModifiedFile extends StatusFile {
 }
 
 class RenamedFile extends StatusFile {
-  const RenamedFile(String newPath) : super(newPath);
+  const RenamedFile(String newPath, String fileRelativePath,
+      [GitDiffFileState fileState = GitDiffFileState.unstaged])
+      : super(newPath, fileRelativePath, fileState);
 
   @override
-  Color get color => Colors.green;
+  Color get color => BrinGitTheme.successColor;
+
+  @override
+  String get prefix => 'R ';
 
   @override
   GitFileState get state => GitFileState.renamed;
@@ -102,10 +136,12 @@ class RenamedFile extends StatusFile {
 }
 
 class IgnoredFile extends StatusFile {
-  const IgnoredFile(String newPath) : super(newPath);
+  const IgnoredFile(String newPath, String fileRelativePath,
+      [GitDiffFileState fileState = GitDiffFileState.unstaged])
+      : super(newPath, fileRelativePath, fileState);
 
   @override
-  Color get color => Colors.brown;
+  Color get color => BrinGitTheme.ignoredColor;
 
   @override
   GitFileState get state => GitFileState.ignored;
@@ -113,5 +149,26 @@ class IgnoredFile extends StatusFile {
   @override
   bool operator ==(Object other) {
     return other is IgnoredFile && super == other;
+  }
+}
+
+// added deleted state
+class DeletedFile extends StatusFile {
+  const DeletedFile(String newPath, String fileRelativePath,
+      [GitDiffFileState fileState = GitDiffFileState.unstaged])
+      : super(newPath, fileRelativePath, fileState);
+
+  @override
+  Color get color => BrinGitTheme.warningColor;
+
+  @override
+  String get prefix => 'D ';
+
+  @override
+  GitFileState get state => GitFileState.deleted;
+
+  @override
+  bool operator ==(Object other) {
+    return other is DeletedFile && super == other;
   }
 }

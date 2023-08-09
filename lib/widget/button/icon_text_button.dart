@@ -37,7 +37,7 @@ class IconTextButton extends StatefulWidget {
 }
 
 class _IconTextButtonState extends State<IconTextButton> {
-  Color hovercolor = BrinGitTheme.unknowColor;
+  Color hovercolor = BrinGitTheme.unknownColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _IconTextButtonState extends State<IconTextButton> {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           foregroundColor: Theme.of(context).colorScheme.primary,
-          backgroundColor: BrinGitTheme.unknowColor,
+          backgroundColor: BrinGitTheme.unknownColor,
           side: BorderSide(
             color: hovercolor,
           ),
@@ -72,7 +72,7 @@ class _IconTextButtonState extends State<IconTextButton> {
       },
       onExit: (PointerExitEvent s) {
         setState(() {
-          hovercolor = BrinGitTheme.unknowColor;
+          hovercolor = BrinGitTheme.unknownColor;
         });
       },
     );
