@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
+BRANCH_NAME=$(git branch | grep '*' | sed 's/* //') 
+
+if [[ $BRANCH_NAME == *"no branch"* ]]
+then
+  printf "\e[33;1m%s\e[0m\n" 'Pre-Commit skipped during rebase'
+  exit 0
+fi
+
 printf "\e[33;1m%s\e[0m\n" 'Pre-Commit'
+
+
 
 # Undo the stash of the files
 pop_stash_files () {
