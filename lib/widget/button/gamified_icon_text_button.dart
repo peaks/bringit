@@ -21,6 +21,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:git_ihm/utils/button_level.dart';
 import 'package:git_ihm/utils/theme/bringit_theme.dart';
+import 'package:logger/logger.dart';
+
+import '../../utils/git_gud_logger.dart';
 
 class GamifiedIconTextButton extends StatefulWidget {
   GamifiedIconTextButton({
@@ -58,11 +61,12 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
   late AnimationController controller;
   late Animation<double> animation;
   Color hovercolor = BrinGitTheme.unknownColor;
+  late Logger log;
 
   @override
   void initState() {
     state = widget.level;
-
+    log = getLogger(runtimeType.toString());
     buttonlevel = widget.colorByLevel;
     super.initState();
     controller = AnimationController(
@@ -88,6 +92,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
         onTapUp: (_) {
           controller.stop();
           controller.reset();
+          log.d('git ${widget.title}: feature not yet implemented');
         },
         onHover: (_) {
           setState(() {

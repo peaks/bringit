@@ -18,17 +18,24 @@
  */
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/screen/home_screen.dart';
+import 'package:git_ihm/utils/git_gud_logger.dart';
 import 'package:git_ihm/utils/theme/bringit_theme.dart';
 import 'package:git_ihm/utils/utils_factory.dart';
+import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'data/git/git_factory.dart';
 import 'data/git_proxy.dart';
 
 Future<void> main() async {
+  final Logger log = getLogger('Main');
+
   // added to run the app. Crash without it
   WidgetsFlutterBinding.ensureInitialized();
   // On changera si besoin. Déjà quand Mégane et toi allez lancer l'app sur votre ordi vous allez pouvoir comparer
@@ -44,20 +51,60 @@ Future<void> main() async {
       ChangeNotifierProvider<GitProxy>(create: (BuildContext context) => git),
       Provider<UtilsFactory>(create: (_) => UtilsFactory())
     ],
-    child: const MyApp(),
+    child: const BrinGit(),
   );
+  // Obtenir la version et le nom du package de l'application
+  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  // Vérifier l'état de la connexion réseau
+  final ConnectivityResult connectivityResult =
+      await Connectivity().checkConnectivity();
+  final String connectionStatus = describeEnum(connectivityResult);
 
+  // Logs au démarrage de l'application
+  log.i('''
+
+  ██████████                  ████                    ████
+██▒▒▒▒▒▒▒▒████              ██▒▒████                ██▒▒████
+██▒▒██████▒▒████    ██████  ████████  ██████████    ██▒▒████
+██▒▒██████▒▒████  ██▒▒▒▒██████▒▒██████▒▒▒▒▒▒▒▒████  ████████
+██▒▒▒▒▒▒▒▒████████▒▒██████████▒▒██████▒▒██████▒▒████  ██████
+██▒▒██████▒▒██████▒▒█████   ██▒▒██████▒▒██████▒▒████
+██▒▒██████▒▒██████▒▒████    ██▒▒██████▒▒██████▒▒████
+██▒▒▒▒▒▒▒▒████████▒▒████    ██▒▒██████▒▒██████▒▒████
+████████████████████████    ████████████████████████
+  ████████████    ██████      ██████  ████    ██████
+
+    ██████████    ████      ████
+  ██▒▒▒▒▒▒▒▒██████▒▒████  ██▒▒████
+██▒▒████████████████████  ██▒▒████            ████
+██▒▒██████████████▒▒██████▒▒▒▒▒▒████        ██▒▒████
+██▒▒████▒▒▒▒██████▒▒████████▒▒██████        ████▒▒████
+██▒▒██████▒▒██████▒▒████  ██▒▒████            ████▒▒████
+██▒▒██████▒▒██████▒▒████  ██▒▒████            ██▒▒██████  ██████████
+████▒▒▒▒▒▒████████▒▒████  ████▒▒████        ██▒▒██████  ██▒▒▒▒▒▒▒▒████
+  ██████████████████████    ████████        ████████    ██████████████
+    ██████████    ██████      ██████          ████        ████████████
+''');
+  log.i('Application version: ${packageInfo.version}');
+  log.i('Plateform: ${Platform.operatingSystem}');
+  log.i('OS: ${Platform.operatingSystemVersion}');
+  log.i('Network connection status: $connectionStatus');
+
+  log.i('''
+
+█▒▒▒▒▒▒█▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒█▒▒▒▒▒▒██▒▒▒▒▒▒█
+ 
+  ''');
   runApp(myApp);
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp();
+class BrinGit extends StatelessWidget {
+  const BrinGit();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Clever Git',
       theme: BrinGitTheme().darkTheme,
       home: const HomeScreen(),
     );
