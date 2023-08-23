@@ -22,16 +22,16 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:git_ihm/presentation/screen/home_screen.dart';
-import 'package:git_ihm/presentation/utils/theme/bringit_theme.dart';
-import 'package:git_ihm/presentation/utils/utils_factory.dart';
-import 'package:git_ihm/services/git/git_proxy.dart';
-import 'package:git_ihm/utils/git_gud_logger.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/helpers/git_gud_logger.dart';
+import 'package:git_ihm/ui/common/utils_factory.dart';
+import 'package:git_ihm/ui/screens/home_screen.dart';
+import 'package:git_ihm/ui/theme/bringit_theme.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-import 'services/git/git_factory.dart';
+import 'domain/git/git_factory.dart';
 
 Future<void> main() async {
   final Logger log = getLogger('Main');

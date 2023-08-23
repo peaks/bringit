@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:git_ihm/presentation/screen/main_screen.dart';
-import 'package:git_ihm/presentation/widget/shared/path_selector.dart';
-import 'package:git_ihm/services/git/git_proxy.dart';
-import 'package:git_ihm/services/git/git_proxy_implementation.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/domain/git/git_proxy_implementation.dart';
+import 'package:git_ihm/ui/common/widget/shared/path_selector.dart';
+import 'package:git_ihm/ui/screens/main_screen.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../test/presentation/widget/path_selector_test.dart';
-import '../test/services/mock/git_registry_mock.dart';
-import '../test/services/mock/path_manager_mock.dart';
+import '../test/domain/mock/git_registry_mock.dart';
+import '../test/domain/mock/path_manager_mock.dart';
+import '../test/ui/common/path_selector_test.dart';
 import '../test/utils/git_dependent_loader.dart';
 
 void main() {

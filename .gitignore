@@ -56,7 +56,8 @@ unlinked_spec.ds
 /dev/integration_tests/**/xcuserdata
 /dev/integration_tests/**/Pods
 /packages/flutter/coverage/
-version
+# version
+/version
 
 # Android related
 **/android/**/gradle-wrapper.jar

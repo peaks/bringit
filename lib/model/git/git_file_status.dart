@@ -18,7 +18,7 @@
  */
 // ignore_for_file: hash_and_equals
 import 'package:flutter/material.dart';
-import 'package:git_ihm/presentation/utils/theme/bringit_theme.dart';
+import 'package:git_ihm/ui/theme/bringit_theme.dart';
 
 // added deleted state
 enum GitFileState { untracked, modified, added, renamed, ignored, deleted }

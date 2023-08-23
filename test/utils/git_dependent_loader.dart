@@ -17,12 +17,12 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
-import 'package:git_ihm/presentation/utils/utils_factory.dart';
-import 'package:git_ihm/services/git/git_proxy.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/ui/common/utils_factory.dart';
 import 'package:provider/provider.dart';
 
-import '../services/mock/git_proxy_mock.dart';
-import '../services/utils/file/tree/tree_data_file_loader_test.dart';
+import '../domain/mock/git_proxy_mock.dart';
+import '../domain/utils/file/tree/tree_data_file_loader_test.dart';
 
 class GitDependentLoader {
   GitProxy? gitProxy;
