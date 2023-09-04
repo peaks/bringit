@@ -17,6 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 
 class ModalHome extends StatelessWidget {
   const ModalHome(
@@ -97,7 +98,7 @@ class ModalHome extends StatelessWidget {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'Cancel',
+                    Wording.modalCreateNewGitProjectCancelButtonTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),

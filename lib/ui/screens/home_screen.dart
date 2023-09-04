@@ -17,6 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/widget/modal/new_git_project_form.dart';
 import 'package:git_ihm/ui/common/widget/modal/new_modal.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -37,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context) => NewProjectModal(
         icon: MdiIcons.git,
         modalContent: const NewGitProjectForm(),
-        title: 'Create Git Project',
+        title: Wording.modalCreateNewGitProjectTitle,
         onSubmit: () {},
-        titleAction: 'Create',
+        titleAction: Wording.homeScreenCreateGitProjectButtonTitle,
       ),
     );
   }
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         child: Center(
           child: HomeButton(
-            title: 'Create Git Project',
+            title: Wording.homeScreenCreateGitProjectButtonTitle,
             icon: MdiIcons.git,
             onPressed: () {
               displayModalCreateNewGitProject();

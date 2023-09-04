@@ -17,10 +17,13 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Wording {
-  /// strings used in app
-  static const String stagingScreenTitle = 'staging';
-  static const String explorerScreenTitle = 'explorer';
-  static const String locationScreenTitle = 'location';
+  // Views Titles
+
+  static const String stagingViewTitle = 'staging';
+  static const String explorerViewTitle = 'explorer';
+  static const String locationViewTitle = 'location';
+
+  // Block Titles
 
   static const String commitBlockTitle = 'COMMIT';
   static const String locationBlockTitle = 'LOCATION';
@@ -31,31 +34,56 @@ class Wording {
   static const String diffBlockTitle = 'DIFF';
   static const String consoleBlockTitle = 'CONSOLE';
 
-  /// list of strings by screen
-  static const List<String> stagingScreenTitles = <String>[
-    stagingBlockTitle,
-    commitBlockTitle,
-    diffBlockTitle,
-  ];
+  static const String gitActionAddAllTitle = 'Add All';
+  static const String gitActionRestoreTitle = 'Restore';
+  static const String gitActionCommitTitle = 'Commit';
+  static const String gitActionDeleteTitle = 'Delete';
+  static const String gitActionStashTitle = 'Stash';
+  static const String gitActionRestoreStagedTitle = 'Restore Staged';
 
-  static const List<String> explorerScreenTitles = <String>[
-    previewBlockTitle,
-    explorerBlockTitle,
-  ];
+  // Common
 
-  static const List<String> locationScreenTitles = <String>[
-    commitBlockTitle,
-    locationBlockTitle,
-    commitSummaryBlockTitle,
-  ];
+  static const String cancelAction = 'Cancel';
+  static const String initializationMessage = 'Initialization...';
 
-  /// map blokes titles with screen title to get corresponding titles
-  static const Map<String, List<String>> mapScreenTitles =
-      <String, List<String>>{
-    stagingScreenTitle: stagingScreenTitles,
-    explorerScreenTitle: explorerScreenTitles,
-    locationScreenTitle: locationScreenTitles,
-  };
+  // Home Screen
+
+  static const String homeScreenCreateGitProjectButtonTitle =
+      'Create Git Project';
+
+  // Create New Git Project Modal
+
+  static const String modalCreateNewGitProjectTitle =
+      homeScreenCreateGitProjectButtonTitle;
+  static const String modalCreateNewGitProjectCreateButtonTitle = 'Create';
+  static const String modalCreateNewGitProjectCancelButtonTitle = cancelAction;
+  static const String modalCreateNewGitProjectTextfieldSelectFolderPathLabel =
+      'Parent Folder';
+  static const String modalCreateNewGitProjectProjectNameHintText = 'Name';
+  static const String modalCreateNewGitProjectProjectNameLabel = 'project name';
+  static const String modalCreateNewGitProjectPathSelectorHintText =
+      'path directory';
+  static const String modalCreateNewGitProjectPathSelectorTitle =
+      'Set project path';
+
+  static const String
+      modalCreateNewGitProjectErrorMessageForInvalidProjectPathName =
+      'is not a valid project name';
+  static const String
+      modalCreateNewGitProjectErrorMessageForExistingProjectPath =
+      'already exists';
+  static const String modalCreateNewGitProjectErrorMessageForEmptyProjectName =
+      'the project name cannot be empty';
+  static const String
+      modalCreateNewGitProjectErrorMessageForInvalidProjectName =
+      'is not a valid project name';
+  static const String modalCreateNewGitProjectErrorMessageNotAGitRepository =
+      'not a git directory';
+
+  static const String pathSelectorActionSaveButton = 'Save';
+  static const String versionMessageForGitChip = 'fetching git version...';
+
+  // Staging
 
   static const String modifiedFiles = 'Modified';
   static const String stagedFiles = 'Staged (waiting to be committed)';

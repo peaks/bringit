@@ -17,6 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/button_level.dart';
 
 import '../shared/button/gamified_icon_text_button.dart';
@@ -42,31 +43,31 @@ class StagingButtons extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   GamifiedIconTextButton(
-                    title: 'Restore',
+                    title: Wording.gitActionRestoreTitle,
                     icon: Icons.restore,
                     onPressed: () {},
                     level: ButtonLevel.risky,
                   ),
                   GamifiedIconTextButton(
-                    title: 'Add All',
+                    title: Wording.gitActionAddAllTitle,
                     icon: Icons.arrow_circle_right_rounded,
                     onPressed: () {},
                     level: ButtonLevel.safe,
                   ),
                   GamifiedIconTextButton(
-                    title: 'Stash',
+                    title: Wording.gitActionStashTitle,
                     icon: Icons.cloud_download,
                     onPressed: () {},
                     level: ButtonLevel.safe,
                   ),
                   GamifiedIconTextButton(
-                    title: 'Restore staged',
+                    title: Wording.gitActionRestoreStagedTitle,
                     icon: Icons.arrow_circle_left_rounded,
                     onPressed: () {},
                     level: ButtonLevel.safe,
                   ),
                   GamifiedIconTextButton(
-                    title: 'Delete',
+                    title: Wording.gitActionDeleteTitle,
                     icon: Icons.delete,
                     onPressed: () {},
                     level: ButtonLevel.risky,
@@ -77,7 +78,7 @@ class StagingButtons extends StatelessWidget {
             ),
           ),
           GamifiedIconTextButton(
-            title: 'Commit',
+            title: Wording.gitActionCommitTitle,
             icon: Icons.check,
             onPressed: () {},
             level: ButtonLevel.safe,

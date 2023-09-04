@@ -18,6 +18,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:provider/provider.dart';
 
 class PathSelector extends StatefulWidget {
@@ -42,7 +43,9 @@ class _PathSelectorState extends State<PathSelector> {
   }
 
   InputDecoration buildDecoration(String? error) {
-    return InputDecoration(hintText: 'path directory', errorText: error);
+    return InputDecoration(
+        hintText: Wording.modalCreateNewGitProjectPathSelectorHintText,
+        errorText: error);
   }
 
   Future<AlertDialog?> showSelectionModal(
@@ -55,7 +58,8 @@ class _PathSelectorState extends State<PathSelector> {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Set project path'),
+              title:
+                  const Text(Wording.modalCreateNewGitProjectPathSelectorTitle),
               content: TextField(
                 controller: pathController,
                 decoration: buildDecoration(pathFieldError),
@@ -65,7 +69,7 @@ class _PathSelectorState extends State<PathSelector> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('Cancel')),
+                    child: const Text(Wording.cancelAction)),
                 TextButton(
                     onPressed: () async {
                       final bool isGitDir =
@@ -74,11 +78,12 @@ class _PathSelectorState extends State<PathSelector> {
                         git.path = pathController.text;
                         Navigator.pop(context);
                       } else {
-                        pathFieldError = 'not a git directory';
+                        pathFieldError = Wording
+                            .modalCreateNewGitProjectErrorMessageNotAGitRepository;
                       }
                       setState(() {});
                     },
-                    child: const Text('Save'))
+                    child: const Text(Wording.pathSelectorActionSaveButton))
               ],
             );
           });

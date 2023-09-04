@@ -17,6 +17,7 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/widget/modal/custom_form_field.dart';
 
 class TextfieldProjectName extends StatefulWidget {
@@ -45,8 +46,8 @@ class _TextfieldProjectNameState extends State<TextfieldProjectName> {
       padding: const EdgeInsets.only(bottom: 10),
       child: CustomTextFormField(
           readOnly: false,
-          labelText: 'Name',
-          hintText: 'project name',
+          labelText: Wording.modalCreateNewGitProjectProjectNameLabel,
+          hintText: Wording.modalCreateNewGitProjectProjectNameHintText,
           errorText: widget.projectNameMessageError,
           inputIsValid: widget.isProjectNameValid,
           onChanged: (String? val) => widget.onProjectNameChanged(val ?? ''),
