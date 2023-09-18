@@ -46,6 +46,8 @@ dependencies:
   logger: ^2.0.1
   package_info_plus: ^4.0.2
   connectivity_plus: ^4.0.1
+  flutter_local_notifications: ^15.1.1
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   mockito: ^5.2.0

@@ -18,9 +18,11 @@
  */
 import 'package:flutter/material.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
+import 'package:git_ihm/ui/common/widget/modal/modal_license_notice.dart';
 import 'package:git_ihm/ui/common/widget/modal/new_git_project_form.dart';
 import 'package:git_ihm/ui/common/widget/modal/new_modal.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/widget/shared/button/home_button.dart';
 
@@ -32,6 +34,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final SharedPreferences sharedPreferences;
+
   void displayModalCreateNewGitProject() {
     showDialog<String>(
       context: context,
@@ -43,6 +47,31 @@ class _HomeScreenState extends State<HomeScreen> {
         titleAction: Wording.homeScreenCreateGitProjectButtonTitle,
       ),
     );
+  }
+
+  void displayModalAlertLicense() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => ModalLicenseNotice(sharedPreferences),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+      initFirstLaunch();
+    });
+  }
+
+  Future<void> initFirstLaunch() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    final bool isFirstLaunch =
+        sharedPreferences.getBool('isFirstLaunch') ?? true;
+    if (isFirstLaunch) {
+      displayModalAlertLicense();
+      await sharedPreferences.setBool('isFirstLaunch', false);
+    }
   }
 
   @override
