@@ -66,4 +66,9 @@ class GitProxyImplementation extends GitProxy {
   Future<List<GitCommit>> gitLog() async {
     return _registry.logCommand.run(path);
   }
+
+ /*  @override
+  Future<String> gitInit(String pathDirectory) {
+    
+  } */
 }

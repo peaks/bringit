@@ -19,6 +19,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/git/base_command/init_fetcher.dart';
+import 'package:git_ihm/git/git_init_implementation.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
 import 'package:logger/logger.dart';
@@ -89,6 +91,43 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
 
     setState(() {});
   }
+  Future<void> createNewDirectory(String directoryPath) async {
+    final Directory newDirectory = Directory(directoryPath);
+
+    try {
+      await newDirectory.create(recursive: true);
+      final ProcessResult result = await Process.run('git', <String>['init'],
+          workingDirectory: directoryPath);
+
+      print('Dossier créé avec succès : $directoryPath');
+    } catch (e) {
+      print('Erreur lors de la création du dossier : $e');
+    }
+  }
+
+ /*  Future<void> initializeGitRepository(String directoryPath) async {
+    final Directory repositoryDirectory = Directory(directoryPath);
+    final bool isPathExisting = repositoryDirectory.existsSync();
+
+    try {
+      // Vérifiez si le dossier existe
+      if (isPathExisting) {
+        // Exécutez la commande 'git init' à l'intérieur du dossier
+        final  result = GitInitImplementation(InitFetcher(directoryPath), directoryPath);
+
+        if (result.exitCode == 0) {
+          print('Dépôt Git initialisé avec succès dans : $directoryPath');
+        } else {
+          print(
+              'Erreur lors de linitialisation du dépôt Git : ${result.stderr}');
+        }
+      } else {
+        print('Le dossier spécifié nexiste pas : $directoryPath');
+      }
+    } catch (e) {
+      print('Erreur lors de linitialisation du dépôt Git : $e');
+    }
+  } */
 
   @override
   void initState() {
