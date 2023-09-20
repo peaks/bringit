@@ -19,8 +19,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:git_ihm/git/base_command/init_fetcher.dart';
-import 'package:git_ihm/git/git_init_implementation.dart';
+import 'package:git_ihm/domain/git/git_factory.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
 import 'package:logger/logger.dart';
@@ -44,6 +44,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
   bool isProjectPathValid = false;
   bool isProjectNameValid = true;
   bool isProjectNameNotYetModified = true;
+  late GitProxy git;
 
   final TextEditingController pathDirectoryController = TextEditingController();
   String? selectedDirectory;
@@ -91,47 +92,41 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
 
     setState(() {});
   }
-  Future<void> createNewDirectory(String directoryPath) async {
-    final Directory newDirectory = Directory(directoryPath);
 
-    try {
-      await newDirectory.create(recursive: true);
-      final ProcessResult result = await Process.run('git', <String>['init'],
-          workingDirectory: directoryPath);
-
-      print('Dossier créé avec succès : $directoryPath');
-    } catch (e) {
-      print('Erreur lors de la création du dossier : $e');
-    }
-  }
-
- /*  Future<void> initializeGitRepository(String directoryPath) async {
+  Future<void> initializeGitRepository(String directoryPath) async {
     final Directory repositoryDirectory = Directory(directoryPath);
     final bool isPathExisting = repositoryDirectory.existsSync();
+    // Create an instance of the GitProxy class.
 
     try {
-      // Vérifiez si le dossier existe
-      if (isPathExisting) {
-        // Exécutez la commande 'git init' à l'intérieur du dossier
-        final  result = GitInitImplementation(InitFetcher(directoryPath), directoryPath);
-
-        if (result.exitCode == 0) {
-          print('Dépôt Git initialisé avec succès dans : $directoryPath');
+      // Check if the directory exists
+      if (!isPathExisting) {
+        await repositoryDirectory.create(recursive: true);
+        print('Dossier créé avec succès : $directoryPath');
+        if (repositoryDirectory.existsSync()) {
+          await git.gitInit(directoryPath);
+          if (await git.isGitDir(directoryPath)) {
+            print('$directoryPath est initialiser');
+          } else {
+            print('no initialise');
+          }
         } else {
-          print(
-              'Erreur lors de linitialisation du dépôt Git : ${result.stderr}');
+          print('le dossier nexxiste pas');
         }
-      } else {
-        print('Le dossier spécifié nexiste pas : $directoryPath');
       }
     } catch (e) {
-      print('Erreur lors de linitialisation du dépôt Git : $e');
+      print('Error initializing Git repository: $e');
     }
-  } */
+  }
 
   @override
   void initState() {
     log = getLogger(runtimeType.toString());
+    GitFactory().getGit().then((GitProxy gitP) {
+      setState(() {
+        git = gitP;
+      });
+    });
     super.initState();
   }
 
@@ -178,6 +173,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                         MaterialPageRoute<MaterialPageRoute<dynamic>>(
                             builder: (BuildContext context) =>
                                 const MainScreen()));
+                    initializeGitRepository(pathToNewProject);
                     log.i(
                         "git project '$pathToNewProject' successfully created");
                   },

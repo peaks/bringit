@@ -17,8 +17,10 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import 'package:git_ihm/data/git/git_init_command.dart';
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
+import 'package:git_ihm/domain/git/init/git_init_command.dart';
+import 'package:git_ihm/domain/git/init/git_init_implementation.dart';
+import 'package:git_ihm/domain/git/init/init_fetcher.dart';
 import 'package:git_ihm/domain/git/log/git_log_command.dart';
 import 'package:git_ihm/domain/git/log/git_log_implementation.dart';
 import 'package:git_ihm/domain/git/log/log_fetcher.dart';
@@ -29,8 +31,6 @@ import 'package:git_ihm/domain/git/status/status_parser.dart';
 import 'package:git_ihm/domain/git/version/git_version_command.dart';
 import 'package:git_ihm/domain/git/version/git_version_implementation.dart';
 import 'package:git_ihm/domain/git/version/version_fetcher.dart';
-import 'package:git_ihm/git/base_command/init_fetcher.dart';
-import 'package:git_ihm/git/git_init_implementation.dart';
 
 class GitRegistry {
   GitStatusCommand get statusCommand =>
@@ -42,5 +42,5 @@ class GitRegistry {
   GitLogCommand get logCommand =>
       GitLogImplementation(LogFetcher(), CommitParser());
 
-  //GitInitCommand get initCommand => GitInitImplementation(InitFetcher());
+  GitInitCommand get initCommand => GitInitImplementation(InitFetcher());
 }
