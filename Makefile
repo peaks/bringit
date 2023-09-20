@@ -16,4 +16,4 @@ test-with-filesystem: fixtures
 
 fixtures:
 	printf "=> Preparing fixture files\n"
-	./test/scripts/filesystem_fixtures.sh
+	./test/utils/scripts/filesystem_fixtures.sh
