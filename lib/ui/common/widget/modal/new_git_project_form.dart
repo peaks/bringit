@@ -21,6 +21,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/domain/git/git_factory.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/domain/git/init/git_init_project.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
 import 'package:logger/logger.dart';
@@ -49,29 +50,6 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
   final TextEditingController pathDirectoryController = TextEditingController();
   String? selectedDirectory;
 
-  void setValidatorProjectName(bool valid) {
-    setState(() {
-      isProjectNameValid = valid;
-    });
-  }
-
-  String getErrorMessageForPathName(
-      bool pathAlreadyExists, bool isValidProjectName) {
-    if (!isValidProjectName) {
-      return 'is not a valid project name';
-    }
-    if (pathAlreadyExists) {
-      return 'already exists';
-    }
-    return '';
-  }
-
-  void setValidatorPathAlreadyExists(bool pathAlreadyExists) {
-    setState(() {
-      isProjectPathValid = pathAlreadyExists;
-    });
-  }
-
   Future<void> onProjectNameChanged(String? val) async {
     projectNameMessageError = '';
     final String pathDirectory = pathDirectoryController.text;
@@ -79,7 +57,10 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
     isProjectNameNotYetModified = false;
 
     if (val!.isEmpty) {
-      projectNameMessageError = 'the project name cannot be empty';
+      projectNameMessageError = 'The project name cannot be empty';
+      isProjectNameValid = false;
+    } else if (!isValidFolderNameSyntax(val)) {
+      projectNameMessageError = 'Invalid project name syntax';
       isProjectNameValid = false;
     } else {
       isProjectNameValid = true;
@@ -93,30 +74,13 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
     setState(() {});
   }
 
-  Future<void> initializeGitRepository(String directoryPath) async {
-    final Directory repositoryDirectory = Directory(directoryPath);
-    final bool isPathExisting = repositoryDirectory.existsSync();
-    // Create an instance of the GitProxy class.
+  bool isValidFolderNameSyntax(String name) {
+    final RegExp folderNameRegex = RegExp(r'^[a-zA-Z0-9_]+$');
+    return folderNameRegex.hasMatch(name);
+  }
 
-    try {
-      // Check if the directory exists
-      if (!isPathExisting) {
-        await repositoryDirectory.create(recursive: true);
-        print('Dossier créé avec succès : $directoryPath');
-        if (repositoryDirectory.existsSync()) {
-          await git.gitInit(directoryPath);
-          if (await git.isGitDir(directoryPath)) {
-            print('$directoryPath est initialiser');
-          } else {
-            print('no initialise');
-          }
-        } else {
-          print('le dossier nexxiste pas');
-        }
-      }
-    } catch (e) {
-      print('Error initializing Git repository: $e');
-    }
+  Future<void> initProject(String directoryPath, GitProxy git) async {
+    GitInitProject(directoryPath, git);
   }
 
   @override
@@ -173,7 +137,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                         MaterialPageRoute<MaterialPageRoute<dynamic>>(
                             builder: (BuildContext context) =>
                                 const MainScreen()));
-                    initializeGitRepository(pathToNewProject);
+                    initProject(pathToNewProject, git);
                     log.i(
                         "git project '$pathToNewProject' successfully created");
                   },
