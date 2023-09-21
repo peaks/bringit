@@ -69,6 +69,7 @@ class GitProxyImplementation extends GitProxy {
 
   @override
   Future<String> gitInit(String directoryPath) {
+    path = directoryPath;
     return _registry.initCommand.run(directoryPath);
   }
 }
