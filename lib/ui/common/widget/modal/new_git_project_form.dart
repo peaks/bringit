@@ -21,12 +21,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/domain/git/git_factory.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
-import 'package:git_ihm/domain/git/init/git_init_project.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
-import 'package:logger/logger.dart';
 
-import '../../../../helpers/git_gud_logger.dart';
 import '../../../screens/main_screen.dart';
 import '../shared/texfield/textfield_select_folder_path.dart';
 
@@ -39,7 +36,6 @@ class NewGitProjectForm extends StatefulWidget {
 
 class _NewGitProjectFormState extends State<NewGitProjectForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late Logger log;
   late String pathToNewProject = '';
   late String projectNameMessageError = '';
   bool isProjectPathValid = false;
@@ -60,7 +56,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
       projectNameMessageError = 'The project name cannot be empty';
       isProjectNameValid = false;
     } else if (!isValidFolderNameSyntax(val)) {
-      projectNameMessageError = 'Invalid project name syntax';
+      projectNameMessageError = '"$val"d is not a valide project name';
       isProjectNameValid = false;
     } else {
       isProjectNameValid = true;
@@ -70,7 +66,6 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
         isProjectNameValid = false;
       }
     }
-
     setState(() {});
   }
 
@@ -79,13 +74,8 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
     return folderNameRegex.hasMatch(name);
   }
 
-  Future<void> initProject(String directoryPath, GitProxy git) async {
-    GitInitProject(directoryPath, git);
-  }
-
   @override
   void initState() {
-    log = getLogger(runtimeType.toString());
     GitFactory().getGit().then((GitProxy gitP) {
       setState(() {
         git = gitP;
@@ -132,14 +122,12 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                 Expanded(
                     child: ModalActionButton(
                   onSubmit: () {
+                    git.gitInit(pathToNewProject);
                     Navigator.push<MaterialPageRoute<dynamic>>(
                         context,
                         MaterialPageRoute<MaterialPageRoute<dynamic>>(
                             builder: (BuildContext context) =>
                                 const MainScreen()));
-                    initProject(pathToNewProject, git);
-                    log.i(
-                        "git project '$pathToNewProject' successfully created");
                   },
                   enable: isProjectNameValid && !isProjectNameNotYetModified,
                   title: 'Create',

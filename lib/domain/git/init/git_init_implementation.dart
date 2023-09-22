@@ -28,9 +28,6 @@ class GitInitImplementation extends GitInitCommand {
   Future<String> run(String path) async {
     final String initStatus = await fetcher.fetch(path);
 
-    // Check if the Git repository is initialized
-    final bool isInitialized = initStatus.isNotEmpty;
-
-    return isInitialized ? 'Initialized' : 'Not initialized';
+    return initStatus;
   }
 }

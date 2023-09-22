@@ -20,7 +20,6 @@ import 'package:git_ihm/domain/git/base_command/shell_command.dart';
 
 class InitFetcher {
   Future<String> fetch(String directoryPath) async {
-    // don't send back ignored files
     final ShellCommand command = ShellCommand('git', <String>['init']);
     return command.run(directoryPath);
   }
