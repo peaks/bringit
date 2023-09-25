@@ -18,6 +18,9 @@
  */
 
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
+import 'package:git_ihm/domain/git/init/git_init_command.dart';
+import 'package:git_ihm/domain/git/init/git_init_implementation.dart';
+import 'package:git_ihm/domain/git/init/init_fetcher.dart';
 import 'package:git_ihm/domain/git/log/git_log_command.dart';
 import 'package:git_ihm/domain/git/log/git_log_implementation.dart';
 import 'package:git_ihm/domain/git/log/log_fetcher.dart';
@@ -38,4 +41,6 @@ class GitRegistry {
 
   GitLogCommand get logCommand =>
       GitLogImplementation(LogFetcher(), CommitParser());
+
+  GitInitCommand get initCommand => GitInitImplementation(InitFetcher());
 }

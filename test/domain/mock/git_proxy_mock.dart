@@ -58,4 +58,9 @@ class GitProxyMock extends GitProxy {
   Future<List<GitCommit>> gitLog() async {
     return <GitCommit>[];
   }
+
+  @override
+  Future<String> gitInit(String diretoryPath) async {
+    return 'no init';
+  }
 }

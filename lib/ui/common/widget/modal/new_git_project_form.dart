@@ -19,11 +19,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/domain/git/git_factory.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
-import 'package:logger/logger.dart';
 
-import '../../../../helpers/git_gud_logger.dart';
 import '../../../screens/main_screen.dart';
 import '../shared/texfield/textfield_select_folder_path.dart';
 
@@ -36,38 +36,15 @@ class NewGitProjectForm extends StatefulWidget {
 
 class _NewGitProjectFormState extends State<NewGitProjectForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late Logger log;
   late String pathToNewProject = '';
   late String projectNameMessageError = '';
   bool isProjectPathValid = false;
   bool isProjectNameValid = true;
   bool isProjectNameNotYetModified = true;
+  late GitProxy git;
 
   final TextEditingController pathDirectoryController = TextEditingController();
   String? selectedDirectory;
-
-  void setValidatorProjectName(bool valid) {
-    setState(() {
-      isProjectNameValid = valid;
-    });
-  }
-
-  String getErrorMessageForPathName(
-      bool pathAlreadyExists, bool isValidProjectName) {
-    if (!isValidProjectName) {
-      return 'is not a valid project name';
-    }
-    if (pathAlreadyExists) {
-      return 'already exists';
-    }
-    return '';
-  }
-
-  void setValidatorPathAlreadyExists(bool pathAlreadyExists) {
-    setState(() {
-      isProjectPathValid = pathAlreadyExists;
-    });
-  }
 
   Future<void> onProjectNameChanged(String? val) async {
     projectNameMessageError = '';
@@ -76,7 +53,10 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
     isProjectNameNotYetModified = false;
 
     if (val!.isEmpty) {
-      projectNameMessageError = 'the project name cannot be empty';
+      projectNameMessageError = 'The project name cannot be empty';
+      isProjectNameValid = false;
+    } else if (!isValidFolderNameSyntax(val)) {
+      projectNameMessageError = '"$val"d is not a valide project name';
       isProjectNameValid = false;
     } else {
       isProjectNameValid = true;
@@ -86,13 +66,21 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
         isProjectNameValid = false;
       }
     }
-
     setState(() {});
+  }
+
+  bool isValidFolderNameSyntax(String name) {
+    final RegExp folderNameRegex = RegExp(r'^[a-zA-Z0-9_]+$');
+    return folderNameRegex.hasMatch(name);
   }
 
   @override
   void initState() {
-    log = getLogger(runtimeType.toString());
+    GitFactory().getGit().then((GitProxy gitP) {
+      setState(() {
+        git = gitP;
+      });
+    });
     super.initState();
   }
 
@@ -134,13 +122,12 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                 Expanded(
                     child: ModalActionButton(
                   onSubmit: () {
+                    git.gitInit(pathToNewProject);
                     Navigator.push<MaterialPageRoute<dynamic>>(
                         context,
                         MaterialPageRoute<MaterialPageRoute<dynamic>>(
                             builder: (BuildContext context) =>
                                 const MainScreen()));
-                    log.i(
-                        "git project '$pathToNewProject' successfully created");
                   },
                   enable: isProjectNameValid && !isProjectNameNotYetModified,
                   title: 'Create',
