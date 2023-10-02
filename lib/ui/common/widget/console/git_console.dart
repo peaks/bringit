@@ -19,6 +19,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_ihm/domain/git/git_factory.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/widget/console/git_console_command_result.dart';
 import 'package:git_ihm/ui/common/widget/console/git_console_history.dart';
@@ -89,11 +91,21 @@ class _GitConsoleState extends State<GitConsole> {
     // 'rm',
     'clean',
   ];
+  late GitProxy git;
+  @override
+  void initState() {
+    GitFactory().getGit().then((GitProxy gitP) {
+      setState(() {
+        git = gitP;
+      });
+    });
+    super.initState();
+  }
 
-  GitConsoleCommandResult _runCommand(String command) {
+  GitConsoleCommandResult _runCommand(String command, String workingDirectory) {
     _setCurrentCommand(command);
     final ProcessResult result = Process.runSync('git', command.split(' '),
-        includeParentEnvironment: false, workingDirectory: './');
+        includeParentEnvironment: false, workingDirectory: workingDirectory);
     setState(() {
       lastCommandSucceeded = result.exitCode == 0;
     });
@@ -105,7 +117,7 @@ class _GitConsoleState extends State<GitConsole> {
   }
 
   void runCommand(String command) {
-    final GitConsoleCommandResult result = _runCommand(command);
+    final GitConsoleCommandResult result = _runCommand(command, git.path);
 
     // Collapse last command result
     if (_gitConsoleHistory.isNotEmpty) {
