@@ -20,7 +20,6 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/ui/common/widget/menu/side_menu.dart'
     as side_menu_custom;
-import 'package:git_ihm/ui/common/widget/shared/path_selector.dart';
 import 'package:git_ihm/ui/common/widget/status_bar/status_bar.dart';
 
 import '../views/commits_view.dart';
@@ -73,7 +72,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           // actions in appbar to add buttons here the selection of the  project's path
-          actions: const <Widget>[PathSelector()],
         ),
       ),
       body: Row(
