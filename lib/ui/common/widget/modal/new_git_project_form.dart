@@ -23,10 +23,10 @@ import 'package:git_ihm/domain/git/git_factory.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
-import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
+import 'package:git_ihm/ui/common/widget/shared/textfield/textfield_project_name.dart';
 
 import '../../../screens/main_screen.dart';
-import '../shared/texfield/textfield_select_folder_path.dart';
+import '../shared/textfield/textfield_select_folder_path.dart';
 
 class NewGitProjectForm extends StatefulWidget {
   const NewGitProjectForm({Key? key}) : super(key: key);
