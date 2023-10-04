@@ -88,4 +88,10 @@ class Wording {
   static const String modifiedFiles = 'Modified';
   static const String stagedFiles = 'Staged (waiting to be committed)';
   static const String untrackedFiles = 'Untracked';
+
+  // License Notice
+
+  static const String licenseNoticeModalTitle = 'Brin\'Git License';
+  static const String licenseNoticeModalMoreButtonTitle = 'More';
+  static const String licenseNoticeModalContinueButtonTitle = 'Ok';
 }

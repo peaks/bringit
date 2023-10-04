@@ -22,6 +22,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/helpers/git_gud_logger.dart';
 import 'package:git_ihm/ui/common/utils_factory.dart';
@@ -33,6 +34,8 @@ import 'package:provider/provider.dart';
 
 import 'domain/git/git_factory.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 Future<void> main() async {
   final Logger log = getLogger('Main');
 
@@ -55,6 +58,7 @@ Future<void> main() async {
   );
   // Obtenir la version et le nom du package de l'application
   final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
   // Vérifier l'état de la connexion réseau
   final ConnectivityResult connectivityResult =
       await Connectivity().checkConnectivity();
@@ -98,15 +102,21 @@ Future<void> main() async {
   runApp(myApp);
 }
 
-class BrinGit extends StatelessWidget {
+class BrinGit extends StatefulWidget {
   const BrinGit();
+
+  @override
+  State<BrinGit> createState() => _BrinGitState();
+}
+
+class _BrinGitState extends State<BrinGit> {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: BrinGitTheme().darkTheme,
-      home: const HomeScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: BrinGitTheme().darkTheme,
+        home: const HomeScreen());
   }
 }
