@@ -51,7 +51,7 @@ class _StatusDisplayState extends State<StatusDisplay> {
   @override
   Widget build(BuildContext context) {
     if (git == null) {
-      return const Text('Initialization...');
+      return const Text(Wording.initializationMessage);
     }
 
     untracked = git!.gitState

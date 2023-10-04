@@ -21,6 +21,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:git_ihm/domain/git/git_factory.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/widget/shared/button/modal_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/texfield/textfield_project_name.dart';
 
@@ -53,16 +54,19 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
     isProjectNameNotYetModified = false;
 
     if (val!.isEmpty) {
-      projectNameMessageError = 'The project name cannot be empty';
+      projectNameMessageError =
+          Wording.modalCreateNewGitProjectErrorMessageForEmptyProjectName;
       isProjectNameValid = false;
     } else if (!isValidFolderNameSyntax(val)) {
-      projectNameMessageError = '"$val"d is not a valide project name';
+      projectNameMessageError =
+          '$val ${Wording.modalCreateNewGitProjectErrorMessageForInvalidProjectName}';
       isProjectNameValid = false;
     } else {
       isProjectNameValid = true;
       final bool isPathExisting = Directory(pathToNewProject).existsSync();
       if (isPathExisting) {
-        projectNameMessageError = '$pathToNewProject already exists';
+        projectNameMessageError =
+            '$pathToNewProject ${Wording.modalCreateNewGitProjectErrorMessageForExistingProjectPath}';
         isProjectNameValid = false;
       }
     }
@@ -94,7 +98,8 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
         children: <Widget>[
           TextfieldSelectFolderPath(
             isProjectPathValid: isProjectPathValid,
-            label: 'Parent Folder',
+            label:
+                Wording.modalCreateNewGitProjectTextfieldSelectFolderPathLabel,
             pathDirectoryController: pathDirectoryController,
           ),
           TextfieldProjectName(
@@ -111,11 +116,11 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
               children: <Widget>[
                 Expanded(
                     child: ModalActionButton(
-                  onSubmit: () {
-                    Navigator.of(context).pop();
-                  },
-                  title: 'Cancel',
-                )),
+                        onSubmit: () {
+                          Navigator.of(context).pop();
+                        },
+                        title:
+                            Wording.modalCreateNewGitProjectCancelButtonTitle)),
                 const SizedBox(
                   width: 15,
                 ),
@@ -130,7 +135,7 @@ class _NewGitProjectFormState extends State<NewGitProjectForm> {
                                 const MainScreen()));
                   },
                   enable: isProjectNameValid && !isProjectNameNotYetModified,
-                  title: 'Create',
+                  title: Wording.modalCreateNewGitProjectCreateButtonTitle,
                 )),
               ],
             ),

@@ -18,6 +18,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class GitChip extends StatelessWidget {
               FutureBuilder<String>(
             future: git.gitVersion(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              String versionMessage = 'fetching git version...';
+              String versionMessage = Wording.versionMessageForGitChip;
               if (snapshot.hasData) {
                 versionMessage = snapshot.data!;
               }
