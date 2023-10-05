@@ -16,70 +16,57 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
-import 'package:git_ihm/domain/git/status/status_fetcher.dart';
 
-class StatusFetcherMock extends StatusFetcher {
-  List<String> runResult = <String>[];
-  String expectedPath = '';
+class GitStatusGenerator {
+  List<String> _stdout = <String>[];
 
-  @override
-  Future<List<String>> fetch(String path) async {
-    if (expectedPath.isEmpty) {
-      throw Exception('expectedPath for mocked method run is not initialized');
-    }
-    if (expectedPath != path) {
-      throw Exception(
-          'Failed to assert method "run" parameter, expected: "$expectedPath", actual: "$path"');
-    }
-    return runResult;
+  String get stdout => _stdout.join('\n');
+
+  void clear() {
+    _stdout = <String>[];
   }
 
   void pushUntrackedResult(String filePath) {
-    runResult.add('?? $filePath');
+    _stdout.add('?? $filePath');
   }
 
   void pushRenamedResult(String filePath, String oldFilePath) {
-    runResult.add('R  $oldFilePath -> $filePath');
-    print(runResult);
+    _stdout.add('R  $oldFilePath -> $filePath');
   }
 
   void pushRenamedUnstagedResult(String filePath, String oldFilePath) {
-    runResult.add(' R $oldFilePath -> $filePath');
+    _stdout.add(' R $oldFilePath -> $filePath');
   }
 
   void pushDeletedUnstagedResult(String filePath) {
-    runResult.add(' D $filePath');
+    _stdout.add(' D $filePath');
   }
 
   void pushDeletedStagedResult(String filePath) {
-    runResult.add('D  $filePath');
+    _stdout.add('D  $filePath');
   }
 
   void pushModifiedUnstagedResult(String filePath) {
-    runResult.add(' M $filePath');
+    _stdout.add(' M $filePath');
   }
 
   void pushModifiedStagedResult(String filePath) {
-    runResult.add('M  $filePath');
+    _stdout.add('M  $filePath');
   }
 
   void pushModifiedStagedThenModifiedResult(String filePath) {
-    runResult.add('MM $filePath');
+    _stdout.add('MM $filePath');
   }
 
   void pushAdded(String filePath) {
-    runResult.add('A  $filePath');
+    _stdout.add('A  $filePath');
   }
 
   void pushAddedModified(String filePath) {
-    runResult.add('AM $filePath');
-  }
-
-  void willRunFor(String gitDirectory) {
-    expectedPath = gitDirectory;
+    _stdout.add('AM $filePath');
   }
 
   void pushIgnoredResult(String filePath) {
-    runResult.add('!! $filePath');
+    _stdout.add('!! $filePath');
   }
 }

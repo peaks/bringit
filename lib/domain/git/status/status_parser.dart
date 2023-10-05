@@ -59,6 +59,9 @@ class StatusParser {
   }
 
   List<GitFileStatus> parse(String fileStatus) {
+    if (fileStatus.isEmpty) {
+      return <GitFileStatus>[];
+    }
     final String gitPrefix = fileStatus.substring(0, 2);
     final String fileRelativePath = _extractFilePath(gitPrefix, fileStatus);
     final String fileAbsolutePath = _projectPath + fileRelativePath;

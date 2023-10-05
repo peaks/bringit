@@ -25,19 +25,16 @@ class ShellCommand {
 
   final String command;
   late final List<String> _parameters;
+  late ProcessResult? _result;
 
-  Future<String> run([String? workingDirectory]) async {
-    final ProcessResult result = await Process.run(command, _parameters,
+  Future<ProcessResult> run([String? workingDirectory]) async {
+    _result = await Process.run(command, _parameters,
         workingDirectory: workingDirectory);
 
-    if (_commandIsSuccessful(result)) {
-      // don't trim because it removes essential white space in front of first file status
-      return result.stdout as String;
-    }
-
-    return '';
+    return _result!;
   }
+}
 
-  bool _commandIsSuccessful(ProcessResult result) =>
-      result.stdout is String && result.exitCode == 0;
+extension ResultChecks on ProcessResult {
+  bool get isSuccessful => this.exitCode == 0;
 }

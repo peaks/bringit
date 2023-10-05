@@ -16,8 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/model/git/git_file_status.dart';
 
 abstract class GitStatusCommand {
-  Future<List<GitFileStatus>> run(String path);
+  Future<CommandResult<List<GitFileStatus>>> run(String path);
 }

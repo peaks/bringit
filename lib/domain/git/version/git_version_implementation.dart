@@ -16,20 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
+import 'package:git_ihm/domain/git/base_command/shell_command.dart';
 import 'package:git_ihm/domain/git/version/git_version_command.dart';
-import 'package:git_ihm/domain/git/version/version_fetcher.dart';
+import 'package:git_ihm/domain/git/version/version_parser.dart';
 
 class GitVersionImplementation extends GitVersionCommand {
-  GitVersionImplementation(this.fetcher);
-
-  final VersionFetcher fetcher;
-  final RegExp _versionRegex = RegExp(r'[1-9](\.[0-9]{0,2}){0,2}');
+  GitVersionImplementation();
 
   @override
-  Future<String> run() async {
-    final RegExpMatch? versionMatch =
-        _versionRegex.firstMatch(await fetcher.fetch());
-
-    return versionMatch == null ? '' : versionMatch.group(0)!;
+  Future<CommandResult<String>> run() async {
+    final ShellCommand command = ShellCommand('git', <String>['--version']);
+    final ProcessResult processResult = await command.run();
+    if (!processResult.isSuccessful) {
+      return CommandResult<String>('', processResult);
+    }
+    final String version =
+        VersionParser().parse(processResult.stdout.toString());
+    return CommandResult<String>(version, processResult);
   }
 }

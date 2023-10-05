@@ -16,6 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/domain/git/git_proxy_implementation.dart';
 import 'package:git_ihm/domain/git/status/git_status_command.dart';
@@ -39,7 +42,7 @@ void main() {
 
   test('it delegates git --version to registry\'s GitVersionCommand', () async {
     expect(await testSubject.gitVersion(),
-        same(await registry.versionCommand.run()));
+        same((await registry.versionCommand.run()).result));
   });
 
   test('it fetches path from pathManager', () {
@@ -52,7 +55,7 @@ void main() {
     setUp(() => testSubject = GitProxyImplementationSpy());
 
     test('it notifies listeners after getStatus', () async {
-      await testSubject.getStatus();
+      await testSubject.updateStatus();
       expect(testSubject.listenersWhereNotified, equals(true));
     });
 
@@ -63,7 +66,7 @@ void main() {
 
     test('getStatus sets gitState with actual path gitStatus result', () async {
       testSubject.clearGitStatusCalls();
-      await testSubject.getStatus();
+      await testSubject.updateStatus();
 
       expect(testSubject.gitStatusCallCount, 1);
       expect(testSubject.gitStatusPathCalls, <String>[testSubject.actualPath]);
@@ -150,8 +153,10 @@ class GitStatusCommandSpy extends Fake implements GitStatusCommand {
   ];
 
   @override
-  Future<List<GitFileStatus>> run(String path) {
+  Future<CommandResult<List<GitFileStatus>>> run(String path) {
     pathProvidedToRun = path;
-    return Future<List<GitFileStatus>>(() => commandResult);
+    return Future<CommandResult<List<GitFileStatus>>>(() =>
+        CommandResult<List<GitFileStatus>>(
+            commandResult, ProcessResult(0, 0, commandResult, null)));
   }
 }

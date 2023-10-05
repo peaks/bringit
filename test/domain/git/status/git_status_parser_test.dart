@@ -16,38 +16,37 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
-import 'package:git_ihm/domain/git/status/git_status_command.dart';
-import 'package:git_ihm/domain/git/status/git_status_implementation.dart';
 import 'package:git_ihm/domain/git/status/status_parser.dart';
 import 'package:git_ihm/model/git/git_file_status.dart';
 import 'package:test/test.dart';
 
-import '../../mock/status_fetcher_mock.dart';
+import '../../mock/git_status_generator.dart';
 
 void main() {
-  late GitStatusImplementation command;
-  late StatusFetcherMock mockedCommand;
+  late StatusParser statusParser;
+  late GitStatusGenerator statusGenerator;
   const String projectPath = '/any/path/';
 
   setUp(() {
-    mockedCommand = StatusFetcherMock();
-    mockedCommand.willRunFor(projectPath);
-    command = GitStatusImplementation(StatusParser(), mockedCommand);
+    statusParser = StatusParser();
+    statusParser.setProject(projectPath);
+    statusGenerator = GitStatusGenerator();
   });
 
   test('create class', () {
-    expect(command, isA<GitStatusCommand>());
+    expect(statusParser, isA<StatusParser>());
   });
 
   test('returns empty list when status command returns empty list', () async {
-    expect(await command.run(projectPath), isEmpty);
+    expect(statusParser.parse(''), isEmpty);
   });
 
   test('returns untracked file in results', () async {
     const String filePath = 'my/untracked/file/path';
-    mockedCommand.pushUntrackedResult(filePath);
+    statusGenerator.pushUntrackedResult(filePath);
 
-    final List<GitFileStatus> result = await command.run(projectPath);
+    final String stdout = statusGenerator.stdout;
+    final List<GitFileStatus> result = statusParser.parse(stdout);
 
     expect(
         result.contains(const UntrackedPath('$projectPath$filePath', filePath)),
@@ -56,9 +55,10 @@ void main() {
 
   test('returns deleted file in results', () async {
     const String filePath = 'my/deleted/file/path';
-    mockedCommand.pushDeletedStagedResult(filePath);
+    statusGenerator.pushDeletedStagedResult(filePath);
 
-    final List<GitFileStatus> result = await command.run(projectPath);
+    final String stdout = statusGenerator.stdout;
+    final List<GitFileStatus> result = statusParser.parse(stdout);
     expect(
         result.contains(const DeletedFile('$projectPath$filePath', filePath)),
         isTrue);
@@ -68,10 +68,14 @@ void main() {
     const String filePath = 'my/oldName/file/path';
     const String filePath1 = 'my/renamed/file1/path';
     const String filePath2 = 'my/renamed/file2/path';
-    mockedCommand.pushRenamedResult(filePath1, filePath);
-    mockedCommand.pushRenamedUnstagedResult(filePath2, filePath);
+    statusGenerator.pushRenamedResult(filePath1, filePath);
+    statusGenerator.pushRenamedUnstagedResult(filePath2, filePath);
 
-    final List<GitFileStatus> result = await command.run(projectPath);
+    final String stdout = statusGenerator.stdout;
+    final List<GitFileStatus> result = <GitFileStatus>[];
+    for (final String line in stdout.split('\n')) {
+      result.addAll(statusParser.parse(line));
+    }
     expect(
         result.contains(const RenamedFile(
             '$projectPath$filePath -> $filePath1', '$filePath -> $filePath1')),
@@ -85,11 +89,15 @@ void main() {
     const String filePath1 = 'my/modified/file1/path';
     const String filePath2 = 'my/modified/file2/path';
     const String filePath3 = 'my/modified/file3/path';
-    mockedCommand.pushModifiedUnstagedResult(filePath1);
-    mockedCommand.pushModifiedStagedResult(filePath2);
-    mockedCommand.pushModifiedStagedThenModifiedResult(filePath3);
+    statusGenerator.pushModifiedUnstagedResult(filePath1);
+    statusGenerator.pushModifiedStagedResult(filePath2);
+    statusGenerator.pushModifiedStagedThenModifiedResult(filePath3);
 
-    final List<GitFileStatus> result = await command.run(projectPath);
+    final String stdout = statusGenerator.stdout;
+    final List<GitFileStatus> result = <GitFileStatus>[];
+    for (final String line in stdout.split('\n')) {
+      result.addAll(statusParser.parse(line));
+    }
 
     expect(
         result
@@ -108,10 +116,14 @@ void main() {
   test('returns added files in results', () async {
     const String filePath1 = 'my/added/file1/path';
     const String filePath2 = 'my/added/file2/path';
-    mockedCommand.pushAdded(filePath1);
-    mockedCommand.pushAddedModified(filePath2);
+    statusGenerator.pushAdded(filePath1);
+    statusGenerator.pushAddedModified(filePath2);
 
-    final List<GitFileStatus> result = await command.run(projectPath);
+    final String stdout = statusGenerator.stdout;
+    final List<GitFileStatus> result = <GitFileStatus>[];
+    for (final String line in stdout.split('\n')) {
+      result.addAll(statusParser.parse(line));
+    }
 
     expect(
         result.contains(const AddedFile('$projectPath$filePath1', filePath1)),

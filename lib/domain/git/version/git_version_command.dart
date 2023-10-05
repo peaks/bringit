@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
+
 abstract class GitVersionCommand {
-  Future<String> run();
+  Future<CommandResult<String>> run();
 }
