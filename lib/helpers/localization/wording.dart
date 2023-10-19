@@ -26,6 +26,7 @@ class Wording {
   // Block Titles
 
   static const String commitBlockTitle = 'COMMIT';
+  static const String historyBlockTitle = 'HISTORY';
   static const String locationBlockTitle = 'LOCATION';
   static const String commitSummaryBlockTitle = 'COMMIT SUMMARY';
   static const String previewBlockTitle = 'PREVIEW';

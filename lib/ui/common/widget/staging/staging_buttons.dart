@@ -17,13 +17,57 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/domain/git/git_factory.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/helpers/git_gud_logger.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/button_level.dart';
+import 'package:logger/logger.dart';
 
 import '../shared/button/gamified_icon_text_button.dart';
 
-class StagingButtons extends StatelessWidget {
+class StagingButtons extends StatefulWidget {
   const StagingButtons({Key? key}) : super(key: key);
+
+  @override
+  State<StagingButtons> createState() => _StagingButtonsState();
+}
+
+class _StagingButtonsState extends State<StagingButtons> {
+  GitProxy? git;
+  late Logger log;
+
+  @override
+  void initState() {
+    GitFactory().getGit().then((GitProxy gitP) {
+      setState(() {
+        git = gitP;
+      });
+    });
+    super.initState();
+    log = getLogger(runtimeType.toString());
+  }
+
+  Future<void> executeGitCommand(
+      Future<String> Function(String path) gitCommand) async {
+    final String path = git!.path;
+    try {
+      if (path.isEmpty) {
+        log.w('Cannot execute command "$gitCommand": no path is provided');
+      }
+      gitCommand(path);
+    } catch (error) {
+      log.w('Cannot execute command "$gitCommand": $error');
+    }
+  }
+
+  Future<void> addAll() {
+    return executeGitCommand((String path) => git!.gitAddAll(path));
+  }
+
+  Future<void> restoreStaged() {
+    return executeGitCommand((String path) => git!.gitRestoreStagedAll(path));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,46 +87,25 @@ class StagingButtons extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   GamifiedIconTextButton(
-                    title: Wording.gitActionRestoreTitle,
-                    icon: Icons.restore,
-                    onPressed: () {},
-                    level: ButtonLevel.risky,
-                  ),
-                  GamifiedIconTextButton(
                     title: Wording.gitActionAddAllTitle,
-                    icon: Icons.arrow_circle_right_rounded,
-                    onPressed: () {},
-                    level: ButtonLevel.safe,
-                  ),
-                  GamifiedIconTextButton(
-                    title: Wording.gitActionStashTitle,
-                    icon: Icons.cloud_download,
-                    onPressed: () {},
+                    icon: Icons.arrow_circle_right_outlined,
+                    onPressed: () {
+                      addAll();
+                    },
                     level: ButtonLevel.safe,
                   ),
                   GamifiedIconTextButton(
                     title: Wording.gitActionRestoreStagedTitle,
-                    icon: Icons.arrow_circle_left_rounded,
-                    onPressed: () {},
+                    icon: Icons.arrow_circle_left_outlined,
+                    onPressed: () {
+                      restoreStaged();
+                    },
                     level: ButtonLevel.safe,
                   ),
-                  GamifiedIconTextButton(
-                    title: Wording.gitActionDeleteTitle,
-                    icon: Icons.delete,
-                    onPressed: () {},
-                    level: ButtonLevel.risky,
-                  ),
-                  //   const Spacer(),
                 ],
               ),
             ),
           ),
-          GamifiedIconTextButton(
-            title: Wording.gitActionCommitTitle,
-            icon: Icons.check,
-            onPressed: () {},
-            level: ButtonLevel.safe,
-          )
         ],
       ),
     );

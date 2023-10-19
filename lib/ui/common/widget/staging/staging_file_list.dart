@@ -17,21 +17,32 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
-import 'package:git_ihm/ui/theme/bringit_theme.dart';
-
-import '../../../../model/git/git_file_status.dart';
+import 'package:git_ihm/domain/git/git_factory.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/helpers/git_gud_logger.dart';
+import 'package:git_ihm/helpers/localization/wording.dart';
+import 'package:git_ihm/model/git/git_file_status.dart';
+import 'package:git_ihm/ui/common/button_level.dart';
+import 'package:git_ihm/ui/common/widget/shared/button/gamified_icon_button.dart';
+import 'package:git_ihm/ui/common/widget/staging/status_file_list.dart';
+import 'package:git_ihm/ui/common/widget/staging/status_file_list_header.dart';
+import 'package:logger/logger.dart';
 
 class StagingFileList extends StatefulWidget {
   const StagingFileList(
       {Key? key,
       required this.statusFiles,
       required this.title,
-      required this.icon})
+      required this.icon,
+      required this.iconCommand,
+      required this.level})
       : super(key: key);
 
   final List<GitFileStatus>? statusFiles;
   final String title;
   final IconData icon;
+  final IconData iconCommand;
+  final ButtonLevel level;
 
   @override
   State<StagingFileList> createState() => _StagingFileListState();
@@ -39,73 +50,100 @@ class StagingFileList extends StatefulWidget {
 
 class _StagingFileListState extends State<StagingFileList> {
   late ScrollController _scrollController;
+  GitProxy? git;
+  String? filePath = '';
+  String action = '';
+  late Logger log;
   @override
   void initState() {
+    GitFactory().getGit().then((GitProxy gitP) {
+      setState(() {
+        git = gitP;
+      });
+    });
     super.initState();
     _scrollController = ScrollController();
+    log = getLogger(runtimeType.toString());
+  }
+
+  Future<void> executeGitCommand(
+      Future<String> Function(String path) gitCommand) async {
+    final String path = git!.path;
+    try {
+      if (path.isEmpty) {
+        log.w('Cannot execute command "$gitCommand": no path is provided');
+      }
+      await gitCommand(path);
+    } catch (error) {
+      log.w('Cannot execute command "$gitCommand": $error');
+    }
+  }
+
+  Future<void> add(String fileRelativePath) {
+    return executeGitCommand(
+        (String path) => git!.gitAdd(fileRelativePath, path));
+  }
+
+  Future<void> restoreStaged(String fileRelativePath) {
+    return executeGitCommand(
+        (String path) => git!.gitRestoreStaged(fileRelativePath, path));
   }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Icon(
-                widget.icon,
-                size: 16,
-                color: BrinGitTheme.frostBlue3Color,
-              ),
-              Expanded(
-                child: Container(
-                    width: 250,
-                    child: Text(widget.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .apply(overflow: TextOverflow.ellipsis))),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Container(
-              child: Scrollbar(
-                controller: _scrollController,
-                thumbVisibility: true,
-                child: ListView.builder(
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            StatusFileListHeader(
+              title: widget.title,
+              icon: widget.icon,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: Container(
+                child: Scrollbar(
                   controller: _scrollController,
-                  shrinkWrap: true,
-                  itemCount: widget.statusFiles?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: widget.statusFiles?[index].prefix,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.apply(
-                                    color: widget.statusFiles?[index].color),
-                          ),
-                          TextSpan(
-                            text: widget.statusFiles?[index].fileRelativePath,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                  thumbVisibility: true,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    shrinkWrap: true,
+                    itemCount: widget.statusFiles?.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return StatusFileList(
+                        statusFiles: widget.statusFiles?[index],
+                        gamifiedIconButton: GamifiedIconButton(
+                          level: widget.level,
+                          iconCommand: widget.iconCommand,
+                          onPressed: () {
+                            final String? filePath =
+                                widget.statusFiles?[index].fileRelativePath;
+                            final String action = widget.title;
+                            if (action == Wording.modifiedFiles ||
+                                action == Wording.untrackedFiles &&
+                                    filePath != null) {
+                              add(filePath!);
+                            }
+                            if (action == Wording.stagedFiles &&
+                                filePath != null) {
+                              restoreStaged(filePath);
+                            }
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

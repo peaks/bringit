@@ -48,6 +48,7 @@ dependencies:
   connectivity_plus: ^4.0.1
   flutter_local_notifications: ^15.1.1
   url_launcher: ^6.1.14
+  fluttertoast: ^8.2.3
 
 dev_dependencies:
   mockito: ^5.2.0

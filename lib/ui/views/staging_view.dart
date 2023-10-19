@@ -18,59 +18,36 @@
  */
 import 'package:flutter/material.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
-import 'package:git_ihm/ui/theme/nord_colors.dart';
+import 'package:git_ihm/ui/common/widget/shared/scrollable_panel_container.dart';
+import 'package:git_ihm/ui/common/widget/staging/status_display.dart';
 import 'package:git_ihm/ui/views/view_template.dart';
-
-import '../common/widget/staging/status_display.dart';
 
 class StagingScreen extends StatelessWidget {
   StagingScreen({Key? key}) : super(key: key);
 
   final List<Widget> stagingChildren = <Widget>[
-    const StatusDisplay(),
-    const Expanded(
-      flex: 3,
-      child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              Wording.diffBlockTitle,
-              style: TextStyle(color: NordColors.$8),
-            ),
-            Divider(
-              color: NordColors.$0,
-              thickness: 1,
-            ),
-            Center(
-              child: Text(
-                'Content',
-                style: TextStyle(fontSize: 32),
-              ),
-            )
-          ]),
+    const ScrollablePanelContainer(
+      title: Wording.stagingBlockTitle,
+      child: StatusDisplay(),
     ),
-    const Expanded(
-      flex: 1,
-      child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              Wording.commitBlockTitle,
-              style: TextStyle(color: NordColors.$8),
-            ),
-            Divider(
-              color: NordColors.$0,
-              thickness: 1,
-            ),
-            Center(
-              child: Text(
-                'Content',
-                style: TextStyle(fontSize: 31),
-              ),
-            )
-          ]),
+    const ScrollablePanelContainer(
+      title: Wording.diffBlockTitle,
+      child: Center(
+        child: Text(
+          'Content',
+          style: TextStyle(fontSize: 32),
+        ),
+      ),
+    ),
+    const ScrollablePanelContainer(
+      flex: 2,
+      title: Wording.historyBlockTitle,
+      child: Center(
+        child: Text(
+          'Content',
+          style: TextStyle(fontSize: 32),
+        ),
+      ),
     ),
   ];
 

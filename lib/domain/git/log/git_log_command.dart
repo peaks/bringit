@@ -20,5 +20,5 @@ import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/model/git/git_commit.dart';
 
 abstract class GitLogCommand {
-  Future<CommandResult<List<GitCommit>>> run(String path);
+  Future<CommandResult<List<GitCommit>>> run(String workingDirectoryPath);
 }

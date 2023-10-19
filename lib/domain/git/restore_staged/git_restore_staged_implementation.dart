@@ -20,14 +20,16 @@ import 'dart:io';
 
 import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/base_command/shell_command.dart';
-import 'package:git_ihm/domain/git/init/git_init_command.dart';
+import 'package:git_ihm/domain/git/restore_staged/git_restore_staged_command.dart';
 
-class GitInitImplementation extends GitInitCommand {
-  GitInitImplementation();
+class GitRestoreStagedImplementation extends GitRestoreStagedCommand {
+  GitRestoreStagedImplementation();
 
   @override
-  Future<CommandResult<String>> run(String workingDirectoryPath) async {
-    final ShellCommand command = ShellCommand('git', <String>['init']);
+  Future<CommandResult<String>> run(
+      String fileRelativePath, String workingDirectoryPath) async {
+    final ShellCommand command =
+        ShellCommand('git', <String>['restore', '--staged', fileRelativePath]);
     final ProcessResult result = await command.run(workingDirectoryPath);
     return CommandResult<String>(result.stdout.toString(), result);
   }

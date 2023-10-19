@@ -21,5 +21,5 @@ import 'package:git_ihm/domain/git/base_command/command_result.dart';
 
 /// Runs `git init` command and returns the stdout string
 abstract class GitInitCommand {
-  Future<CommandResult<String>> run(String path);
+  Future<CommandResult<String>> run(String workingDirectoryPath);
 }

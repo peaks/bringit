@@ -92,7 +92,7 @@ class _GamifiedIconTextButtonState extends State<GamifiedIconTextButton>
         onTapUp: (_) {
           controller.stop();
           controller.reset();
-          log.d('git ${widget.title}: feature not yet implemented');
+          widget.onPressed();
         },
         onHover: (_) {
           setState(() {

@@ -94,8 +94,14 @@ class StatusParser {
           ModifiedFile(
               fileAbsolutePath, fileRelativePath, GitDiffFileState.staged)
         ];
-      case GIT_ADDED:
       case GIT_ADDED_MODIFIED:
+        return <GitFileStatus>[
+          AddedFile(
+              fileAbsolutePath, fileRelativePath, GitDiffFileState.staged),
+          ModifiedFile(
+              fileAbsolutePath, fileRelativePath, GitDiffFileState.staged)
+        ];
+      case GIT_ADDED:
         return <GitFileStatus>[
           AddedFile(fileAbsolutePath, fileRelativePath, GitDiffFileState.staged)
         ];

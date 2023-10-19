@@ -63,4 +63,24 @@ class GitProxyMock extends GitProxy {
   Future<String> gitInit(String diretoryPath) async {
     return 'no init';
   }
+
+  @override
+  Future<String> gitAddAll(String path) async {
+    return 'no path';
+  }
+
+  @override
+  Future<String> gitAdd(String filePath, String path) async {
+    return 'no path';
+  }
+
+  @override
+  Future<String> gitRestoreStaged(String filePath, String path) async {
+    return 'no path';
+  }
+
+  @override
+  Future<String> gitRestoreStagedAll(String path) async {
+    return 'no path';
+  }
 }

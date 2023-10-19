@@ -18,17 +18,21 @@
  */
 import 'dart:io';
 
+import 'package:git_ihm/domain/git/add/git_add_command.dart';
 import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/base_command/shell_command.dart';
-import 'package:git_ihm/domain/git/init/git_init_command.dart';
 
-class GitInitImplementation extends GitInitCommand {
-  GitInitImplementation();
+class GitAddImplementation extends GitAddCommand {
+  GitAddImplementation();
 
   @override
-  Future<CommandResult<String>> run(String workingDirectoryPath) async {
-    final ShellCommand command = ShellCommand('git', <String>['init']);
+  Future<CommandResult<String>> run(
+      String fileRelativePath, String workingDirectoryPath) async {
+    final ShellCommand command =
+        ShellCommand('git', <String>['add', fileRelativePath]);
     final ProcessResult result = await command.run(workingDirectoryPath);
+    print(fileRelativePath);
+    print(workingDirectoryPath);
     return CommandResult<String>(result.stdout.toString(), result);
   }
 }

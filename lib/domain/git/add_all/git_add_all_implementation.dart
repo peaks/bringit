@@ -18,16 +18,16 @@
  */
 import 'dart:io';
 
+import 'package:git_ihm/domain/git/add_all/git_add_all_command.dart';
 import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/base_command/shell_command.dart';
-import 'package:git_ihm/domain/git/init/git_init_command.dart';
 
-class GitInitImplementation extends GitInitCommand {
-  GitInitImplementation();
+class GitAddAllImplementation extends GitAddAllCommand {
+  GitAddAllImplementation();
 
   @override
   Future<CommandResult<String>> run(String workingDirectoryPath) async {
-    final ShellCommand command = ShellCommand('git', <String>['init']);
+    final ShellCommand command = ShellCommand('git', <String>['add', '--all']);
     final ProcessResult result = await command.run(workingDirectoryPath);
     return CommandResult<String>(result.stdout.toString(), result);
   }
