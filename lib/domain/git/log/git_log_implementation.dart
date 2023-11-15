@@ -16,48 +16,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
-import 'package:git_ihm/domain/git/commit/commit_parser.dart';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
+import 'package:git_ihm/domain/git/base_command/shell_command.dart';
 import 'package:git_ihm/domain/git/log/git_log_command.dart';
-import 'package:git_ihm/domain/git/log/log_fetcher.dart';
+import 'package:git_ihm/domain/git/log/log_parser.dart';
 import 'package:git_ihm/model/git/git_commit.dart';
 
 class GitLogImplementation extends GitLogCommand {
-  GitLogImplementation(this._fetcher, this._parser);
+  GitLogImplementation(this._parser);
 
-  final LogFetcher _fetcher;
-  final CommitParser _parser;
+  final LogParser _parser;
 
   @override
-  Future<List<GitCommit>> run(String path) async {
-    return _mapIntoCommit(await _fetcher.fetch(path));
-  }
+  Future<CommandResult<List<GitCommit>>> run(String path) async {
+    final ShellCommand command =
+        ShellCommand('git', <String>['log', r'--format=%h\%ct\%cn%n%s%n%D']);
+    final ProcessResult result = await command.run(path);
 
-  Future<List<GitCommit>> _mapIntoCommit(List<String> logLines) async {
-    final List<GitCommit> result = <GitCommit>[];
-
-    await for (final List<String> chunk in _parseByGroupOfThree(logLines)) {
-      _addToResult(_parser.map(chunk), result);
+    List<GitCommit> commits = <GitCommit>[];
+    if (result.isSuccessful) {
+      commits = await _parser.mapIntoCommits(
+          LineSplitter.split(result.stdout.toString()).toList());
     }
-
-    return result;
-  }
-
-  Stream<List<String>> _parseByGroupOfThree(List<String> logContent) async* {
-    final Iterator<String> iterator = logContent.iterator;
-    final List<String> chunk = <String>[];
-
-    while (iterator.moveNext()) {
-      chunk.add(iterator.current);
-      if (chunk.length == 3) {
-        yield chunk;
-        chunk.clear();
-      }
-    }
-  }
-
-  void _addToResult(GitCommit? commit, List<GitCommit> result) {
-    if (commit is GitCommit) {
-      result.add(commit);
-    }
+    return CommandResult<List<GitCommit>>(commits, result);
   }
 }

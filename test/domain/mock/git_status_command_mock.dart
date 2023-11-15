@@ -16,6 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/status/git_status_command.dart';
 import 'package:git_ihm/model/git/git_file_status.dart';
 
@@ -24,12 +27,13 @@ class GitStatusCommandMock extends GitStatusCommand {
   String expectedParameter = '';
 
   @override
-  Future<List<GitFileStatus>> run(String path) async {
+  Future<CommandResult<List<GitFileStatus>>> run(String path) async {
     if (path != expectedParameter) {
       throw Exception(
           'Failed asserting method "run" parameter: expecting "$expectedParameter", actual: "$path"');
     }
-    return mockedResult;
+    return CommandResult<List<GitFileStatus>>(
+        mockedResult, ProcessResult(0, 0, '', null));
   }
 
   void willReturn(List<GitFileStatus> list) {

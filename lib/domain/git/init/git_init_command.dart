@@ -17,6 +17,9 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
+
+/// Runs `git init` command and returns the stdout string
 abstract class GitInitCommand {
-  Future<String> run(String path);
+  Future<CommandResult<String>> run(String path);
 }

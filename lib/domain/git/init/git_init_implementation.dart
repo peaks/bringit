@@ -16,18 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
+import 'package:git_ihm/domain/git/base_command/shell_command.dart';
 import 'package:git_ihm/domain/git/init/git_init_command.dart';
-import 'package:git_ihm/domain/git/init/init_fetcher.dart';
 
 class GitInitImplementation extends GitInitCommand {
-  GitInitImplementation(this.fetcher);
-
-  final InitFetcher fetcher;
+  GitInitImplementation();
 
   @override
-  Future<String> run(String path) async {
-    final String initStatus = await fetcher.fetch(path);
-
-    return initStatus;
+  Future<CommandResult<String>> run(String path) async {
+    final ShellCommand command = ShellCommand('git', <String>['init']);
+    final ProcessResult result = await command.run(path);
+    return CommandResult<String>(result.stdout.toString(), result);
   }
 }

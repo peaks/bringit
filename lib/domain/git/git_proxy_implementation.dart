@@ -19,6 +19,7 @@
 import 'dart:io';
 
 import 'package:git/git.dart';
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/path/path_manager.dart';
 import 'package:git_ihm/helpers/git_gud_logger.dart';
 import 'package:git_ihm/model/git/git_commit.dart';
@@ -30,7 +31,7 @@ import 'git_proxy.dart';
 
 class GitProxyImplementation extends GitProxy {
   GitProxyImplementation(this._registry, this._pathManager) {
-    getStatus();
+    updateStatus();
 
     _log = getLogger(runtimeType.toString());
   }
@@ -46,12 +47,24 @@ class GitProxyImplementation extends GitProxy {
 
   @override
   Future<List<GitFileStatus>> gitStatus(String path) async {
-    return _registry.statusCommand.run(path);
+    final CommandResult<List<GitFileStatus>> commandResult =
+        await _registry.statusCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git status failed to execute: ${commandResult.stderr}');
   }
 
   @override
   Future<String> gitVersion() async {
-    return _registry.versionCommand.run();
+    final CommandResult<String> commandResult =
+        await _registry.versionCommand.run();
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git version failed to execute: ${commandResult.stderr}');
   }
 
   @override
@@ -60,18 +73,24 @@ class GitProxyImplementation extends GitProxy {
   @override
   set path(String newPath) {
     _pathManager.path = newPath;
-    getStatus();
+    updateStatus();
   }
 
   @override
-  Future<void> getStatus() async {
+  Future<void> updateStatus() async {
     gitState = await gitStatus(path);
     notifyListeners();
   }
 
   @override
   Future<List<GitCommit>> gitLog() async {
-    return _registry.logCommand.run(path);
+    final CommandResult<List<GitCommit>> commandResult =
+        await _registry.logCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git log failed to execute: ${commandResult.stderr}');
   }
 
   @override
@@ -79,12 +98,13 @@ class GitProxyImplementation extends GitProxy {
     final Directory repositoryDirectory = Directory(directoryPath);
     try {
       await repositoryDirectory.create(recursive: true);
-      final String initStatus = await _registry.initCommand.run(directoryPath);
+      final CommandResult<String> initStatus =
+          await _registry.initCommand.run(directoryPath);
       if (await GitDir.isGitDir(directoryPath)) {
         path = directoryPath;
         notifyListeners();
         _log.i("git project '$repositoryDirectory' successfully created");
-        return initStatus;
+        return initStatus.result;
       } else {
         throw Exception('Error: Git initialization failed');
       }

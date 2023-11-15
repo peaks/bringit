@@ -33,7 +33,7 @@ abstract class GitProxy extends ChangeNotifier {
 
   List<GitFileStatus> gitState = <GitFileStatus>[];
 
-  Future<void> getStatus();
+  Future<void> updateStatus();
 
   Future<String> gitInit(String directoryPath);
 

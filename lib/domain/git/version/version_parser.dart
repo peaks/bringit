@@ -16,19 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
-import 'dart:convert';
+class VersionParser {
+  final RegExp _versionRegex = RegExp(r'[1-9](\.[0-9]{0,2}){0,2}');
 
-import 'package:git_ihm/domain/git/base_command/shell_command.dart';
-
-class LogFetcher {
-  Future<List<String>> fetch(String workingDirectory) async {
-    return LineSplitter.split(await _callGitLog(workingDirectory)).toList();
-  }
-
-  Future<String> _callGitLog(String workingDirectory) async {
-    final ShellCommand command =
-        ShellCommand('git', <String>['log', r'--format=%h\%ct\%cn%n%s%n%D']);
-
-    return await command.run(workingDirectory);
+  String parse(String raw) {
+    final RegExpMatch? versionMatch = _versionRegex.firstMatch(raw);
+    final String version = versionMatch == null ? '' : versionMatch.group(0)!;
+    return version;
   }
 }

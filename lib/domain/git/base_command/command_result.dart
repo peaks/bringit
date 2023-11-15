@@ -16,12 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import 'dart:io';
+
 import 'package:git_ihm/domain/git/base_command/shell_command.dart';
 
-class VersionFetcher {
-  Future<String> fetch() async {
-    final ShellCommand command = ShellCommand('git', <String>['--version']);
+/// This class aims to separate the raw return of a command and the higher level
+/// of return desired, while preserving error messages if needed
 
-    return command.run();
+class CommandResult<T> {
+  CommandResult(this.result, ProcessResult processResult) {
+    _processResult = processResult;
   }
+  final T result;
+  late final ProcessResult _processResult;
+  bool get isSuccessful => _processResult.isSuccessful;
+  int get exitCode => _processResult.exitCode;
+  dynamic get stderr => _processResult.stderr;
+  dynamic get stdout => _processResult.stdout;
 }

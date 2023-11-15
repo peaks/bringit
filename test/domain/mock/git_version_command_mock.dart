@@ -17,13 +17,17 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/version/git_version_command.dart';
 
 class GitVersionCommandMock extends GitVersionCommand {
-  String runResult = '1.2';
+  CommandResult<String> runResult = CommandResult<String>(
+      '1.2', ProcessResult(0, 0, 'git version 2.42.0', null));
 
   @override
-  Future<String> run() async {
+  Future<CommandResult<String>> run() async {
     return runResult;
   }
 }

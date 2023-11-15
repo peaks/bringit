@@ -51,6 +51,11 @@ abstract class GitFileStatus {
   int get hashCode => fileAbsolutePath.hashCode;
 
   GitFileState get state;
+
+  @override
+  String toString() {
+    return '$fileAbsolutePath [$fileState]($prefix)';
+  }
 }
 
 class UntrackedPath extends GitFileStatus {

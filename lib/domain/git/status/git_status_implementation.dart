@@ -17,21 +17,33 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:git_ihm/domain/git/base_command/command_result.dart';
+import 'package:git_ihm/domain/git/base_command/shell_command.dart';
 import 'package:git_ihm/domain/git/status/git_status_command.dart';
-import 'package:git_ihm/domain/git/status/status_fetcher.dart';
 import 'package:git_ihm/domain/git/status/status_parser.dart';
 import 'package:git_ihm/model/git/git_file_status.dart';
 
 class GitStatusImplementation extends GitStatusCommand {
-  GitStatusImplementation(this._parser, this._baseCommand);
+  GitStatusImplementation(this._parser);
 
   final StatusParser _parser;
-  final StatusFetcher _baseCommand;
+  static const LineSplitter _splitter = LineSplitter();
 
   @override
-  Future<List<GitFileStatus>> run(String path) async {
+  Future<CommandResult<List<GitFileStatus>>> run(String path) async {
     _parser.setProject(path);
-    return _parseStatus(await _baseCommand.fetch(path));
+
+    final ShellCommand command = ShellCommand(
+        'git', <String>['status', '--porcelain=v1', '--ignored=no']);
+    final ProcessResult result = await command.run(path);
+    List<GitFileStatus> filesStatus = <GitFileStatus>[];
+    if (result.isSuccessful) {
+      filesStatus = _parseStatus(_splitter.convert(result.stdout.toString()));
+    }
+    return CommandResult<List<GitFileStatus>>(filesStatus, result);
   }
 
   List<GitFileStatus> _parseStatus(List<String> gitStatus) {

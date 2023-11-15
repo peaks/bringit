@@ -20,27 +20,24 @@
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
 import 'package:git_ihm/domain/git/init/git_init_command.dart';
 import 'package:git_ihm/domain/git/init/git_init_implementation.dart';
-import 'package:git_ihm/domain/git/init/init_fetcher.dart';
 import 'package:git_ihm/domain/git/log/git_log_command.dart';
 import 'package:git_ihm/domain/git/log/git_log_implementation.dart';
-import 'package:git_ihm/domain/git/log/log_fetcher.dart';
+import 'package:git_ihm/domain/git/log/log_parser.dart';
 import 'package:git_ihm/domain/git/status/git_status_command.dart';
 import 'package:git_ihm/domain/git/status/git_status_implementation.dart';
-import 'package:git_ihm/domain/git/status/status_fetcher.dart';
 import 'package:git_ihm/domain/git/status/status_parser.dart';
 import 'package:git_ihm/domain/git/version/git_version_command.dart';
 import 'package:git_ihm/domain/git/version/git_version_implementation.dart';
-import 'package:git_ihm/domain/git/version/version_fetcher.dart';
 
 class GitRegistry {
-  GitStatusCommand get statusCommand =>
-      GitStatusImplementation(StatusParser(), StatusFetcher());
+  GitStatusCommand get statusCommand => GitStatusImplementation(
+        StatusParser(),
+      );
 
-  GitVersionCommand get versionCommand =>
-      GitVersionImplementation(VersionFetcher());
+  GitVersionCommand get versionCommand => GitVersionImplementation();
 
   GitLogCommand get logCommand =>
-      GitLogImplementation(LogFetcher(), CommitParser());
+      GitLogImplementation(LogParser(CommitParser()));
 
-  GitInitCommand get initCommand => GitInitImplementation(InitFetcher());
+  GitInitCommand get initCommand => GitInitImplementation();
 }

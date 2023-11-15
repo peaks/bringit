@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
-import 'package:git_ihm/domain/git/version/version_fetcher.dart';
+import 'package:git_ihm/domain/git/version/git_version_command.dart';
 import 'package:test/test.dart';
 
+import '../../mock/git_version_command_mock.dart';
+
 final RegExp gitVersionRegex =
-    RegExp(r'git version [1-9](\.[0-9]{0,2}){0,2}\s?(\((.*?)\))?$');
+    RegExp(r'[1-9](\.[0-9]{0,2}){0,2}\s?(\((.*?)\))?$');
 
 void expectIsAGitVersionMessage(String testedMessage) {
   expect(gitVersionRegex.hasMatch(testedMessage), equals(true),
@@ -30,22 +32,22 @@ void expectIsAGitVersionMessage(String testedMessage) {
 void main() {
   test('version message matches regex', () {
     final List<String> versions = <String>[
-      'git version 1',
-      'git version 1.0',
-      'git version 1.1',
-      'git version 1.30',
-      'git version 1.32.4',
-      'git version 2.32.0',
-      'git version 2.37.1',
-      'git version 3.32.42',
+      '1',
+      '1.0',
+      '1.1',
+      '1.30',
+      '1.32.4',
+      '2.32.0',
+      '2.37.1',
+      '3.32.42',
     ];
 
     versions.forEach(expectIsAGitVersionMessage);
   });
 
   test('it returns the git version message', () async {
-    final VersionFetcher command = VersionFetcher();
-    final String stout = await command.fetch();
+    final GitVersionCommand command = GitVersionCommandMock();
+    final String stout = (await command.run()).result;
     expectIsAGitVersionMessage(stout.trim());
   });
 }

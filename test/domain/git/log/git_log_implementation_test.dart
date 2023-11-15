@@ -17,50 +17,29 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
-import 'package:git_ihm/domain/git/log/git_log_implementation.dart';
-import 'package:git_ihm/domain/git/log/log_fetcher.dart';
+import 'package:git_ihm/domain/git/log/log_parser.dart';
 import 'package:git_ihm/model/git/git_commit.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-late LogFetcher fetcher;
-late CommitParser parser;
+late LogParser parser;
 
 void main() {
   group('it generates commit list from git log results', () {
     setUp(() {
-      parser = CommitParser();
+      parser = LogParser(CommitParser());
     });
-
-    Future<List<GitCommit>> _doTest(String workingDirectory) async {
-      final GitLogImplementation i = GitLogImplementation(fetcher, parser);
-      return await i.run(workingDirectory);
-    }
-
-    Future<void> _thenImplementationReturns(List<GitCommit> expected) async {
-      final List<GitCommit> testResult = await _doTest('any path');
-      expect(_listAreEquals(expected, testResult), true);
-    }
-
-    test('it generates an empty list if fetcher fails', () async {
-      _whenGitLogFails();
-      _thenImplementationReturns(<GitCommit>[]);
-    });
-
-    void _whenFetcherReturnsLines(List<String> fetchedLines) {
-      final SuccessfulFetcher mockedFetcher = SuccessfulFetcher();
-      fetchedLines.forEach(mockedFetcher.fetchResult.add);
-      fetcher = mockedFetcher;
-    }
 
     test('it maps git log result into GitCommit list', () async {
-      _whenFetcherReturnsLines(<String>[
+      final List<String> rawLog = <String>[
         r'a0ed12h\1655709244\lreus',
         'commit subject',
         'HEAD -> master'
-      ]);
+      ];
 
-      _thenImplementationReturns(<GitCommit>[
+      final List<GitCommit> parsedCommits =
+          (await parser.mapIntoCommits(rawLog)).toList();
+
+      final List<GitCommit> expectedCommits = <GitCommit>[
         GitCommit(
             'a0ed12h',
             DateTime.fromMillisecondsSinceEpoch(1655709244 * 1000),
@@ -69,20 +48,25 @@ void main() {
             'commit subject',
             'commit body',
             const <String>['master'])
-      ]);
+      ];
+
+      _listAreEquals(parsedCommits, expectedCommits);
     });
 
     test('it maps git log results in several GitCommit', () async {
-      _whenFetcherReturnsLines(<String>[
+      final List<String> rawLog = <String>[
         r'a0ed12h\1655709244\lreus',
         'next commit',
         'HEAD -> master',
         r'a0ed13f\1655400000\lreus',
         'first commit',
         'origin/another-feat'
-      ]);
+      ];
 
-      _thenImplementationReturns(<GitCommit>[
+      final List<GitCommit> parsedCommits =
+          (await parser.mapIntoCommits(rawLog)).toList();
+
+      final List<GitCommit> expectedCommits = <GitCommit>[
         GitCommit(
             'a0ed12h',
             DateTime.fromMillisecondsSinceEpoch(1655709244 * 1000),
@@ -99,7 +83,9 @@ void main() {
             'first commit',
             '',
             const <String>['origin/another-feat'])
-      ]);
+      ];
+
+      _listAreEquals(parsedCommits, expectedCommits);
     });
   });
 }
@@ -116,24 +102,4 @@ bool _listAreEquals(List<GitCommit> expected, List<GitCommit> testResult) {
     }
   }
   return isTestEqualTooExpectation;
-}
-
-void _whenGitLogFails() {
-  fetcher = FailingFetcher();
-}
-
-class FailingFetcher extends Fake implements LogFetcher {
-  @override
-  Future<List<String>> fetch(String workingDirectory) async {
-    return <String>[];
-  }
-}
-
-class SuccessfulFetcher extends Fake implements LogFetcher {
-  final List<String> fetchResult = <String>[];
-
-  @override
-  Future<List<String>> fetch(String workingDirectory) async {
-    return fetchResult;
-  }
 }

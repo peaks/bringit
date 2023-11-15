@@ -49,7 +49,7 @@ class GitProxyMock extends GitProxy {
   }
 
   @override
-  Future<void> getStatus() async {
+  Future<void> updateStatus() async {
     gitState = <GitFileStatus>[];
     // notifyListeners();
   }
