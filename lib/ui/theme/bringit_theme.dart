@@ -55,7 +55,7 @@ class BrinGitTheme {
           labelSmall: GoogleFonts.roboto(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 14,
+              fontSize: 18,
               color: NordColors.$0,
             ),
           ),

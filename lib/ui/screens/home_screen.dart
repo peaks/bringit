@@ -18,9 +18,10 @@
  */
 import 'package:flutter/material.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
+import 'package:git_ihm/ui/common/widget/modal/create_git_project_form.dart';
+import 'package:git_ihm/ui/common/widget/modal/home_screen_modal.dart';
 import 'package:git_ihm/ui/common/widget/modal/modal_license_notice.dart';
-import 'package:git_ihm/ui/common/widget/modal/new_git_project_form.dart';
-import 'package:git_ihm/ui/common/widget/modal/new_modal.dart';
+import 'package:git_ihm/ui/common/widget/modal/open_project_form.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,12 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
   void displayModalCreateNewGitProject() {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => NewProjectModal(
+      builder: (BuildContext context) => HomeScreenModal(
         icon: MdiIcons.git,
-        modalContent: const NewGitProjectForm(),
+        modalContent: const CreateGitProjectForm(),
         title: Wording.modalCreateNewGitProjectTitle,
         onSubmit: () {},
         titleAction: Wording.homeScreenCreateGitProjectButtonTitle,
+      ),
+    );
+  }
+
+  void displayModalOpenProject() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => HomeScreenModal(
+        icon: MdiIcons.folder,
+        modalContent: const OpenProjectForm(),
+        title: Wording.modalOpenGitProjectTitle,
+        onSubmit: () {},
+        titleAction: Wording.modalOpenGitProjectOpenButtonTitle,
       ),
     );
   }
@@ -91,14 +105,28 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
         ),
       ),
-      body: Container(
-        child: Center(
-          child: HomeButton(
-            title: Wording.homeScreenCreateGitProjectButtonTitle,
-            icon: MdiIcons.git,
-            onPressed: () {
-              displayModalCreateNewGitProject();
-            },
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(64),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <HomeButton>[
+              HomeButton(
+                title: Wording.homeScreenCreateGitProjectButtonTitle,
+                icon: MdiIcons.git,
+                onPressed: () {
+                  displayModalCreateNewGitProject();
+                },
+              ),
+              HomeButton(
+                title: Wording.homeScreenOpenProjectButtonTitle,
+                icon: MdiIcons.folder,
+                onPressed: () {
+                  displayModalOpenProject();
+                },
+              ),
+            ],
           ),
         ),
       ),

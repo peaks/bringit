@@ -48,6 +48,8 @@ class Wording {
 
   // Home Screen
 
+  static const String homeScreenOpenProjectButtonTitle = 'Open Project';
+
   static const String homeScreenCreateGitProjectButtonTitle =
       'Create Git Project';
 
@@ -79,6 +81,21 @@ class Wording {
       'is not a valid project name';
   static const String modalCreateNewGitProjectErrorMessageNotAGitRepository =
       'not a git directory';
+
+  // Open Git Project Modal
+
+  static const String modalOpenGitProjectTitle =
+      homeScreenOpenProjectButtonTitle;
+  static const String modalOpenGitProjectOpenButtonTitle = 'Open';
+  static const String modalOpenGitProjectCancelButtonTitle = cancelAction;
+  static const String modalOpenGitProjectTextfieldSelectFolderPathLabel =
+      'Folder';
+  static const String modalOpenGitProjectPathSelectorHintText =
+      'path directory';
+  static const String modalOpenGitProjectPathSelectorTitle = 'Set project path';
+
+  static const String modalOpenGitProjectErrorMessageNotAGitRepository =
+      'Please select a git repository to open';
 
   static const String pathSelectorActionSaveButton = 'Save';
   static const String versionMessageForGitChip = 'fetching git version...';

@@ -22,7 +22,6 @@ import 'package:flutter/services.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     Key? key,
-    required this.hintText,
     this.inputFormatters,
     this.validator,
     this.suffixIcon,
@@ -34,7 +33,6 @@ class CustomTextFormField extends StatelessWidget {
     required this.labelText,
     this.readOnly = false,
   }) : super(key: key);
-  final String? hintText;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final IconButton? suffixIcon;

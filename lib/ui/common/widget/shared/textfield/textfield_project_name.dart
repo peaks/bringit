@@ -45,24 +45,24 @@ class _TextfieldProjectNameState extends State<TextfieldProjectName> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: CustomTextFormField(
-          readOnly: false,
-          labelText: Wording.modalCreateNewGitProjectProjectNameLabel,
-          hintText: Wording.modalCreateNewGitProjectProjectNameHintText,
-          errorText: widget.projectNameMessageError,
-          inputIsValid: widget.isProjectNameValid,
-          onChanged: (String? val) => widget.onProjectNameChanged(val ?? ''),
-          suffixIcon: !widget.isProjectNameNotYetModified
-              ? IconButton(
-                  icon: widget.isProjectNameValid
-                      ? Icon(
-                          Icons.check_circle,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        )
-                      : Icon(Icons.warning_amber,
-                          color: Theme.of(context).colorScheme.onError),
-                  onPressed: () {},
-                )
-              : null),
+        readOnly: false,
+        labelText: Wording.modalCreateNewGitProjectProjectNameLabel,
+        errorText: widget.projectNameMessageError,
+        inputIsValid: widget.isProjectNameValid,
+        onChanged: (String? val) => widget.onProjectNameChanged(val ?? ''),
+        suffixIcon: !widget.isProjectNameNotYetModified
+            ? IconButton(
+                icon: widget.isProjectNameValid
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      )
+                    : Icon(Icons.warning_amber,
+                        color: Theme.of(context).colorScheme.onError),
+                onPressed: () {},
+              )
+            : null,
+      ),
     );
   }
 }

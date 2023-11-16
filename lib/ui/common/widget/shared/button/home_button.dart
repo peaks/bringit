@@ -36,65 +36,75 @@ class HomeButton extends StatefulWidget {
 }
 
 class _HomeButtonState extends State<HomeButton> {
-  late bool ishover;
+  late bool isHover;
 
   @override
   void initState() {
     super.initState();
-    ishover = false;
+    isHover = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      child: OutlinedButton(
-        onHover: (bool value) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: MouseRegion(
+        child: OutlinedButton(
+          onHover: (bool value) {
+            setState(() {
+              isHover = true;
+            });
+          },
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              width: isHover == true ? 4 : 2,
+            ),
+            shadowColor: Theme.of(context).primaryColorDark,
+            elevation: isHover == true ? 5 : 0,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+          ),
+          onPressed: widget.onPressed,
+          child: Container(
+            width: 500,
+            height: 125,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  width: isHover ? 5 : 10,
+                ),
+                Icon(
+                  widget.icon,
+                  size: isHover ? 100 : 90,
+                  shadows: <Shadow>[
+                    Shadow(
+                        color: Theme.of(context).primaryColorDark,
+                        blurRadius: 25)
+                  ],
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                SizedBox(
+                  width: isHover ? 5 : 10,
+                ),
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+              ],
+            ),
+          ),
+        ),
+        onExit: (PointerExitEvent s) {
           setState(() {
-            ishover = true;
+            isHover = false;
           });
         },
-        style: OutlinedButton.styleFrom(
-          foregroundColor: Theme.of(context).colorScheme.primary,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            width: ishover == true ? 4 : 2,
-          ),
-          shadowColor: Theme.of(context).primaryColorDark,
-          elevation: ishover == true ? 5 : 0,
-        ),
-        onPressed: widget.onPressed,
-        child: Container(
-          padding: const EdgeInsets.only(right: 300, top: 20, bottom: 20),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Icon(
-                widget.icon,
-                size: ishover == true ? 110 : 90,
-                shadows: <Shadow>[
-                  Shadow(
-                      color: Theme.of(context).primaryColorDark,
-                      blurRadius: 100)
-                ],
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-            ],
-          ),
-        ),
       ),
-      onExit: (PointerExitEvent s) {
-        setState(() {
-          ishover = false;
-        });
-      },
     );
   }
 }
