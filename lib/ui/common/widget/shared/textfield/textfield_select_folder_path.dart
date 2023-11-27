@@ -28,11 +28,13 @@ class TextfieldSelectFolderPath extends StatefulWidget {
       {Key? key,
       required this.isProjectPathValid,
       required this.label,
-      required this.pathDirectoryController})
+      required this.pathDirectoryController,
+      this.errorMessage})
       : super(key: key);
   final bool isProjectPathValid;
   final String label;
   final TextEditingController pathDirectoryController;
+  final String? errorMessage;
 
   @override
   State<TextfieldSelectFolderPath> createState() =>
@@ -40,23 +42,20 @@ class TextfieldSelectFolderPath extends StatefulWidget {
 }
 
 class _TextfieldSelectFolderPathState extends State<TextfieldSelectFolderPath> {
-  String? selectedDirectory;
   late Logger log;
-  TextEditingController pathDirectory = TextEditingController();
   @override
   void initState() {
     super.initState();
     log = getLogger(runtimeType.toString());
-    pathDirectory = widget.pathDirectoryController;
   }
 
   Future<void> selectDirectory() async {
-    selectedDirectory = await getDirectoryPath();
+    final String? selectedDirectory = await getDirectoryPath();
     if (selectedDirectory == null) {
       log.t('No folder selected');
     } else {
-      pathDirectory.text = selectedDirectory.toString();
-      log.t('parent folder selected $selectedDirectory');
+      widget.pathDirectoryController.text = selectedDirectory.toString();
+      log.t('Folder selected $selectedDirectory');
     }
   }
 
@@ -67,7 +66,6 @@ class _TextfieldSelectFolderPathState extends State<TextfieldSelectFolderPath> {
       child: CustomTextFormField(
         readOnly: true,
         labelText: widget.label,
-        hintText: '',
         inputIsValid: widget.isProjectPathValid,
         controller: widget.pathDirectoryController,
         suffixIcon: IconButton(
@@ -75,9 +73,7 @@ class _TextfieldSelectFolderPathState extends State<TextfieldSelectFolderPath> {
               Icons.folder,
             ),
             onPressed: selectDirectory),
-        onChanged: (String? val) {
-          print(val);
-        },
+        errorText: widget.errorMessage,
       ),
     );
   }

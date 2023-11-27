@@ -28,14 +28,14 @@ import 'package:git_ihm/ui/common/widget/shared/textfield/textfield_project_name
 import '../../../screens/main_screen.dart';
 import '../shared/textfield/textfield_select_folder_path.dart';
 
-class NewGitProjectForm extends StatefulWidget {
-  const NewGitProjectForm({Key? key}) : super(key: key);
+class CreateGitProjectForm extends StatefulWidget {
+  const CreateGitProjectForm({Key? key}) : super(key: key);
 
   @override
-  State<NewGitProjectForm> createState() => _NewGitProjectFormState();
+  State<CreateGitProjectForm> createState() => _CreateGitProjectFormState();
 }
 
-class _NewGitProjectFormState extends State<NewGitProjectForm> {
+class _CreateGitProjectFormState extends State<CreateGitProjectForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String pathToNewProject = '';
   late String projectNameMessageError = '';

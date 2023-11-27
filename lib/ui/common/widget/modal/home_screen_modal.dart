@@ -18,8 +18,8 @@
  */
 import 'package:flutter/material.dart';
 
-class NewProjectModal extends StatefulWidget {
-  const NewProjectModal(
+class HomeScreenModal extends StatefulWidget {
+  const HomeScreenModal(
       {Key? key,
       required this.title,
       required this.icon,
@@ -35,15 +35,18 @@ class NewProjectModal extends StatefulWidget {
   final Widget modalContent;
 
   @override
-  State<NewProjectModal> createState() => _NewProjectModalState();
+  State<HomeScreenModal> createState() => _HomeScreenModalState();
 }
 
-class _NewProjectModalState extends State<NewProjectModal> {
+class _HomeScreenModalState extends State<HomeScreenModal> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       titlePadding: const EdgeInsets.symmetric(horizontal: 10),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
       title: Container(
         child: Column(
           children: <Widget>[

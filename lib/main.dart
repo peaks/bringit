@@ -20,7 +20,6 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:desktop_window/desktop_window.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
@@ -62,7 +61,7 @@ Future<void> main() async {
   // Vérifier l'état de la connexion réseau
   final ConnectivityResult connectivityResult =
       await Connectivity().checkConnectivity();
-  final String connectionStatus = describeEnum(connectivityResult);
+  final String connectionStatus = connectivityResult.name;
 
   // Logs au démarrage de l'application
   log.i('''
@@ -94,11 +93,6 @@ Future<void> main() async {
   log.i('OS: ${Platform.operatingSystemVersion}');
   log.i('Network connection status: $connectionStatus');
 
-  log.i('''
-
-█▒▒▒▒▒▒█▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒█▒▒▒▒▒▒██▒▒▒▒▒▒█
- 
-  ''');
   runApp(myApp);
 }
 
