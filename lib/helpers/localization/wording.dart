@@ -47,6 +47,13 @@ class Wording {
   static const String cancelAction = 'Cancel';
   static const String initializationMessage = 'Initialization...';
 
+  // Modal Commit
+  static const String modalCommitTitle = 'Commit';
+
+  static const String modalCommitMessageHintext = 'Commit message';
+  static const String modalCommitErrorMessageForEmptyCommitMessage =
+      'Commit message is mandatory';
+
   // Home Screen
 
   static const String homeScreenOpenProjectButtonTitle = 'Open Project';
