@@ -31,10 +31,11 @@ class GitLogImplementation extends GitLogCommand {
   final LogParser _parser;
 
   @override
-  Future<CommandResult<List<GitCommit>>> run(String path) async {
+  Future<CommandResult<List<GitCommit>>> run(
+      String workingDirectoryPath) async {
     final ShellCommand command =
         ShellCommand('git', <String>['log', r'--format=%h\%ct\%cn%n%s%n%D']);
-    final ProcessResult result = await command.run(path);
+    final ProcessResult result = await command.run(workingDirectoryPath);
 
     List<GitCommit> commits = <GitCommit>[];
     if (result.isSuccessful) {

@@ -38,4 +38,10 @@ abstract class GitProxy extends ChangeNotifier {
   Future<String> gitInit(String directoryPath);
 
   Future<List<GitCommit>> gitLog();
+
+  Future<String> gitAdd(String fileRelativePath, String path);
+  Future<String> gitAddAll(String path);
+
+  Future<String> gitRestoreStaged(String fileRelativePath, String path);
+  Future<String> gitRestoreStagedAll(String path);
 }

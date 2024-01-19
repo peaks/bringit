@@ -17,12 +17,20 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'package:git_ihm/domain/git/add/git_add_command.dart';
+import 'package:git_ihm/domain/git/add/git_add_implementation.dart';
+import 'package:git_ihm/domain/git/add_all/git_add_all_command.dart';
+import 'package:git_ihm/domain/git/add_all/git_add_all_implementation.dart';
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
 import 'package:git_ihm/domain/git/init/git_init_command.dart';
 import 'package:git_ihm/domain/git/init/git_init_implementation.dart';
 import 'package:git_ihm/domain/git/log/git_log_command.dart';
 import 'package:git_ihm/domain/git/log/git_log_implementation.dart';
 import 'package:git_ihm/domain/git/log/log_parser.dart';
+import 'package:git_ihm/domain/git/restore_staged/git_restore_staged_command.dart';
+import 'package:git_ihm/domain/git/restore_staged/git_restore_staged_implementation.dart';
+import 'package:git_ihm/domain/git/restore_staged_all/git_restore_staged_command.dart';
+import 'package:git_ihm/domain/git/restore_staged_all/git_restore_staged_implementation.dart';
 import 'package:git_ihm/domain/git/status/git_status_command.dart';
 import 'package:git_ihm/domain/git/status/git_status_implementation.dart';
 import 'package:git_ihm/domain/git/status/status_parser.dart';
@@ -40,4 +48,13 @@ class GitRegistry {
       GitLogImplementation(LogParser(CommitParser()));
 
   GitInitCommand get initCommand => GitInitImplementation();
+
+  GitAddAllCommand get addAllCommand => GitAddAllImplementation();
+  GitAddCommand get addCommand => GitAddImplementation();
+
+  GitRestoreStagedAllCommand get restoreStagedAllCommand =>
+      GitRestoreStagedAllImplementation();
+
+  GitRestoreStagedCommand get restoreStagedCommand =>
+      GitRestoreStagedImplementation();
 }

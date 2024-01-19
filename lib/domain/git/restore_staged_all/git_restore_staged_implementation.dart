@@ -16,18 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import 'dart:io';
 
 import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/domain/git/base_command/shell_command.dart';
-import 'package:git_ihm/domain/git/init/git_init_command.dart';
+import 'package:git_ihm/domain/git/restore_staged_all/git_restore_staged_command.dart';
 
-class GitInitImplementation extends GitInitCommand {
-  GitInitImplementation();
+class GitRestoreStagedAllImplementation extends GitRestoreStagedAllCommand {
+  GitRestoreStagedAllImplementation();
 
   @override
   Future<CommandResult<String>> run(String workingDirectoryPath) async {
-    final ShellCommand command = ShellCommand('git', <String>['init']);
+    final ShellCommand command =
+        ShellCommand('git', <String>['restore', '--staged', '--', '.']);
     final ProcessResult result = await command.run(workingDirectoryPath);
     return CommandResult<String>(result.stdout.toString(), result);
   }

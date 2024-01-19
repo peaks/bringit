@@ -78,6 +78,50 @@ class GitProxyImplementation extends GitProxy {
   }
 
   @override
+  Future<String> gitAddAll(String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.addAllCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git add all failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
+  Future<String> gitAdd(String fileRelativePath, String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.addCommand.run(fileRelativePath, path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git add failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
+  Future<String> gitRestoreStagedAll(String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.restoreStagedAllCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git restore staged all failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
+  Future<String> gitRestoreStaged(String fileRelativePath, String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.restoreStagedCommand.run(fileRelativePath, path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git restore staged failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
   Future<void> updateStatus() async {
     gitState = await gitStatus(path);
     notifyListeners();

@@ -33,12 +33,13 @@ class GitStatusImplementation extends GitStatusCommand {
   static const LineSplitter _splitter = LineSplitter();
 
   @override
-  Future<CommandResult<List<GitFileStatus>>> run(String path) async {
-    _parser.setProject(path);
+  Future<CommandResult<List<GitFileStatus>>> run(
+      String workingDirectoryPath) async {
+    _parser.setProject(workingDirectoryPath);
 
     final ShellCommand command = ShellCommand(
         'git', <String>['status', '--porcelain=v1', '--ignored=no']);
-    final ProcessResult result = await command.run(path);
+    final ProcessResult result = await command.run(workingDirectoryPath);
     List<GitFileStatus> filesStatus = <GitFileStatus>[];
     if (result.isSuccessful) {
       filesStatus = _parseStatus(_splitter.convert(result.stdout.toString()));

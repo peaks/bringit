@@ -20,5 +20,5 @@ import 'package:git_ihm/domain/git/base_command/command_result.dart';
 import 'package:git_ihm/model/git/git_file_status.dart';
 
 abstract class GitStatusCommand {
-  Future<CommandResult<List<GitFileStatus>>> run(String path);
+  Future<CommandResult<List<GitFileStatus>>> run(String workingDirectoryPath);
 }

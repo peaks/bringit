@@ -19,6 +19,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_ihm/domain/git/git_factory.dart';
 import 'package:git_ihm/domain/git/git_proxy.dart';
+import 'package:git_ihm/ui/common/button_level.dart';
 import 'package:git_ihm/ui/common/widget/staging/staging_file_list.dart';
 
 import '../../../../helpers/localization/wording.dart';
@@ -66,49 +67,51 @@ class _StatusDisplayState extends State<StatusDisplay> {
             element.fileState == GitDiffFileState.unstaged)
         .toList();
     return Container(
-      height: MediaQuery.of(context).size.height / 2 - 36,
+      height: MediaQuery.of(context).size.height / 2 - 87,
       child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).canvasColor,
-              child: Text(
-                Wording.stagingBlockTitle,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(10),
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       child: Column(
                         children: <Widget>[
                           StagingFileList(
-                              statusFiles: unstaged,
-                              title: Wording.modifiedFiles,
-                              icon: Icons.edit_note),
+                            statusFiles: unstaged,
+                            title: Wording.modifiedFiles,
+                            icon: Icons.edit_note,
+                            iconCommand: Icons.arrow_circle_right_outlined,
+                            level: ButtonLevel.safe,
+                          ),
                           const SizedBox(
-                            height: 5,
+                            height: 20,
                           ),
                           StagingFileList(
                             title: Wording.untrackedFiles,
                             icon: Icons.visibility_off_outlined,
                             statusFiles: untracked,
-                          ),
+                            iconCommand: Icons.arrow_circle_right_outlined,
+                            level: ButtonLevel.safe,
+                          ), //S
                         ],
                       ),
                     ),
                     const SizedBox(
-                      width: 5,
+                      width: 20,
                     ),
-                    StagingFileList(
+                    Container(
+                      child: StagingFileList(
                         statusFiles: staged,
                         title: Wording.stagedFiles,
-                        icon: Icons.task_alt)
+                        icon: Icons.task_alt,
+                        iconCommand: Icons.arrow_circle_left_outlined,
+                        level: ButtonLevel.safe,
+                      ),
+                    ),
                   ],
                 ),
               ),
