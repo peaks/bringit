@@ -22,6 +22,8 @@ import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/helpers/git_gud_logger.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
 import 'package:git_ihm/ui/common/button_level.dart';
+import 'package:git_ihm/ui/common/widget/modal/modal_commit.dart';
+import 'package:git_ihm/ui/common/widget/modal/modal_commit_content.dart';
 import 'package:logger/logger.dart';
 
 import '../shared/button/gamified_icon_text_button.dart';
@@ -46,6 +48,22 @@ class _StagingButtonsState extends State<StagingButtons> {
     });
     super.initState();
     log = getLogger(runtimeType.toString());
+  }
+
+  void displayModalCreateNewGitProject() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => ModalCommit(
+        modalContent: const ModalCommitContent(
+          userAuthor: 'John McBeer',
+          userEmail: 'jmcb@maltslayer.com>',
+          commitBranch: '63-update-readme',
+        ),
+        title: Wording.modalCommitTitle,
+        onSubmit: () {},
+        titleAction: Wording.homeScreenCreateGitProjectButtonTitle,
+      ),
+    );
   }
 
   Future<void> executeGitCommand(
@@ -105,6 +123,14 @@ class _StagingButtonsState extends State<StagingButtons> {
                 ],
               ),
             ),
+          ),
+          GamifiedIconTextButton(
+            title: Wording.gitActionCommitTitle,
+            icon: Icons.check,
+            onPressed: () {
+              displayModalCreateNewGitProject();
+            },
+            level: ButtonLevel.safe,
           ),
         ],
       ),

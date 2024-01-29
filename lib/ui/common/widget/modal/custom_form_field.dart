@@ -30,50 +30,66 @@ class CustomTextFormField extends StatelessWidget {
     this.onFieldSubmitted,
     required this.inputIsValid,
     this.controller,
-    required this.labelText,
+    this.labelText,
     this.readOnly = false,
+    this.hinText,
+    this.keyboardType,
+    this.maxLines,
+    this.minLines,
+    this.contentPadding,
   }) : super(key: key);
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final IconButton? suffixIcon;
   final String? errorText;
-  final String labelText;
+  final String? labelText;
+  final String? hinText;
   final Function(String?)? onChanged;
   final Function(String?)? onFieldSubmitted;
   final bool inputIsValid;
   final bool readOnly;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final int? maxLines;
+  final int? minLines;
+  final EdgeInsets? contentPadding;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      readOnly: readOnly,
-      controller: controller,
-      inputFormatters: inputFormatters,
-      validator: validator,
-      onChanged: onChanged,
-      onFieldSubmitted: onFieldSubmitted,
-      decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        floatingLabelAlignment: FloatingLabelAlignment.start,
-        labelText: labelText,
-        labelStyle: Theme.of(context).textTheme.bodyMedium,
-        errorText: errorText,
-        suffixIcon: suffixIcon,
-        errorStyle: TextStyle(
-          color: Theme.of(context).colorScheme.onError,
+        readOnly: readOnly,
+        controller: controller,
+        inputFormatters: inputFormatters,
+        validator: validator,
+        onChanged: onChanged,
+        keyboardType: keyboardType,
+        maxLines: maxLines,
+        minLines: minLines,
+        onFieldSubmitted: onFieldSubmitted,
+        decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
+          floatingLabelAlignment: FloatingLabelAlignment.start,
+          labelText: labelText,
+          hintText: hinText,
+          hintStyle: Theme.of(context).primaryTextTheme.titleMedium,
+          labelStyle: Theme.of(context).textTheme.bodyMedium,
+          errorText: errorText,
+          suffixIcon: suffixIcon,
+          errorStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onError,
+          ),
+          errorBorder: inputIsValid
+              ? const OutlineInputBorder(borderSide: BorderSide.none)
+              : OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.onError, width: 1)),
+          filled: true,
+          fillColor: readOnly
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).colorScheme.secondaryContainer,
+          border: const OutlineInputBorder(borderSide: BorderSide.none),
+          contentPadding: contentPadding,
         ),
-        errorBorder: inputIsValid
-            ? const OutlineInputBorder(borderSide: BorderSide.none)
-            : OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.onError, width: 1)),
-        filled: true,
-        fillColor: readOnly
-            ? Theme.of(context).primaryColorDark
-            : Theme.of(context).colorScheme.secondaryContainer,
-        border: const OutlineInputBorder(borderSide: BorderSide.none),
-      ),
-    );
+        style: Theme.of(context).primaryTextTheme.titleMedium);
   }
 }

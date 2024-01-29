@@ -38,6 +38,28 @@ class BrinGitTheme {
         scaffoldBackgroundColor: NordColors.$1,
         primaryColorDark: NordColors.$0,
         secondaryHeaderColor: NordColors.$9,
+        primaryTextTheme: base.primaryTextTheme.copyWith(
+          titleMedium: GoogleFonts.roboto(
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+              color: NordColors.$4,
+            ),
+          ),
+          titleSmall: GoogleFonts.roboto(
+            textStyle: const TextStyle(
+              fontSize: 16,
+              color: NordColors.$9,
+            ),
+          ),
+          titleLarge: GoogleFonts.roboto(
+            textStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: NordColors.$9,
+            ),
+          ),
+        ),
         textTheme: base.textTheme.copyWith(
           // project title
           titleLarge: const TextStyle(
@@ -59,6 +81,7 @@ class BrinGitTheme {
               color: NordColors.$0,
             ),
           ),
+
           titleSmall:
               const TextStyle(fontSize: 16, fontFamily: 'FantasqueSansMono'),
           headlineLarge: GoogleFonts.roboto(
@@ -89,7 +112,7 @@ class BrinGitTheme {
             ),
           ),
           displayLarge: const TextStyle(
-              color: NordColors.$8, fontWeight: FontWeight.w300, fontSize: 18),
+              color: NordColors.$8, fontWeight: FontWeight.w400, fontSize: 18),
           // staging file path
           bodyMedium: GoogleFonts.roboto(
             textStyle: const TextStyle(
