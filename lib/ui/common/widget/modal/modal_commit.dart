@@ -17,8 +17,6 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
-import 'package:git_ihm/helpers/localization/wording.dart';
-import 'package:git_ihm/ui/common/widget/shared/button/modal_commit_action_button.dart';
 
 class ModalCommit extends StatefulWidget {
   const ModalCommit(
@@ -81,32 +79,6 @@ class _ModalCommitState extends State<ModalCommit> {
         ],
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-      actions: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              child: ModalCommitActionButton(
-                title: Wording.cancelAction,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Expanded(
-                child: ModalCommitActionButton(
-              title: Wording.modalCommitTitle,
-              onPressed: () {
-                widget.onSubmit();
-              },
-            )),
-          ],
-        ),
-      ],
     );
   }
 }

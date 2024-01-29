@@ -40,6 +40,11 @@ class GitProxyMock extends GitProxy {
   }
 
   @override
+  Future<String> gitBranch(String path) async {
+    return 'no branch';
+  }
+
+  @override
   String get path => _path;
 
   @override
@@ -82,5 +87,20 @@ class GitProxyMock extends GitProxy {
   @override
   Future<String> gitRestoreStagedAll(String path) async {
     return 'no path';
+  }
+
+  @override
+  Future<String> gitCommit(String messageCommit, String path) async {
+    return 'no path';
+  }
+
+  @override
+  Future<String> gitGetConfigUserName(String path) async {
+    return 'no user name';
+  }
+
+  @override
+  Future<String> gitGetConfigUserEmail(String path) async {
+    return 'no user email';
   }
 }

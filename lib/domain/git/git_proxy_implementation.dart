@@ -68,6 +68,39 @@ class GitProxyImplementation extends GitProxy {
   }
 
   @override
+  Future<String> gitBranch(String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.branchCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git branch failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
+  Future<String> gitGetConfigUserEmail(String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.getConfigUserEmailCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git user email failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
+  Future<String> gitGetConfigUserName(String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.getConfigUserNameCommand.run(path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git user email failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
   String get path => _pathManager.path;
 
   @override
@@ -119,6 +152,17 @@ class GitProxyImplementation extends GitProxy {
     }
     throw Exception(
         'Command git restore staged failed to execute: ${commandResult.stderr}');
+  }
+
+  @override
+  Future<String> gitCommit(String commitMessage, String path) async {
+    final CommandResult<String> commandResult =
+        await _registry.commitCommand.run(commitMessage, path);
+    if (commandResult.isSuccessful) {
+      return commandResult.result;
+    }
+    throw Exception(
+        'Command git commit failed to execute: ${commandResult.stderr}');
   }
 
   @override

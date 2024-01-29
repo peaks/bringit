@@ -50,20 +50,41 @@ class _StagingButtonsState extends State<StagingButtons> {
     log = getLogger(runtimeType.toString());
   }
 
-  void displayModalCreateNewGitProject() {
+  Future<void> displayModalCommit() async {
+    final String userAuthor = await getUserName();
+    final String userEmail = await getUserEmail();
+    final String branch = await getBranch();
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => ModalCommit(
-        modalContent: const ModalCommitContent(
-          userAuthor: 'John McBeer',
-          userEmail: 'jmcb@maltslayer.com>',
-          commitBranch: '63-update-readme',
+        modalContent: ModalCommitContent(
+          userAuthor: userAuthor,
+          userEmail: userEmail,
+          commitBranch: branch,
         ),
         title: Wording.modalCommitTitle,
         onSubmit: () {},
         titleAction: Wording.homeScreenCreateGitProjectButtonTitle,
       ),
     );
+  }
+
+  Future<String> getUserName() async {
+    final String path = git!.path;
+    final String userName = await git!.gitGetConfigUserName(path);
+    return userName;
+  }
+
+  Future<String> getUserEmail() async {
+    final String path = git!.path;
+    final String userEmail = await git!.gitGetConfigUserEmail(path);
+    return userEmail;
+  }
+
+  Future<String> getBranch() async {
+    final String path = git!.path;
+    final String branch = await git!.gitBranch(path);
+    return branch;
   }
 
   Future<void> executeGitCommand(
@@ -128,7 +149,7 @@ class _StagingButtonsState extends State<StagingButtons> {
             title: Wording.gitActionCommitTitle,
             icon: Icons.check,
             onPressed: () {
-              displayModalCreateNewGitProject();
+              displayModalCommit();
             },
             level: ButtonLevel.safe,
           ),

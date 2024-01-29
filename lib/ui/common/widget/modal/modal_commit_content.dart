@@ -39,33 +39,28 @@ class ModalCommitContent extends StatefulWidget {
 class _ModalCommitContentState extends State<ModalCommitContent> {
   @override
   Widget build(BuildContext context) {
+    final String user = '${widget.userAuthor} <${widget.userEmail}>'
+        .replaceAll('\n', '')
+        .trim();
+
     return Column(
       children: <Widget>[
         Row(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Icon(
-                  MdiIcons.accountOutline,
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  size: 18,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(widget.userAuthor,
-                    style: Theme.of(context).primaryTextTheme.titleSmall),
-                const SizedBox(
-                  width: 2,
-                ),
-                Text(
-                  widget.userEmail,
-                  style: Theme.of(context).primaryTextTheme.titleSmall,
-                ),
-              ],
+            Icon(
+              MdiIcons.accountOutline,
+              color: Theme.of(context).colorScheme.primaryContainer,
+              size: 18,
             ),
             const SizedBox(
-              width: 50,
+              width: 5,
+            ),
+            Text(
+              user,
+              style: Theme.of(context).primaryTextTheme.titleSmall,
+            ),
+            const SizedBox(
+              width: 10,
             ),
             Row(
               children: <Widget>[
