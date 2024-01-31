@@ -22,7 +22,7 @@ import 'package:git_ihm/domain/git/add/git_add_implementation.dart';
 import 'package:git_ihm/domain/git/add_all/git_add_all_command.dart';
 import 'package:git_ihm/domain/git/add_all/git_add_all_implementation.dart';
 import 'package:git_ihm/domain/git/branch/git_branch_command.dart';
-import 'package:git_ihm/domain/git/branch/git_branch_impl%C3%A9mentation.dart';
+import 'package:git_ihm/domain/git/branch/git_branch_implementation.dart';
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
 import 'package:git_ihm/domain/git/commit/git_commit_command.dart';
 import 'package:git_ihm/domain/git/commit/git_commit_implementation.dart';
