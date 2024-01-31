@@ -17,7 +17,10 @@
  * along with Brin'Git.  If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:git_ihm/domain/git/git_factory.dart';
+import 'package:git_ihm/domain/git/git_proxy.dart';
 import 'package:git_ihm/helpers/localization/wording.dart';
+import 'package:git_ihm/ui/common/widget/shared/button/modal_commit_action_button.dart';
 import 'package:git_ihm/ui/common/widget/shared/textfield/textfield_commit_message.dart';
 
 class ModalCommitForm extends StatefulWidget {
@@ -30,22 +33,37 @@ class ModalCommitForm extends StatefulWidget {
 class _ModalCommitFormState extends State<ModalCommitForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isAmendLastCommitChecked = false;
+  String commitMessage = '';
   late String commitMessageMessageError = '';
   bool isCommitMessageValid = true;
   bool isCommitMessageNotYetModified = true;
+  late GitProxy git;
 
   Future<void> onCommitMessageChanged(String? val) async {
     commitMessageMessageError = '';
     isCommitMessageNotYetModified = false;
+    commitMessage = '';
 
     if (val!.isEmpty) {
       commitMessageMessageError =
           Wording.modalCommitErrorMessageForEmptyCommitMessage;
       isCommitMessageValid = false;
+      commitMessage = '';
     } else {
       isCommitMessageValid = true;
+      commitMessage = val;
     }
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    GitFactory().getGit().then((GitProxy gitP) {
+      setState(() {
+        git = gitP;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -76,6 +94,37 @@ class _ModalCommitFormState extends State<ModalCommitForm> {
                 commitMessageMessageError: commitMessageMessageError,
               ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: ModalCommitActionButton(
+                    title: Wording.cancelAction,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                    child: ModalCommitActionButton(
+                  title: Wording.modalCommitTitle,
+                  onPressed: () {
+                    try {
+                      git.gitCommit(commitMessage, git.path);
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                )),
+              ],
+            ),
           ),
         ],
       ),

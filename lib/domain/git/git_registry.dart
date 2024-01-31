@@ -21,7 +21,15 @@ import 'package:git_ihm/domain/git/add/git_add_command.dart';
 import 'package:git_ihm/domain/git/add/git_add_implementation.dart';
 import 'package:git_ihm/domain/git/add_all/git_add_all_command.dart';
 import 'package:git_ihm/domain/git/add_all/git_add_all_implementation.dart';
+import 'package:git_ihm/domain/git/branch/git_branch_command.dart';
+import 'package:git_ihm/domain/git/branch/git_branch_implementation.dart';
 import 'package:git_ihm/domain/git/commit/commit_parser.dart';
+import 'package:git_ihm/domain/git/commit/git_commit_command.dart';
+import 'package:git_ihm/domain/git/commit/git_commit_implementation.dart';
+import 'package:git_ihm/domain/git/get_config_user_email/git_get_config_user_email_command.dart';
+import 'package:git_ihm/domain/git/get_config_user_email/git_get_config_user_email_implementation.dart';
+import 'package:git_ihm/domain/git/get_config_user_name/git_get_config_user_name_command.dart';
+import 'package:git_ihm/domain/git/get_config_user_name/git_get_config_user_name_implementation.dart';
 import 'package:git_ihm/domain/git/init/git_init_command.dart';
 import 'package:git_ihm/domain/git/init/git_init_implementation.dart';
 import 'package:git_ihm/domain/git/log/git_log_command.dart';
@@ -43,6 +51,7 @@ class GitRegistry {
       );
 
   GitVersionCommand get versionCommand => GitVersionImplementation();
+  GitBranchCommand get branchCommand => GitBranchImplementation();
 
   GitLogCommand get logCommand =>
       GitLogImplementation(LogParser(CommitParser()));
@@ -57,4 +66,9 @@ class GitRegistry {
 
   GitRestoreStagedCommand get restoreStagedCommand =>
       GitRestoreStagedImplementation();
+  GitGetConfigUserNameCommand get getConfigUserNameCommand =>
+      GitGetConfigUserNameImplementation();
+  GitGetConfigUserEmailCommand get getConfigUserEmailCommand =>
+      GitGetConfigUserEmailImplementation();
+  GitCommitCommand get commitCommand => GitCommitImplementation();
 }
