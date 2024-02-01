@@ -122,6 +122,8 @@ class _ModalCommitFormState extends State<ModalCommitForm> {
                       print(e);
                     }
                   },
+                  enable:
+                      isCommitMessageValid && !isCommitMessageNotYetModified,
                 )),
               ],
             ),
