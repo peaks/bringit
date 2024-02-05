@@ -28,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     this.errorText,
     this.onChanged,
     this.onFieldSubmitted,
+    this.onTap,
     required this.inputIsValid,
     this.controller,
     this.labelText,
@@ -46,6 +47,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? hinText;
   final Function(String?)? onChanged;
   final Function(String?)? onFieldSubmitted;
+  final Function()? onTap;
   final bool inputIsValid;
   final bool readOnly;
   final TextEditingController? controller;
@@ -66,6 +68,7 @@ class CustomTextFormField extends StatelessWidget {
         maxLines: maxLines,
         minLines: minLines,
         onFieldSubmitted: onFieldSubmitted,
+        onTap: onTap,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           floatingLabelAlignment: FloatingLabelAlignment.start,
