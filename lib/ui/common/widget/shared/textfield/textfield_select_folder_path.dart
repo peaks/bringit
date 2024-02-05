@@ -68,11 +68,13 @@ class _TextfieldSelectFolderPathState extends State<TextfieldSelectFolderPath> {
         labelText: widget.label,
         inputIsValid: widget.isProjectPathValid,
         controller: widget.pathDirectoryController,
+        onTap: selectDirectory,
         suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.folder,
-            ),
-            onPressed: selectDirectory),
+          icon: const Icon(
+            Icons.folder,
+          ),
+          onPressed: () {},
+        ),
         errorText: widget.errorMessage,
       ),
     );
