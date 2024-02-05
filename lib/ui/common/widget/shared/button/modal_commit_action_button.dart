@@ -21,9 +21,13 @@ import 'package:git_ihm/ui/theme/bringit_theme.dart';
 
 class ModalCommitActionButton extends StatefulWidget {
   const ModalCommitActionButton(
-      {super.key, required this.title, required this.onPressed});
+      {super.key,
+      required this.title,
+      required this.onPressed,
+      this.enable = true});
   final String title;
   final GestureTapCallback onPressed;
+  final bool enable;
 
   @override
   State<ModalCommitActionButton> createState() =>
@@ -37,17 +41,23 @@ class _ModalCommitActionButtonState extends State<ModalCommitActionButton> {
   Widget build(BuildContext context) {
     return MouseRegion(
       child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            side: BorderSide(
-              color: hovercolor,
-            )),
-        onPressed: () {
-          widget.onPressed();
-        },
+        style: widget.enable
+            ? OutlinedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColorDark,
+                side: BorderSide(
+                  color: hovercolor,
+                ))
+            : OutlinedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                side: BorderSide(
+                  color: Theme.of(context).colorScheme.surface,
+                )),
+        onPressed: widget.enable ? widget.onPressed : null,
         child: Text(
           widget.title,
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: widget.enable
+              ? Theme.of(context).textTheme.headlineSmall
+              : Theme.of(context).primaryTextTheme.labelSmall,
         ),
       ),
       onHover: (_) {

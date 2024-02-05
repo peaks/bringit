@@ -59,6 +59,13 @@ class BrinGitTheme {
               color: NordColors.$9,
             ),
           ),
+          labelSmall: GoogleFonts.roboto(
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: NordColors.$0,
+            ),
+          ),
         ),
         textTheme: base.textTheme.copyWith(
           // project title
